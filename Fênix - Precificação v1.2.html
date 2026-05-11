@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fênix | Precificação Inteligente v1.2</title>
+    <style>
+        :root {
+            --primary: #041273;
+            --secondary: #08249d;
+            --accent: #27ae60;
+            --bg-gradient: linear-gradient(135deg, #041273 0%, #08249d 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            color: #333;
+        }
+
+        .main-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            width: 95%;
+            max-width: 1100px;
+            margin-top: 40px;
+            justify-content: center;
+        }
+
+        .header-title {
+            color: white;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 25px;
+            flex: 1;
+            min-width: 320px;
+        }
+
+        h3 {
+            color: var(--primary);
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        /* Layout Input ao lado do Label */
+        .form-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        .form-row label {
+            flex: 1;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #444;
+        }
+
+        .input-wrapper {
+            flex: 1.5;
+            display: flex;
+            gap: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .toggle-btn {
+            background: #f0f2f5;
+            border: 1px solid #ddd;
+            padding: 0 12px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: bold;
+            color: #041273;
+            transition: 0.2s;
+        }
+
+        .toggle-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Botão Calcular */
+        .calc-trigger {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .calc-trigger:hover { background: #061aab; }
+
+        /* Card de Resultados */
+        .result-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #999;
+            text-align: center;
+        }
+
+        .price-display {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .price-display strong {
+            font-size: 2.5rem;
+            color: var(--primary);
+            display: block;
+        }
+
+        .breakdown-list { margin-top: 20px; }
+
+        .breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .progress-fill { height: 100%; width: 0; transition: width 0.6s ease; }
+
+        footer {
+            margin-top: auto;
+            padding: 30px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .main-wrapper { flex-direction: column; }
+            .card { min-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-title">
+    <h1>Fênix | Precificação Inteligente <small style="font-size: 0.5em; opacity: 0.8;">v1.2</small></h1>
+</div>
+
+<div class="main-wrapper">
+    <!-- CARD DE INPUTS -->
+    <div class="card">
+        <h3>Configuração de Custos</h3>
+        
+        <div class="form-row">
+            <label>Custo Base</label>
+            <div class="input-wrapper">
+                <input type="number" id="custo" placeholder="0,00" step="0.01">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <label>Margem de Lucro</label>
+            <div class="input-wrapper">
+                <input type="number" id="lucro_val" placeholder="Quanto ganhar?">
+                <button class="toggle-btn active" id="btn_lucro" onclick="toggle('lucro')">%</button>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <label>Comissão / Terceiros</label>
+            <div class="input-wrapper">
+                <input type="number" id="comis_val" placeholder="Taxas">
+                <button class="toggle-btn active" id="btn_comis" onclick="toggle('comis')">%</button>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <label>Impostos (%)</label>
+            <div class="input-wrapper">
+                <input type="number" id="imposto" placeholder="Ex: 6">
+            </div>
+        </div>
+
+        <button class="calc-trigger" onclick="calcular()">Calcular Preço Final</button>
+    </div>
+
+    <!-- CARD DE RESULTADOS -->
+    <div class="card" id="card_resultado">
+        <h3>Painel de Análise</h3>
+        
+        <div id="resultado_vazio" class="result-empty">
+            <p>Preencha os dados ao lado para ver a análise detalhada.</p>
+        </div>
+
+        <div id="resultado_content" style="display:none;">
+            <div class="price-display">
+                <span>Preço Sugerido para o Cliente</span>
+                <strong id="res_total">R$ 0,00</strong>
+            </div>
+
+            <div class="breakdown-list" id="breakdown_list">
+                <!-- Preenchido via JS -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    (c) Cristiano Fênix - 2026 | Fênix Soluções Tecnológica
+</footer>
+
+<script>
+    let tipos = { lucro: 'perc', comis: 'perc' };
+
+    function toggle(campo) {
+        const btn = document.getElementById(`btn_${campo}`);
+        tipos[campo] = tipos[campo] === 'perc' ? 'moeda' : 'perc';
+        btn.innerText = tipos[campo] === 'perc' ? '%' : '$';
+        btn.classList.toggle('active');
+    }
+
+    function calcular() {
+        const custo = parseFloat(document.getElementById('custo').value) || 0;
+        const impostoPerc = parseFloat(document.getElementById('imposto').value) || 0;
+        const lucroInput = parseFloat(document.getElementById('lucro_val').value) || 0;
+        const comisInput = parseFloat(document.getElementById('comis_val').value) || 0;
+
+        let custosFixosAdd = 0;
+        let percVariavel = impostoPerc;
+
+        if (tipos.lucro === 'moeda') custosFixosAdd += lucroInput;
+        else percVariavel += lucroInput;
+
+        if (tipos.comis === 'moeda') custosFixosAdd += comisInput;
+        else percVariavel += comisInput;
+
+        const divisor = (100 - percVariavel) / 100;
+        
+        if (divisor <= 0) {
+            alert("Erro: A soma das porcentagens não pode atingir 100%.");
+            return;
+        }
+
+        const precoFinal = (custo + custosFixosAdd) / divisor;
+
+        // Breakdown Real
+        const vImposto = precoFinal * (impostoPerc / 100);
+        const vComissao = tipos.comis === 'perc' ? precoFinal * (comisInput / 100) : comisInput;
+        const vLucro = precoFinal - custo - vImposto - vComissao;
+
+        mostrarResultados(precoFinal, custo, vImposto, vComissao, vLucro);
+    }
+
+    function mostrarResultados(total, custo, imposto, comissao, lucro) {
+        document.getElementById('resultado_vazio').style.display = 'none';
+        document.getElementById('resultado_content').style.display = 'block';
+        document.getElementById('res_total').innerText = total.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
+
+        const dados = [
+            { label: 'Custo Base', valor: custo, cor: '#555' },
+            { label: 'Impostos', valor: imposto, cor: '#e74c3c' },
+            { label: 'Comissão', valor: comissao, cor: '#f39c12' },
+            { label: 'Seu Lucro Real', valor: lucro, cor: '#27ae60' }
+        ];
+
+        let html = '';
+        dados.forEach(item => {
+            const p = (item.valor / total * 100).toFixed(1);
+            html += `
+                <div class="breakdown-row">
+                    <span>${item.label} (${p}%)</span>
+                    <span>R$ ${item.valor.toFixed(2)}</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${p}%; background: ${item.cor}"></div>
+                </div>
+            `;
+        });
+
+        document.getElementById('breakdown_list').innerHTML = html;
+    }
+</script>
+
+</body>
+</html>
