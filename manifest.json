@@ -1,0 +1,35 @@
+{
+  "name": "Fênix | Precificação Inteligente",
+  "short_name": "Fênix",
+  "description": "Calculadora de precificação inteligente com análise de margens",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#020d52",
+  "theme_color": "#041273",
+  "orientation": "portrait-primary",
+  "lang": "pt-BR",
+  "categories": ["business", "finance", "productivity"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Nova OS",
+      "short_name": "Nova OS",
+      "description": "Abrir nova ordem de serviço",
+      "url": "./index.html"
+    }
+  ]
+}

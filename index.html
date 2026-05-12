@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fênix | Precificação Inteligente v2.3</title>
+    <title>Fênix | Precificação Inteligente v2.4</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#041273">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Fênix">
+    <link rel="apple-touch-icon" href="icon-192.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -82,10 +89,33 @@
         .toggle-btn{background:var(--gray-light);border:1.5px solid var(--gray-mid);padding:0 12px;cursor:pointer;border-radius:8px;font-weight:700;font-size:.82rem;color:var(--primary);transition:all .2s;white-space:nowrap;min-width:42px;height:36px;display:flex;align-items:center;justify-content:center;}
         .toggle-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
 
-        /* comis tag */
-        .comis-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:.68rem;font-weight:700;border:1.5px solid var(--gray-mid);background:var(--gray-light);color:var(--gray-text);cursor:pointer;transition:all .22s;white-space:nowrap;height:30px;user-select:none;}
-        .comis-tag:hover{border-color:var(--comis);color:var(--comis);}
-        .comis-tag.on{background:rgba(142,68,173,.12);border-color:var(--comis);color:var(--comis);}
+        /* comis tag — OFF por padrão, ON quando ativo */
+        .comis-tag{
+            display:inline-flex;align-items:center;gap:5px;
+            padding:4px 10px;border-radius:20px;font-size:.68rem;font-weight:700;
+            border:1.5px dashed var(--gray-mid);background:var(--gray-light);
+            color:var(--gray-text);cursor:pointer;transition:all .22s;
+            white-space:nowrap;height:30px;user-select:none;
+            opacity:.65;
+        }
+        .comis-tag .ct-icon-off{ display:inline-block; }
+        .comis-tag .ct-icon-on { display:none; }
+        .comis-tag:hover{border-color:var(--comis);color:var(--comis);opacity:1;border-style:solid;}
+        .comis-tag.on{
+            background:rgba(142,68,173,.14);border-color:var(--comis);
+            border-style:solid;color:var(--comis);opacity:1;
+            box-shadow:0 0 0 2px rgba(142,68,173,.15);
+        }
+        .comis-tag.on .ct-icon-off{ display:none; }
+        .comis-tag.on .ct-icon-on { display:inline-block; }
+        /* input desabilitado visualmente quando comissão inativa */
+        .comis-section.inativa{ opacity:.45; pointer-events:none; }
+        .comis-section.inativa::after{
+            content:'Ative a comissão no Produto ou Serviço';
+            display:block;font-size:.7rem;color:var(--comis);
+            text-align:center;margin-top:6px;font-style:italic;
+            pointer-events:none;
+        }
 
         /* comis base info */
         .comis-base-info{display:none;background:linear-gradient(90deg,rgba(142,68,173,.08),rgba(142,68,173,.04));border:1px solid rgba(142,68,173,.2);border-radius:8px;padding:7px 12px;margin-bottom:10px;font-size:.78rem;color:#6c3483;align-items:center;justify-content:space-between;gap:8px;}
@@ -269,7 +299,7 @@
     <div class="logo-wrap">
         <div class="logo-icon">🔥</div>
         <div class="logo-text"><h1>Fênix</h1><span>Precificação Inteligente</span></div>
-        <span class="badge-version">v2.3</span>
+        <span class="badge-version">v2.4</span>
     </div>
     <button class="btn-arquivo" onclick="abrirArquivo()">
         <i class="fa-solid fa-database"></i> Arquivo de OS
@@ -319,7 +349,11 @@
         <label><i class="fi fa-solid fa-box"></i> Custo do Produto (CMV)</label>
         <div class="right">
             <input type="text" id="custo" placeholder="R$ 0,00" oninput="maskMoney(this);updateCustoTotal();updateComisBase();livePreview()">
-            <button class="comis-tag" id="tag_cmv" onclick="toggleComisBase('cmv')" title="Incluir CMV na base da comissão"><i class="fa-solid fa-percent"></i> Comissão</button>
+            <button class="comis-tag" id="tag_cmv" onclick="toggleComisBase('cmv')" title="Clique para incluir o CMV na base da comissão">
+                <i class="fa-solid fa-circle-plus ct-icon-off"></i>
+                <i class="fa-solid fa-circle-check ct-icon-on"></i>
+                <span class="ct-txt">Comissão</span>
+            </button>
             <button class="tip-btn" tabindex="-1"><i class="fa-solid fa-circle-question"></i><div class="tip-popup">CMV: valor pago pelo produto antes de qualquer margem. Ative "Comissão" se houver indicação sobre este item.</div></button>
         </div>
     </div>
@@ -330,7 +364,11 @@
         <label><i class="fi fa-solid fa-screwdriver-wrench"></i> Custo de Serviços</label>
         <div class="right">
             <input type="text" id="servico" placeholder="R$ 0,00" oninput="maskMoney(this);updateCustoTotal();updateComisBase();livePreview()">
-            <button class="comis-tag" id="tag_serv" onclick="toggleComisBase('serv')" title="Incluir Serviços na base da comissão"><i class="fa-solid fa-percent"></i> Comissão</button>
+            <button class="comis-tag" id="tag_serv" onclick="toggleComisBase('serv')" title="Clique para incluir Serviços na base da comissão">
+                <i class="fa-solid fa-circle-plus ct-icon-off"></i>
+                <i class="fa-solid fa-circle-check ct-icon-on"></i>
+                <span class="ct-txt">Comissão</span>
+            </button>
             <button class="tip-btn" tabindex="-1"><i class="fa-solid fa-circle-question"></i><div class="tip-popup">Mão de obra, frete, embalagem. Ative "Comissão" se o indicador trouxe este serviço.</div></button>
         </div>
     </div>
@@ -348,7 +386,7 @@
     </div>
 
     <!-- Comissão de Indicação -->
-    <div class="comis-section">
+    <div class="comis-section inativa" id="comis_section">
         <div class="comis-section-title"><i class="fa-solid fa-handshake"></i> Comissão de Indicação</div>
         <div class="form-row" style="margin-bottom:0">
             <label style="flex:0 0 148px;font-size:.78rem;font-weight:600;color:#6c3483;display:flex;align-items:center;gap:5px;">
@@ -408,11 +446,42 @@
             <div class="skel-sub" id="skel_price_sub">Preencha os dados para ver a análise</div>
         </div>
         <div class="skel-rows">
-            <div><div class="skel-row-item"><div class="skel-row-left"><div class="skel-dot" style="background:#555"></div><i class="fa-solid fa-box" style="color:#ccc;font-size:.72rem"></i><span class="skel-name">Custo do Produto (CMV)</span><span class="skel-pct">— %</span></div><span class="skel-amount">R$ —</span></div><div class="skel-bar"><div class="skel-bar-fill" style="background:#555;width:38%"></div></div></div>
-            <div><div class="skel-row-item"><div class="skel-row-left"><div class="skel-dot" style="background:#3498db"></div><i class="fa-solid fa-screwdriver-wrench" style="color:#ccc;font-size:.72rem"></i><span class="skel-name">Custo de Serviços</span><span class="skel-pct">— %</span></div><span class="skel-amount">R$ —</span></div><div class="skel-bar"><div class="skel-bar-fill" style="background:#3498db;width:18%"></div></div></div>
-            <div><div class="skel-row-item"><div class="skel-row-left"><div class="skel-dot" style="background:#8e44ad"></div><i class="fa-solid fa-handshake" style="color:#ccc;font-size:.72rem"></i><span class="skel-name">Comissão de Indicação</span><span class="skel-pct">— %</span></div><span class="skel-amount">R$ —</span></div><div class="skel-bar"><div class="skel-bar-fill" style="background:#8e44ad;width:10%"></div></div></div>
-            <div><div class="skel-row-item"><div class="skel-row-left"><div class="skel-dot" style="background:#e74c3c"></div><i class="fa-solid fa-landmark" style="color:#ccc;font-size:.72rem"></i><span class="skel-name">Impostos | Fatia "Governo"</span><span class="skel-pct">— %</span></div><span class="skel-amount">R$ —</span></div><div class="skel-bar"><div class="skel-bar-fill" style="background:#e74c3c;width:15%"></div></div></div>
-            <div><div class="skel-row-item"><div class="skel-row-left"><div class="skel-dot" style="background:#27ae60"></div><i class="fa-solid fa-chart-line" style="color:#ccc;font-size:.72rem"></i><span class="skel-name">Lucro Real</span><span class="skel-pct">— %</span></div><span class="skel-amount">R$ —</span></div><div class="skel-bar"><div class="skel-bar-fill" style="background:#27ae60;width:25%"></div></div></div>
+            <!-- cada item tem IDs para atualização em tempo real -->
+            <div id="lv_cmv_wrap">
+                <div class="skel-row-item">
+                    <div class="skel-row-left"><div class="skel-dot" style="background:#555"></div><i class="fa-solid fa-box" style="color:#777;font-size:.72rem"></i><span class="skel-name">Custo do Produto (CMV)</span><span class="skel-pct" id="lv_cmv_pct">— %</span></div>
+                    <span class="skel-amount" id="lv_cmv_val">R$ —</span>
+                </div>
+                <div class="skel-bar"><div class="skel-bar-fill" id="lv_cmv_bar" style="background:#555;width:0%"></div></div>
+            </div>
+            <div id="lv_serv_wrap">
+                <div class="skel-row-item">
+                    <div class="skel-row-left"><div class="skel-dot" style="background:#3498db"></div><i class="fa-solid fa-screwdriver-wrench" style="color:#3498db;font-size:.72rem;opacity:.5"></i><span class="skel-name">Custo de Serviços</span><span class="skel-pct" id="lv_serv_pct">— %</span></div>
+                    <span class="skel-amount" id="lv_serv_val">R$ —</span>
+                </div>
+                <div class="skel-bar"><div class="skel-bar-fill" id="lv_serv_bar" style="background:#3498db;width:0%"></div></div>
+            </div>
+            <div id="lv_comis_wrap">
+                <div class="skel-row-item">
+                    <div class="skel-row-left"><div class="skel-dot" style="background:#8e44ad"></div><i class="fa-solid fa-handshake" style="color:#8e44ad;font-size:.72rem;opacity:.5"></i><span class="skel-name">Comissão de Indicação</span><span class="skel-pct" id="lv_comis_pct">— %</span></div>
+                    <span class="skel-amount" id="lv_comis_val">R$ —</span>
+                </div>
+                <div class="skel-bar"><div class="skel-bar-fill" id="lv_comis_bar" style="background:#8e44ad;width:0%"></div></div>
+            </div>
+            <div id="lv_imp_wrap">
+                <div class="skel-row-item">
+                    <div class="skel-row-left"><div class="skel-dot" style="background:#e74c3c"></div><i class="fa-solid fa-landmark" style="color:#e74c3c;font-size:.72rem;opacity:.5"></i><span class="skel-name">Impostos | Fatia "Governo"</span><span class="skel-pct" id="lv_imp_pct">— %</span></div>
+                    <span class="skel-amount" id="lv_imp_val">R$ —</span>
+                </div>
+                <div class="skel-bar"><div class="skel-bar-fill" id="lv_imp_bar" style="background:#e74c3c;width:0%"></div></div>
+            </div>
+            <div id="lv_lucro_wrap">
+                <div class="skel-row-item">
+                    <div class="skel-row-left"><div class="skel-dot" style="background:#27ae60"></div><i class="fa-solid fa-chart-line" style="color:#27ae60;font-size:.72rem;opacity:.5"></i><span class="skel-name">Lucro Real</span><span class="skel-pct" id="lv_lucro_pct">— %</span></div>
+                    <span class="skel-amount" id="lv_lucro_val">R$ —</span>
+                </div>
+                <div class="skel-bar"><div class="skel-bar-fill" id="lv_lucro_bar" style="background:#27ae60;width:0%"></div></div>
+            </div>
         </div>
     </div>
 
@@ -556,6 +625,9 @@ function formatData(d) {
 function toggleComisBase(tipo) {
     comisBase[tipo]=!comisBase[tipo];
     document.getElementById(`tag_${tipo}`).classList.toggle('on',comisBase[tipo]);
+    // habilita/desabilita seção de comissão
+    const ativo = comisBase.cmv || comisBase.serv;
+    document.getElementById('comis_section').classList.toggle('inativa',!ativo);
     updateComisBase();
     livePreview();
 }
@@ -565,7 +637,6 @@ function updateComisBase() {
     let base=0;
     if(comisBase.cmv)  base+=cmv;
     if(comisBase.serv) base+=serv;
-    if(!comisBase.cmv&&!comisBase.serv) base=cmv+serv;
     document.getElementById('comis_base_value').innerText=formatBRL(base);
     const info=document.getElementById('comis_base_info');
     (comisBase.cmv||comisBase.serv)?info.classList.add('visible'):info.classList.remove('visible');
@@ -594,21 +665,17 @@ function toggle(campo) {
 }
 
 /* ══════════════════════════════════════════
-   LIVE PREVIEW — atualiza card 2 ao digitar
+   LIVE PREVIEW COMPLETO — atualiza TUDO ao digitar
 ══════════════════════════════════════════ */
 function livePreview() {
-    // Atualiza badge OS
-    const os    = document.getElementById('os_num').value   || '—';
-    const data  = document.getElementById('os_data').value;
-    const cli   = document.getElementById('cliente').value  || '—';
-    document.getElementById('pv_os').innerText     = os;
-    document.getElementById('pv_data').innerText   = data ? formatData(data) : '—';
-    document.getElementById('pv_cliente').innerText= cli;
+    // Badge OS
+    document.getElementById('pv_os').innerText      = document.getElementById('os_num').value || '—';
+    document.getElementById('pv_data').innerText    = document.getElementById('os_data').value ? formatData(document.getElementById('os_data').value) : '—';
+    document.getElementById('pv_cliente').innerText = document.getElementById('cliente').value || '—';
 
-    // Tenta calcular silenciosamente para atualizar skeleton price
     const cmv         = parseMoney(document.getElementById('custo').value);
     const serv        = parseMoney(document.getElementById('servico').value);
-    const custoTotal  = cmv+serv;
+    const custoTotal  = cmv + serv;
     const impostoPerc = parseDecimal(document.getElementById('imposto').value);
     const lucroInput  = tipos.lucro==='perc'
         ? parseDecimal(document.getElementById('lucro_val').value)
@@ -617,33 +684,69 @@ function livePreview() {
         ? parseDecimal(document.getElementById('comis_val').value)
         : parseMoney(document.getElementById('comis_val').value);
 
-    if(cmv<=0) {
-        document.getElementById('skel_price_val').innerText='R$ —,——';
-        document.getElementById('skel_price_sub').innerText='Informe o custo do produto para calcular';
+    if(cmv <= 0) {
+        document.getElementById('skel_price_val').innerText = 'R$ —,——';
+        document.getElementById('skel_price_sub').innerText = 'Informe o custo do produto para calcular';
+        _resetSkelRows();
         return;
     }
 
-    let base=0;
-    if(comisBase.cmv)  base+=cmv;
-    if(comisBase.serv) base+=serv;
-    if(!comisBase.cmv&&!comisBase.serv) base=custoTotal;
+    // Comissão SÓ entra se pelo menos um tag ativo
+    const comissaoAtiva = comisBase.cmv || comisBase.serv;
+    let baseComissao = 0;
+    if(comisBase.cmv)  baseComissao += cmv;
+    if(comisBase.serv) baseComissao += serv;
+    const vComissao = comissaoAtiva
+        ? (tipos.comis==='perc' ? baseComissao*(comisInput/100) : comisInput)
+        : 0;
 
-    const vComissao = tipos.comis==='perc' ? base*(comisInput/100) : comisInput;
-    const fixos     = custoTotal+vComissao;
-    let percVar     = impostoPerc;
-    if(tipos.lucro==='perc') percVar+=lucroInput;
-    const divisor   = (100-percVar)/100;
-    if(divisor<=0) {
-        document.getElementById('skel_price_val').innerText='Erro %';
+    const fixos   = custoTotal + vComissao;
+    let percVar   = impostoPerc;
+    if(tipos.lucro==='perc') percVar += lucroInput;
+    const divisor = (100 - percVar) / 100;
+
+    if(divisor <= 0) {
+        document.getElementById('skel_price_val').innerText = 'Erro: % > 100';
+        document.getElementById('skel_price_sub').innerText = 'Reduza os percentuais';
+        _resetSkelRows();
         return;
     }
-    const lucroFixo  = tipos.lucro==='moeda'?lucroInput:0;
-    const precoFinal = (fixos+lucroFixo)/divisor;
 
-    document.getElementById('skel_price_val').innerText=formatBRL(precoFinal);
-    document.getElementById('skel_price_sub').innerText='Prévia — clique em Calcular para confirmar';
+    const lucroFixo  = tipos.lucro==='moeda' ? lucroInput : 0;
+    const precoFinal = (fixos + lucroFixo) / divisor;
+    const vImposto   = precoFinal * (impostoPerc/100);
+    const vLucro     = precoFinal - custoTotal - vComissao - vImposto;
+
+    // Atualiza preço no skeleton
+    document.getElementById('skel_price_val').innerText = formatBRL(precoFinal);
+    document.getElementById('skel_price_sub').innerText = 'Prévia — clique em Calcular para confirmar';
+
+    // Atualiza todas as linhas do breakdown
+    _updateSkelRow('cmv',   cmv,       precoFinal);
+    _updateSkelRow('serv',  serv,      precoFinal);
+    _updateSkelRow('comis', vComissao, precoFinal);
+    _updateSkelRow('imp',   vImposto,  precoFinal);
+    _updateSkelRow('lucro', vLucro,    precoFinal);
 
     salvarRascunho();
+}
+
+function _updateSkelRow(id, valor, total) {
+    const pct    = total > 0 ? (valor/total*100) : 0;
+    const el_val = document.getElementById(`lv_${id}_val`);
+    const el_pct = document.getElementById(`lv_${id}_pct`);
+    const el_bar = document.getElementById(`lv_${id}_bar`);
+    const el_wrap= document.getElementById(`lv_${id}_wrap`);
+    if(el_val) el_val.innerText   = valor > 0 ? formatBRL(valor) : 'R$ —';
+    if(el_pct) el_pct.innerText   = valor > 0 ? pct.toFixed(1)+'%' : '— %';
+    if(el_bar) el_bar.style.width = (valor > 0 ? pct : 0)+'%';
+    if(el_wrap) el_wrap.style.opacity = valor > 0 ? '1' : '0.3';
+}
+
+function _resetSkelRows() {
+    ['cmv','serv','comis','imp','lucro'].forEach(id=>{
+        _updateSkelRow(id, 0, 0);
+    });
 }
 
 /* ══════════════════════════════════════════
@@ -673,12 +776,15 @@ function calcular() {
     const lucroInput =tipos.lucro==='perc'?parseDecimal(document.getElementById('lucro_val').value):parseMoney(document.getElementById('lucro_val').value);
     const comisInput =tipos.comis==='perc'?parseDecimal(document.getElementById('comis_val').value):parseMoney(document.getElementById('comis_val').value);
 
+    // Comissão SÓ entra se pelo menos um tag ativo
+    const comissaoAtiva = comisBase.cmv || comisBase.serv;
     let baseComissao=0;
     if(comisBase.cmv)  baseComissao+=cmv;
     if(comisBase.serv) baseComissao+=servico;
-    if(!comisBase.cmv&&!comisBase.serv) baseComissao=custoTotal;
 
-    const vComissao=tipos.comis==='perc'?baseComissao*(comisInput/100):comisInput;
+    const vComissao = comissaoAtiva
+        ? (tipos.comis==='perc' ? baseComissao*(comisInput/100) : comisInput)
+        : 0;
     const fixos=custoTotal+vComissao;
     let percVar=impostoPerc;
     if(tipos.lucro==='perc') percVar+=lucroInput;
@@ -691,10 +797,10 @@ function calcular() {
     const lucroPerc=(vLucro/precoFinal)*100;
 
     let baseLabel='';
-    if(comisBase.cmv&&comisBase.serv) baseLabel='sobre Produto + Serviço';
-    else if(comisBase.cmv)            baseLabel='sobre Produto (CMV)';
-    else if(comisBase.serv)           baseLabel='sobre Serviço';
-    else                              baseLabel='sobre Custo Total';
+    if(!comissaoAtiva)                 baseLabel='inativa';
+    else if(comisBase.cmv&&comisBase.serv) baseLabel='sobre Produto + Serviço';
+    else if(comisBase.cmv)             baseLabel='sobre Produto (CMV)';
+    else                               baseLabel='sobre Serviço';
 
     const saude=lucroPerc>=20?'Saudável':lucroPerc>=10?'Apertado':'Perigoso';
 
@@ -1182,6 +1288,7 @@ function resetForm() {
     comisBase={cmv:false,serv:false};
     document.getElementById('tag_cmv').classList.remove('on');
     document.getElementById('tag_serv').classList.remove('on');
+    document.getElementById('comis_section').classList.add('inativa');
     document.getElementById('comis_base_info').classList.remove('visible');
     updateCustoTotal();
     ultimoResultado=null;
@@ -1203,6 +1310,15 @@ function showToast(msg,tipo='success') {
     t.querySelector('i').className=tipo==='success'?'fa-solid fa-circle-check':'fa-solid fa-circle-exclamation';
     clearTimeout(toastTimer);
     toastTimer=setTimeout(()=>t.classList.remove('show'),3400);
+/* ══════════════════════════════════════════
+   SERVICE WORKER REGISTRATION
+══════════════════════════════════════════ */
+if('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then(r => console.log('SW registrado:', r.scope))
+            .catch(e => console.log('SW erro:', e));
+    });
 }
 </script>
 </body>
