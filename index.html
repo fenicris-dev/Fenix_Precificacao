@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fênix | Precificação Inteligente v2.1</title>
+    <title>Fênix | Precificação Inteligente v2.2</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -16,6 +16,7 @@
             --accent:     #27ae60;
             --warn:       #f39c12;
             --danger:     #e74c3c;
+            --comis-color:#8e44ad;
             --bg1:        #020d52;
             --white:      #ffffff;
             --gray-light: #f4f6fb;
@@ -39,298 +40,214 @@
         }
 
         /* ── BG orbs ── */
-        .orb {
-            position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
-        }
+        .orb { position:fixed;border-radius:50%;pointer-events:none;z-index:0; }
         .orb1 { width:600px;height:600px;top:-200px;right:-180px;background:radial-gradient(circle,rgba(8,36,157,.45) 0%,transparent 70%); }
         .orb2 { width:420px;height:420px;bottom:-140px;left:-120px;background:radial-gradient(circle,rgba(39,174,96,.1) 0%,transparent 70%); }
         .orb3 { width:260px;height:260px;top:40%;left:38%;background:radial-gradient(circle,rgba(243,156,18,.06) 0%,transparent 70%); }
 
         /* ── Header ── */
-        .site-header {
-            width:100%; padding:28px 40px 16px;
-            display:flex; flex-direction:column; align-items:center;
-            position:relative; z-index:2;
-        }
+        .site-header { width:100%;padding:28px 40px 16px;display:flex;flex-direction:column;align-items:center;position:relative;z-index:2; }
         .logo-wrap { display:flex;align-items:center;gap:14px;margin-bottom:4px; }
         .logo-icon {
-            width:50px;height:50px;
-            background:linear-gradient(135deg,#f39c12,#e74c3c);
+            width:50px;height:50px;background:linear-gradient(135deg,#f39c12,#e74c3c);
             border-radius:14px;display:flex;align-items:center;justify-content:center;
             font-size:1.5rem;box-shadow:0 8px 24px rgba(243,156,18,.4);
-            animation: pulse 3s ease-in-out infinite;
+            animation:pulse 3s ease-in-out infinite;
         }
-        @keyframes pulse {
-            0%,100%{box-shadow:0 8px 24px rgba(243,156,18,.4);}
-            50%{box-shadow:0 8px 36px rgba(243,156,18,.7);}
-        }
-        .logo-text h1 {
-            font-family:'Syne',sans-serif;font-weight:800;font-size:1.9rem;
-            color:#fff;letter-spacing:-0.5px;line-height:1;
-        }
-        .logo-text span {
-            font-size:.72rem;color:rgba(255,255,255,.5);
-            font-weight:400;letter-spacing:2.5px;text-transform:uppercase;
-        }
-        .badge-version {
-            background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
-            color:rgba(255,255,255,.65);padding:3px 10px;border-radius:20px;
-            font-size:.68rem;letter-spacing:1px;
-        }
+        @keyframes pulse { 0%,100%{box-shadow:0 8px 24px rgba(243,156,18,.4);}50%{box-shadow:0 8px 36px rgba(243,156,18,.7);} }
+        .logo-text h1 { font-family:'Syne',sans-serif;font-weight:800;font-size:1.9rem;color:#fff;letter-spacing:-0.5px;line-height:1; }
+        .logo-text span { font-size:.72rem;color:rgba(255,255,255,.5);font-weight:400;letter-spacing:2.5px;text-transform:uppercase; }
+        .badge-version { background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.65);padding:3px 10px;border-radius:20px;font-size:.68rem;letter-spacing:1px; }
 
         /* ── Grid ── */
-        .main-wrapper {
-            display:grid;grid-template-columns:1fr 1fr;gap:20px;
-            width:95%;max-width:1080px;padding-bottom:40px;
-            position:relative;z-index:2;
-        }
+        .main-wrapper { display:grid;grid-template-columns:1fr 1fr;gap:20px;width:95%;max-width:1080px;padding-bottom:40px;position:relative;z-index:2; }
 
         /* ── Cards ── */
-        .card {
-            background:#fff;border-radius:20px;
-            box-shadow:var(--card-shadow);padding:24px 26px;
-            animation:slideUp .5s ease both;
-        }
+        .card { background:#fff;border-radius:20px;box-shadow:var(--card-shadow);padding:24px 26px;animation:slideUp .5s ease both; }
         .card:nth-child(2){animation-delay:.1s;}
         @keyframes slideUp{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:translateY(0);}}
 
-        .card-header {
-            display:flex;align-items:center;gap:10px;
-            margin-bottom:18px;padding-bottom:12px;
-            border-bottom:2px solid var(--gray-mid);
-        }
-        .card-header-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.95rem;}
-        .icon-blue {background:rgba(4,18,115,.1);color:var(--primary);}
-        .icon-green{background:rgba(39,174,96,.12);color:var(--accent);}
-        .card-header h3{font-family:'Syne',sans-serif;font-weight:700;font-size:.97rem;color:var(--primary);margin:0;}
+        .card-header { display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--gray-mid); }
+        .card-header-icon { width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.95rem; }
+        .icon-blue  { background:rgba(4,18,115,.1);color:var(--primary); }
+        .icon-green { background:rgba(39,174,96,.12);color:var(--accent); }
+        .card-header h3 { font-family:'Syne',sans-serif;font-weight:700;font-size:.97rem;color:var(--primary);margin:0; }
 
         /* ── OS Section ── */
-        .os-section {
-            background:var(--gray-light);border-radius:12px;
-            padding:13px 15px;margin-bottom:16px;border:1px solid var(--gray-mid);
-        }
-        .section-title {
-            font-size:.68rem;font-weight:700;color:var(--gray-text);
-            text-transform:uppercase;letter-spacing:1.8px;margin-bottom:10px;
-            display:flex;align-items:center;gap:6px;
-        }
-        .os-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-        .os-grid .full{grid-column:1/-1;}
+        .os-section { background:var(--gray-light);border-radius:12px;padding:13px 15px;margin-bottom:16px;border:1px solid var(--gray-mid); }
+        .section-title { font-size:.68rem;font-weight:700;color:var(--gray-text);text-transform:uppercase;letter-spacing:1.8px;margin-bottom:10px;display:flex;align-items:center;gap:6px; }
+        .os-grid { display:grid;grid-template-columns:1fr 1fr;gap:8px; }
+        .os-grid .full { grid-column:1/-1; }
+        .form-group-sm { margin-bottom:0; }
+        .form-group-sm label { display:flex;font-size:.73rem;font-weight:600;color:#555;margin-bottom:3px;align-items:center;gap:4px; }
+        .form-group-sm label i { color:var(--secondary);font-size:.68rem; }
 
-        /* ── Inline row (label + input lado a lado) ── */
-        .form-row {
-            display:flex;align-items:center;gap:8px;
-            margin-bottom:9px;min-height:var(--row-h);
-            position:relative;
-        }
-        .form-row label {
-            flex:0 0 148px;font-size:.78rem;font-weight:600;color:#444;
-            display:flex;align-items:center;gap:5px;line-height:1.3;
-            cursor:default;
-        }
-        .form-row label i.field-icon{color:var(--secondary);font-size:.72rem;flex-shrink:0;}
-        .form-row .right{flex:1;display:flex;gap:5px;align-items:center;}
-
-        /* small label standalone (inside os-section) */
-        .form-group-sm{margin-bottom:0;}
-        .form-group-sm label{
-            display:block;font-size:.73rem;font-weight:600;color:#555;
-            margin-bottom:3px;display:flex;align-items:center;gap:4px;
-        }
-        .form-group-sm label i{color:var(--secondary);font-size:.68rem;}
+        /* ── Inline form row ── */
+        .form-row { display:flex;align-items:center;gap:8px;margin-bottom:9px;min-height:var(--row-h);position:relative; }
+        .form-row label { flex:0 0 148px;font-size:.78rem;font-weight:600;color:#444;display:flex;align-items:center;gap:5px;line-height:1.3;cursor:default; }
+        .form-row label i.field-icon { color:var(--secondary);font-size:.72rem;flex-shrink:0; }
+        .form-row .right { flex:1;display:flex;gap:5px;align-items:center; }
 
         /* ── Inputs ── */
-        input[type="text"],input[type="number"],input[type="date"],input[type="tel"]{
-            width:100%;padding:8px 11px;
-            border:1.5px solid var(--gray-mid);border-radius:8px;
-            font-size:.88rem;font-family:'DM Sans',sans-serif;
-            background:#fff;color:#222;
+        input[type="text"],input[type="date"],input[type="tel"] {
+            width:100%;padding:8px 11px;border:1.5px solid var(--gray-mid);border-radius:8px;
+            font-size:.88rem;font-family:'DM Sans',sans-serif;background:#fff;color:#222;
             transition:border-color .2s,box-shadow .2s;outline:none;
         }
-        input:focus{border-color:var(--secondary);box-shadow:0 0 0 3px rgba(8,36,157,.09);}
-        input.error{border-color:var(--danger);box-shadow:0 0 0 3px rgba(231,76,60,.09);}
+        input:focus { border-color:var(--secondary);box-shadow:0 0 0 3px rgba(8,36,157,.09); }
+        input.error { border-color:var(--danger);box-shadow:0 0 0 3px rgba(231,76,60,.09); }
+        .field-error { font-size:.7rem;color:var(--danger);margin-top:2px;display:none;align-items:center;gap:3px; }
+        .field-error.show { display:flex; }
 
-        .field-error{
-            font-size:.7rem;color:var(--danger);margin-top:2px;
-            display:none;align-items:center;gap:3px;
-        }
-        .field-error.show{display:flex;}
-
-        /* ── Toggle ── */
-        .toggle-btn{
+        /* ── Toggle padrão (%/$) ── */
+        .toggle-btn {
             background:var(--gray-light);border:1.5px solid var(--gray-mid);
             padding:0 12px;cursor:pointer;border-radius:8px;
             font-weight:700;font-size:.82rem;color:var(--primary);
             transition:all .2s;white-space:nowrap;min-width:42px;height:36px;
             display:flex;align-items:center;justify-content:center;
         }
-        .toggle-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+        .toggle-btn.active { background:var(--primary);color:#fff;border-color:var(--primary); }
 
-        /* ── Tooltip ── */
-        .tip-btn{
-            background:none;border:none;cursor:pointer;
-            color:var(--gray-text);font-size:.72rem;padding:0 2px;
-            transition:color .2s;position:relative;flex-shrink:0;
+        /* ════════════════════════════════════════
+           NOVO: Seletor de Base de Comissão
+        ════════════════════════════════════════ */
+
+        /* Etiqueta "Com comissão?" ao lado de CMV e Serviço */
+        .comis-tag {
+            display:inline-flex;align-items:center;gap:4px;
+            padding:3px 9px;border-radius:20px;font-size:.68rem;font-weight:700;
+            border:1.5px solid var(--gray-mid);background:var(--gray-light);
+            color:var(--gray-text);cursor:pointer;transition:all .22s;
+            white-space:nowrap;height:30px;user-select:none;
+            letter-spacing:.3px;
         }
-        .tip-btn:hover{color:var(--secondary);}
-        .tip-popup{
-            position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 6px);
-            background:#1e2a5e;color:#fff;border-radius:8px;
-            padding:8px 12px;font-size:.75rem;line-height:1.45;
-            width:210px;z-index:100;pointer-events:none;
-            opacity:0;transition:opacity .18s;box-shadow:0 4px 16px rgba(0,0,0,.25);
-            text-align:left;font-weight:400;
+        .comis-tag i { font-size:.65rem;transition:color .22s; }
+        .comis-tag:hover { border-color:#8e44ad;color:#8e44ad; }
+        .comis-tag.on {
+            background:rgba(142,68,173,.12);border-color:#8e44ad;
+            color:#8e44ad;
         }
-        .tip-popup::after{
-            content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);
-            border:5px solid transparent;border-top-color:#1e2a5e;
+        .comis-tag.on i { color:#8e44ad; }
+
+        /* Painel explicativo de base da comissão (aparece dinamicamente) */
+        .comis-base-info {
+            display:none;
+            background:linear-gradient(90deg,rgba(142,68,173,.08),rgba(142,68,173,.04));
+            border:1px solid rgba(142,68,173,.2);border-radius:8px;
+            padding:7px 12px;margin-bottom:10px;
+            font-size:.78rem;color:#6c3483;
+            align-items:center;justify-content:space-between;gap:8px;
         }
-        .tip-btn:hover .tip-popup,.tip-btn:focus .tip-popup{opacity:1;}
+        .comis-base-info.visible { display:flex; }
+        .comis-base-info .cbi-label { display:flex;align-items:center;gap:6px;font-weight:500; }
+        .comis-base-info .cbi-value { font-weight:700;font-family:'Syne',sans-serif;font-size:.88rem; }
+
+        /* Seção completa da comissão */
+        .comis-section {
+            background:rgba(142,68,173,.05);border:1px solid rgba(142,68,173,.15);
+            border-radius:10px;padding:10px 12px;margin-bottom:9px;
+        }
+        .comis-section-title {
+            font-size:.68rem;font-weight:700;color:#8e44ad;
+            text-transform:uppercase;letter-spacing:1.5px;
+            margin-bottom:8px;display:flex;align-items:center;gap:5px;
+        }
 
         /* ── Custo total live ── */
-        .custo-total-bar{
+        .custo-total-bar {
             background:linear-gradient(90deg,rgba(4,18,115,.07),rgba(4,18,115,.04));
             border:1px solid rgba(4,18,115,.12);border-radius:8px;
             padding:7px 12px;margin-bottom:10px;
-            display:flex;align-items:center;justify-content:space-between;
-            font-size:.8rem;
+            display:flex;align-items:center;justify-content:space-between;font-size:.8rem;
         }
-        .custo-total-bar span:first-child{color:var(--gray-text);font-weight:500;display:flex;align-items:center;gap:5px;}
-        .custo-total-bar .ct-value{font-weight:700;color:var(--primary);font-size:.9rem;font-family:'Syne',sans-serif;}
+        .custo-total-bar span:first-child { color:var(--gray-text);font-weight:500;display:flex;align-items:center;gap:5px; }
+        .custo-total-bar .ct-value { font-weight:700;color:var(--primary);font-size:.9rem;font-family:'Syne',sans-serif; }
 
         /* ── Divider ── */
-        .divider{
-            font-size:.68rem;font-weight:700;color:var(--gray-text);
-            text-transform:uppercase;letter-spacing:1.8px;
-            margin:12px 0 10px;display:flex;align-items:center;gap:8px;
+        .divider { font-size:.68rem;font-weight:700;color:var(--gray-text);text-transform:uppercase;letter-spacing:1.8px;margin:12px 0 10px;display:flex;align-items:center;gap:8px; }
+        .divider::before,.divider::after { content:'';flex:1;height:1px;background:var(--gray-mid); }
+
+        /* ── Tooltip ── */
+        .tip-btn { background:none;border:none;cursor:pointer;color:var(--gray-text);font-size:.72rem;padding:0 2px;transition:color .2s;position:relative;flex-shrink:0; }
+        .tip-btn:hover { color:var(--secondary); }
+        .tip-popup {
+            position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 6px);
+            background:#1e2a5e;color:#fff;border-radius:8px;padding:8px 12px;
+            font-size:.75rem;line-height:1.45;width:220px;z-index:100;pointer-events:none;
+            opacity:0;transition:opacity .18s;box-shadow:0 4px 16px rgba(0,0,0,.25);text-align:left;font-weight:400;
         }
-        .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--gray-mid);}
+        .tip-popup::after { content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1e2a5e; }
+        .tip-btn:hover .tip-popup,.tip-btn:focus .tip-popup { opacity:1; }
 
         /* ── Botões ── */
-        .btn-row{display:flex;gap:8px;margin-top:14px;}
-        .btn{
-            flex:1;padding:11px 10px;border:none;border-radius:10px;
-            font-size:.88rem;font-weight:600;font-family:'DM Sans',sans-serif;
-            cursor:pointer;display:flex;align-items:center;justify-content:center;
-            gap:7px;transition:all .2s;
-        }
-        .btn-primary{background:var(--primary);color:#fff;box-shadow:0 4px 16px rgba(4,18,115,.25);}
-        .btn-primary:hover{background:#061aab;transform:translateY(-1px);}
-        .btn-ghost{background:var(--gray-light);color:var(--gray-text);border:1.5px solid var(--gray-mid);}
-        .btn-ghost:hover{background:var(--gray-mid);}
-        .btn-pdf{background:#e74c3c;color:#fff;}
-        .btn-pdf:hover{background:#c0392b;transform:translateY(-1px);}
-        .btn-wpp{background:#25D366;color:#fff;}
-        .btn-wpp:hover{background:#1ebe5d;transform:translateY(-1px);}
+        .btn-row { display:flex;gap:8px;margin-top:14px; }
+        .btn { flex:1;padding:11px 10px;border:none;border-radius:10px;font-size:.88rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .2s; }
+        .btn-primary { background:var(--primary);color:#fff;box-shadow:0 4px 16px rgba(4,18,115,.25); }
+        .btn-primary:hover { background:#061aab;transform:translateY(-1px); }
+        .btn-ghost { background:var(--gray-light);color:var(--gray-text);border:1.5px solid var(--gray-mid); }
+        .btn-ghost:hover { background:var(--gray-mid); }
+        .btn-pdf { background:#e74c3c;color:#fff; }
+        .btn-pdf:hover { background:#c0392b;transform:translateY(-1px); }
+        .btn-wpp { background:#25D366;color:#fff; }
+        .btn-wpp:hover { background:#1ebe5d;transform:translateY(-1px); }
 
         /* ════════════════════════════════
            CARD 2 — RESULTADO
         ════════════════════════════════ */
+        .skel-price { background:linear-gradient(135deg,rgba(4,18,115,.07),rgba(8,36,157,.05));border:1.5px dashed rgba(4,18,115,.18);border-radius:14px;padding:18px 20px;text-align:center; }
+        .skel-price .skel-label { font-size:.7rem;font-weight:700;color:var(--gray-text);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:5px; }
+        .skel-price .skel-value { font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:rgba(4,18,115,.2);letter-spacing:-1px; }
+        .skel-price .skel-sub { font-size:.72rem;color:rgba(4,18,115,.3);margin-top:5px; }
+        .skel-rows { display:flex;flex-direction:column;gap:8px; }
+        .skel-row-item { display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-radius:8px;background:var(--gray-light);border:1px solid var(--gray-mid); }
+        .skel-row-left { display:flex;align-items:center;gap:8px; }
+        .skel-dot { width:10px;height:10px;border-radius:50%;opacity:.35; }
+        .skel-name { font-size:.8rem;font-weight:600;color:rgba(60,60,80,.35); }
+        .skel-pct { font-size:.72rem;color:rgba(60,60,80,.25);margin-left:4px; }
+        .skel-amount { font-size:.82rem;font-weight:700;color:rgba(60,60,80,.25); }
+        .skel-bar { height:5px;background:var(--gray-mid);border-radius:4px;margin-top:4px;overflow:hidden; }
+        .skel-bar-fill { height:100%;border-radius:4px;opacity:.2; }
 
-        /* Skeleton (sempre visível) */
-        .result-skeleton{display:flex;flex-direction:column;gap:10px;}
+        .health-badge { display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-left:8px; }
+        .health-green  { background:rgba(39,174,96,.15);color:#1e8449; }
+        .health-yellow { background:rgba(243,156,18,.15);color:#b7770d; }
+        .health-red    { background:rgba(231,76,60,.15);color:#a93226; }
 
-        .skel-price{
-            background:linear-gradient(135deg,rgba(4,18,115,.07),rgba(8,36,157,.05));
-            border:1.5px dashed rgba(4,18,115,.18);border-radius:14px;
-            padding:18px 20px;text-align:center;
-        }
-        .skel-price .skel-label{
-            font-size:.7rem;font-weight:700;color:var(--gray-text);
-            text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;
-            display:flex;align-items:center;justify-content:center;gap:5px;
-        }
-        .skel-price .skel-value{
-            font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;
-            color:rgba(4,18,115,.2);letter-spacing:-1px;
-        }
-        .skel-price .skel-sub{font-size:.72rem;color:rgba(4,18,115,.3);margin-top:5px;}
+        .price-block { background:linear-gradient(135deg,var(--primary),var(--secondary));border-radius:14px;padding:18px 22px;text-align:center;color:#fff;position:relative;overflow:hidden;margin-bottom:16px; }
+        .price-block::before { content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:rgba(255,255,255,.06);border-radius:50%; }
+        .price-block .p-label { font-size:.7rem;opacity:.72;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px; }
+        .price-block .p-value { font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;letter-spacing:-1px;line-height:1; }
+        .price-block .p-info  { font-size:.72rem;opacity:.6;margin-top:7px; }
 
-        /* skeleton rows */
-        .skel-rows{display:flex;flex-direction:column;gap:8px;}
-        .skel-row-item{
-            display:flex;align-items:center;justify-content:space-between;
-            padding:7px 10px;border-radius:8px;
-            background:var(--gray-light);border:1px solid var(--gray-mid);
-        }
-        .skel-row-left{display:flex;align-items:center;gap:8px;}
-        .skel-dot{width:10px;height:10px;border-radius:50%;opacity:.35;}
-        .skel-name{font-size:.8rem;font-weight:600;color:rgba(60,60,80,.35);}
-        .skel-pct{font-size:.72rem;color:rgba(60,60,80,.25);margin-left:4px;}
-        .skel-amount{font-size:.82rem;font-weight:700;color:rgba(60,60,80,.25);}
-        .skel-bar{height:5px;background:var(--gray-mid);border-radius:4px;margin-top:4px;overflow:hidden;}
-        .skel-bar-fill{height:100%;border-radius:4px;opacity:.2;}
+        .breakdown-item { margin-bottom:12px;animation:fadeIn .4s ease both; }
+        @keyframes fadeIn { from{opacity:0;transform:translateX(-8px);}to{opacity:1;transform:translateX(0);} }
+        .breakdown-row { display:flex;justify-content:space-between;align-items:center;font-size:.83rem;margin-bottom:5px; }
+        .breakdown-row .name { display:flex;align-items:center;gap:7px;font-weight:500; }
+        .dot { width:10px;height:10px;border-radius:50%;flex-shrink:0; }
+        .pct-chip { font-size:.68rem;color:#fff;padding:1px 6px;border-radius:10px;margin-left:3px;font-weight:600; }
+        .breakdown-row .amount { font-weight:700;font-size:.88rem; }
+        .progress-bar { height:7px;background:var(--gray-mid);border-radius:5px;overflow:hidden; }
+        .progress-fill { height:100%;width:0;border-radius:5px;transition:width .85s cubic-bezier(.16,1,.3,1); }
 
-        /* Saúde da margem */
-        .health-badge{
-            display:inline-flex;align-items:center;gap:5px;
-            padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;
-            letter-spacing:.5px;text-transform:uppercase;margin-left:8px;
+        /* sub-nota da comissão no breakdown */
+        .comis-base-note {
+            font-size:.7rem;color:var(--comis-color);opacity:.8;
+            display:flex;align-items:center;gap:4px;margin-top:-8px;margin-bottom:10px;
+            padding-left:4px;
         }
-        .health-green{background:rgba(39,174,96,.15);color:#1e8449;}
-        .health-yellow{background:rgba(243,156,18,.15);color:#b7770d;}
-        .health-red{background:rgba(231,76,60,.15);color:#a93226;}
 
-        /* Price real */
-        .price-block{
-            background:linear-gradient(135deg,var(--primary),var(--secondary));
-            border-radius:14px;padding:18px 22px;
-            text-align:center;color:#fff;
-            position:relative;overflow:hidden;margin-bottom:16px;
-        }
-        .price-block::before{
-            content:'';position:absolute;top:-30px;right:-30px;
-            width:120px;height:120px;background:rgba(255,255,255,.06);border-radius:50%;
-        }
-        .price-block .p-label{font-size:.7rem;opacity:.72;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px;}
-        .price-block .p-value{
-            font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;
-            letter-spacing:-1px;line-height:1;
-        }
-        .price-block .p-info{font-size:.72rem;opacity:.6;margin-top:7px;}
-
-        /* Breakdown real */
-        .breakdown-item{margin-bottom:12px;animation:fadeIn .4s ease both;}
-        @keyframes fadeIn{from{opacity:0;transform:translateX(-8px);}to{opacity:1;transform:translateX(0);}}
-        .breakdown-row{display:flex;justify-content:space-between;align-items:center;font-size:.83rem;margin-bottom:5px;}
-        .breakdown-row .name{display:flex;align-items:center;gap:7px;font-weight:500;}
-        .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
-        .pct-chip{
-            font-size:.68rem;color:#fff;background:var(--gray-text);
-            padding:1px 6px;border-radius:10px;margin-left:3px;font-weight:600;
-        }
-        .breakdown-row .amount{font-weight:700;font-size:.88rem;}
-        .progress-bar{height:7px;background:var(--gray-mid);border-radius:5px;overflow:hidden;}
-        .progress-fill{height:100%;width:0;border-radius:5px;transition:width .85s cubic-bezier(.16,1,.3,1);}
-
-        /* Odômetro */
-        .odometer-wrap{overflow:hidden;display:inline-block;vertical-align:middle;}
-        .odometer-char{display:inline-block;transition:transform .55s cubic-bezier(.22,1,.36,1);}
-
-        /* Action buttons */
-        .action-buttons{display:flex;gap:8px;margin-top:16px;}
+        .action-buttons { display:flex;gap:8px;margin-top:16px; }
 
         /* ── Toast ── */
-        .toast{
-            position:fixed;bottom:24px;right:24px;
-            background:#1a2050;color:#fff;
-            padding:11px 18px;border-radius:10px;font-size:.83rem;
-            display:flex;align-items:center;gap:9px;
-            box-shadow:0 8px 24px rgba(0,0,0,.25);
-            transform:translateY(80px);opacity:0;
-            transition:all .35s cubic-bezier(.16,1,.3,1);z-index:999;
-            border-left:3px solid var(--accent);
-        }
-        .toast.show{transform:translateY(0);opacity:1;}
-        .toast.error{border-left-color:var(--danger);}
-        .toast i{font-size:1rem;}
-        .toast.success i{color:var(--accent);}
-        .toast.error i{color:var(--danger);}
+        .toast { position:fixed;bottom:24px;right:24px;background:#1a2050;color:#fff;padding:11px 18px;border-radius:10px;font-size:.83rem;display:flex;align-items:center;gap:9px;box-shadow:0 8px 24px rgba(0,0,0,.25);transform:translateY(80px);opacity:0;transition:all .35s cubic-bezier(.16,1,.3,1);z-index:999;border-left:3px solid var(--accent); }
+        .toast.show { transform:translateY(0);opacity:1; }
+        .toast.error { border-left-color:var(--danger); }
+        .toast i { font-size:1rem; }
+        .toast.success i { color:var(--accent); }
+        .toast.error   i { color:var(--danger); }
 
-        footer{
-            width:100%;padding:20px;color:rgba(255,255,255,.38);
-            font-size:.75rem;text-align:center;position:relative;z-index:2;
-        }
+        footer { width:100%;padding:20px;color:rgba(255,255,255,.38);font-size:.75rem;text-align:center;position:relative;z-index:2; }
 
         @media(max-width:768px){
             .main-wrapper{grid-template-columns:1fr;}
@@ -347,7 +264,6 @@
 <div class="orb orb2"></div>
 <div class="orb orb3"></div>
 
-<!-- HEADER -->
 <header class="site-header">
     <div class="logo-wrap">
         <div class="logo-icon">🔥</div>
@@ -355,15 +271,13 @@
             <h1>Fênix</h1>
             <span>Precificação Inteligente</span>
         </div>
-        <span class="badge-version">v2.1</span>
+        <span class="badge-version">v2.2</span>
     </div>
 </header>
 
 <div class="main-wrapper">
 
-<!-- ══════════════════════════════════
-     CARD 1 — INPUTS
-══════════════════════════════════ -->
+<!-- ══════════════════════════ CARD 1 ══════════════════════════ -->
 <div class="card">
     <div class="card-header">
         <div class="card-header-icon icon-blue"><i class="fa-solid fa-sliders"></i></div>
@@ -401,15 +315,15 @@
 
     <!-- CMV -->
     <div class="form-row">
-        <label>
-            <i class="field-icon fa-solid fa-box"></i>
-            Custo do Produto (CMV)
-        </label>
+        <label><i class="field-icon fa-solid fa-box"></i> Custo do Produto (CMV)</label>
         <div class="right">
-            <input type="text" id="custo" placeholder="R$ 0,00" oninput="maskMoney(this);updateCustoTotal()">
+            <input type="text" id="custo" placeholder="R$ 0,00" oninput="maskMoney(this);updateCustoTotal();updateComisBase()">
+            <button class="comis-tag" id="tag_cmv" onclick="toggleComisBase('cmv')" title="Incluir CMV na base da comissão">
+                <i class="fa-solid fa-percent"></i> Comissão
+            </button>
             <button class="tip-btn" tabindex="-1">
                 <i class="fa-solid fa-circle-question"></i>
-                <div class="tip-popup">Custo de Mercadoria Vendida: valor pago pelo produto ou matéria-prima antes de qualquer margem.</div>
+                <div class="tip-popup">Custo de Mercadoria Vendida: valor pago pelo produto ou matéria-prima antes de qualquer margem. Ative "Comissão" se houver indicação sobre este item.</div>
             </button>
         </div>
     </div>
@@ -417,15 +331,15 @@
 
     <!-- Custo de Serviços -->
     <div class="form-row">
-        <label>
-            <i class="field-icon fa-solid fa-screwdriver-wrench"></i>
-            Custo de Serviços
-        </label>
+        <label><i class="field-icon fa-solid fa-screwdriver-wrench"></i> Custo de Serviços</label>
         <div class="right">
-            <input type="text" id="servico" placeholder="R$ 0,00" oninput="maskMoney(this);updateCustoTotal()">
+            <input type="text" id="servico" placeholder="R$ 0,00" oninput="maskMoney(this);updateCustoTotal();updateComisBase()">
+            <button class="comis-tag" id="tag_serv" onclick="toggleComisBase('serv')" title="Incluir Serviços na base da comissão">
+                <i class="fa-solid fa-percent"></i> Comissão
+            </button>
             <button class="tip-btn" tabindex="-1">
                 <i class="fa-solid fa-circle-question"></i>
-                <div class="tip-popup">Mão de obra, frete, embalagem ou qualquer custo operacional direto do serviço prestado.</div>
+                <div class="tip-popup">Mão de obra, frete, embalagem ou custo operacional. Ative "Comissão" se o indicador trouxe este serviço.</div>
             </button>
         </div>
     </div>
@@ -436,34 +350,39 @@
         <span class="ct-value" id="custo_total_live">R$ 0,00</span>
     </div>
 
-    <!-- Margem de Lucro -->
+    <!-- Base da Comissão — painel dinâmico -->
+    <div class="comis-base-info" id="comis_base_info">
+        <span class="cbi-label"><i class="fa-solid fa-bullseye"></i> Base de Cálculo da Comissão de Indicação:</span>
+        <span class="cbi-value" id="comis_base_value">R$ 0,00</span>
+    </div>
+
+    <!-- Seção Comissão de Indicação -->
+    <div class="comis-section">
+        <div class="comis-section-title"><i class="fa-solid fa-handshake"></i> Comissão de Indicação</div>
+        <div class="form-row" style="margin-bottom:0">
+            <label style="flex:0 0 148px;font-size:.78rem;font-weight:600;color:#6c3483;display:flex;align-items:center;gap:5px;">
+                <i class="field-icon fa-solid fa-user-tag" style="color:#8e44ad"></i> % sobre a base
+            </label>
+            <div class="right">
+                <input type="text" id="comis_val" placeholder="0,00" oninput="maskDecimal(this)">
+                <button class="toggle-btn active" id="btn_comis" onclick="toggle('comis')" title="Alternar % / R$">%</button>
+                <button class="tip-btn" tabindex="-1">
+                    <i class="fa-solid fa-circle-question"></i>
+                    <div class="tip-popup">Comissão paga ao indicador. Incide sobre os itens marcados com "Comissão" (Produto e/ou Serviço). Se nenhum marcado, incide sobre o Custo Total.</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lucro Desejado -->
     <div class="form-row">
-        <label>
-            <i class="field-icon fa-solid fa-chart-line"></i>
-            Margem de Lucro
-        </label>
+        <label><i class="field-icon fa-solid fa-chart-line"></i> Lucro Desejado</label>
         <div class="right">
             <input type="text" id="lucro_val" placeholder="0,00" oninput="maskDecimal(this)">
             <button class="toggle-btn active" id="btn_lucro" onclick="toggle('lucro')" title="Alternar % / R$">%</button>
             <button class="tip-btn" tabindex="-1">
                 <i class="fa-solid fa-circle-question"></i>
-                <div class="tip-popup">Quanto você deseja ganhar. Em % aplica sobre o preço final. Em R$ é valor fixo adicionado.</div>
-            </button>
-        </div>
-    </div>
-
-    <!-- Comissão -->
-    <div class="form-row">
-        <label>
-            <i class="field-icon fa-solid fa-handshake"></i>
-            Comissão / Terceiros
-        </label>
-        <div class="right">
-            <input type="text" id="comis_val" placeholder="0,00" oninput="maskDecimal(this)">
-            <button class="toggle-btn active" id="btn_comis" onclick="toggle('comis')" title="Alternar % / R$">%</button>
-            <button class="tip-btn" tabindex="-1">
-                <i class="fa-solid fa-circle-question"></i>
-                <div class="tip-popup">Taxa de marketplace, comissão de vendedor, gateway de pagamento ou parceiro comercial.</div>
+                <div class="tip-popup">Quanto você deseja lucrar. Em % aplica sobre o preço final (markup reverso). Em R$ é valor fixo adicionado ao custo.</div>
             </button>
         </div>
     </div>
@@ -472,37 +391,31 @@
     <div class="form-row">
         <label>
             <i class="field-icon fa-solid fa-landmark"></i>
-            Impostos | Fatia do Sócio <em style="font-style:normal;font-size:.7em;opacity:.7">"Governo"</em>
+            Impostos | Fatia do Sócio <em style="font-style:normal;font-size:.68em;opacity:.7">"Governo"</em>
         </label>
         <div class="right">
             <input type="text" id="imposto" placeholder="0,00 %" oninput="maskDecimal(this)">
             <button class="tip-btn" tabindex="-1">
                 <i class="fa-solid fa-circle-question"></i>
-                <div class="tip-popup">Alíquota de impostos sobre o faturamento (Simples Nacional, ISS, ICMS, PIS/COFINS, etc.).</div>
+                <div class="tip-popup">Alíquota de impostos sobre o faturamento (Simples Nacional, ISS, ICMS, PIS/COFINS etc.).</div>
             </button>
         </div>
     </div>
 
     <div class="btn-row">
-        <button class="btn btn-ghost" onclick="resetForm()">
-            <i class="fa-solid fa-rotate-left"></i> Limpar
-        </button>
-        <button class="btn btn-primary" onclick="calcular()">
-            <i class="fa-solid fa-calculator"></i> Calcular Preço
-        </button>
+        <button class="btn btn-ghost" onclick="resetForm()"><i class="fa-solid fa-rotate-left"></i> Limpar</button>
+        <button class="btn btn-primary" onclick="calcular()"><i class="fa-solid fa-calculator"></i> Calcular Preço</button>
     </div>
 </div>
 
-<!-- ══════════════════════════════════
-     CARD 2 — RESULTADO
-══════════════════════════════════ -->
+<!-- ══════════════════════════ CARD 2 ══════════════════════════ -->
 <div class="card">
     <div class="card-header">
         <div class="card-header-icon icon-green"><i class="fa-solid fa-chart-pie"></i></div>
         <h3>Painel de Análise</h3>
     </div>
 
-    <!-- SKELETON sempre visível antes do cálculo -->
+    <!-- Skeleton -->
     <div id="resultado_skeleton">
         <div class="skel-price">
             <div class="skel-label"><i class="fa-solid fa-tag"></i> Preço Sugerido ao Cliente</div>
@@ -512,71 +425,16 @@
         <div style="margin-top:14px;">
             <div class="section-title" style="margin-bottom:10px;"><i class="fa-solid fa-list-ul"></i> Composição do Preço</div>
             <div class="skel-rows">
-                <!-- CMV -->
-                <div>
-                    <div class="skel-row-item">
-                        <div class="skel-row-left">
-                            <div class="skel-dot" style="background:#555"></div>
-                            <i class="fa-solid fa-box" style="color:#ccc;font-size:.72rem"></i>
-                            <span class="skel-name">Custo do Produto (CMV)</span><span class="skel-pct">— %</span>
-                        </div>
-                        <span class="skel-amount">R$ —</span>
-                    </div>
-                    <div class="skel-bar"><div class="skel-bar-fill" style="background:#555;width:40%"></div></div>
-                </div>
-                <!-- Serviços -->
-                <div>
-                    <div class="skel-row-item">
-                        <div class="skel-row-left">
-                            <div class="skel-dot" style="background:#3498db"></div>
-                            <i class="fa-solid fa-screwdriver-wrench" style="color:#ccc;font-size:.72rem"></i>
-                            <span class="skel-name">Custo de Serviços</span><span class="skel-pct">— %</span>
-                        </div>
-                        <span class="skel-amount">R$ —</span>
-                    </div>
-                    <div class="skel-bar"><div class="skel-bar-fill" style="background:#3498db;width:20%"></div></div>
-                </div>
-                <!-- Impostos -->
-                <div>
-                    <div class="skel-row-item">
-                        <div class="skel-row-left">
-                            <div class="skel-dot" style="background:#e74c3c"></div>
-                            <i class="fa-solid fa-landmark" style="color:#ccc;font-size:.72rem"></i>
-                            <span class="skel-name">Impostos | Fatia "Governo"</span><span class="skel-pct">— %</span>
-                        </div>
-                        <span class="skel-amount">R$ —</span>
-                    </div>
-                    <div class="skel-bar"><div class="skel-bar-fill" style="background:#e74c3c;width:15%"></div></div>
-                </div>
-                <!-- Comissão -->
-                <div>
-                    <div class="skel-row-item">
-                        <div class="skel-row-left">
-                            <div class="skel-dot" style="background:#f39c12"></div>
-                            <i class="fa-solid fa-handshake" style="color:#ccc;font-size:.72rem"></i>
-                            <span class="skel-name">Comissão / Terceiros</span><span class="skel-pct">— %</span>
-                        </div>
-                        <span class="skel-amount">R$ —</span>
-                    </div>
-                    <div class="skel-bar"><div class="skel-bar-fill" style="background:#f39c12;width:10%"></div></div>
-                </div>
-                <!-- Lucro -->
-                <div>
-                    <div class="skel-row-item">
-                        <div class="skel-row-left">
-                            <div class="skel-dot" style="background:#27ae60"></div>
-                            <i class="fa-solid fa-chart-line" style="color:#ccc;font-size:.72rem"></i>
-                            <span class="skel-name">Seu Lucro Real</span><span class="skel-pct">— %</span>
-                        </div>
-                        <span class="skel-amount">R$ —</span>
-                    </div>
-                    <div class="skel-bar"><div class="skel-bar-fill" style="background:#27ae60;width:25%"></div></div>
-                </div>
+                <div><div class="skel-row-item"><div class="skel-row-left"><div class="skel-dot" style="background:#555"></div><i class="fa-solid fa-box" style="color:#ccc;font-size:.72rem"></i><span class="skel-name">Custo do Produto (CMV)</span><span class="skel-pct">— %</span></div><span class="skel-amount">R$ —</span></div><div class="skel-bar"><div class="skel-bar-fill" style="background:#555;width:38%"></div></div></div>
+                <div><div class="skel-row-item"><div class="skel-row-left"><div class="skel-dot" style="background:#3498db"></div><i class="fa-solid fa-screwdriver-wrench" style="color:#ccc;font-size:.72rem"></i><span class="skel-name">Custo de Serviços</span><span class="skel-pct">— %</span></div><span class="skel-amount">R$ —</span></div><div class="skel-bar"><div class="skel-bar-fill" style="background:#3498db;width:18%"></div></div></div>
+                <div><div class="skel-row-item"><div class="skel-row-left"><div class="skel-dot" style="background:#8e44ad"></div><i class="fa-solid fa-handshake" style="color:#ccc;font-size:.72rem"></i><span class="skel-name">Comissão de Indicação</span><span class="skel-pct">— %</span></div><span class="skel-amount">R$ —</span></div><div class="skel-bar"><div class="skel-bar-fill" style="background:#8e44ad;width:10%"></div></div></div>
+                <div><div class="skel-row-item"><div class="skel-row-left"><div class="skel-dot" style="background:#e74c3c"></div><i class="fa-solid fa-landmark" style="color:#ccc;font-size:.72rem"></i><span class="skel-name">Impostos | Fatia "Governo"</span><span class="skel-pct">— %</span></div><span class="skel-amount">R$ —</span></div><div class="skel-bar"><div class="skel-bar-fill" style="background:#e74c3c;width:15%"></div></div></div>
+                <div><div class="skel-row-item"><div class="skel-row-left"><div class="skel-dot" style="background:#27ae60"></div><i class="fa-solid fa-chart-line" style="color:#ccc;font-size:.72rem"></i><span class="skel-name">Lucro Real</span><span class="skel-pct">— %</span></div><span class="skel-amount">R$ —</span></div><div class="skel-bar"><div class="skel-bar-fill" style="background:#27ae60;width:25%"></div></div></div>
             </div>
         </div>
     </div>
 
-    <!-- RESULTADO REAL (oculto até calcular) -->
+    <!-- Resultado real -->
     <div id="resultado_content" style="display:none;">
         <div class="price-block">
             <div class="p-label"><i class="fa-solid fa-tag"></i> Preço Sugerido ao Cliente</div>
@@ -585,12 +443,8 @@
         </div>
         <div id="breakdown_list"></div>
         <div class="action-buttons">
-            <button class="btn btn-pdf" onclick="gerarPDF()">
-                <i class="fa-solid fa-file-pdf"></i> Exportar PDF
-            </button>
-            <button class="btn btn-wpp" onclick="enviarWhatsApp()">
-                <i class="fa-brands fa-whatsapp"></i> WhatsApp
-            </button>
+            <button class="btn btn-pdf" onclick="gerarPDF()"><i class="fa-solid fa-file-pdf"></i> Exportar PDF</button>
+            <button class="btn btn-wpp" onclick="enviarWhatsApp()"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
         </div>
     </div>
 </div>
@@ -599,22 +453,22 @@
 
 <footer>© Cristiano Fênix — 2026 &nbsp;|&nbsp; Fênix Soluções Tecnológicas</footer>
 
-<!-- Toast -->
 <div class="toast" id="toast">
     <i class="fa-solid fa-circle-check"></i>
     <span id="toast_msg">Mensagem</span>
 </div>
 
 <script>
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    ESTADO
-═══════════════════════════════════════════════════ */
-let tipos = { lucro: 'perc', comis: 'perc' };
+═══════════════════════════════════════════ */
+let tipos = { lucro:'perc', comis:'perc' };
+let comisBase = { cmv: false, serv: false }; // quais itens têm comissão
 let ultimoResultado = null;
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    INIT
-═══════════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('os_data').value = new Date().toISOString().split('T')[0];
     document.getElementById('os_num').value  = gerarNumOS();
@@ -622,208 +476,249 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function gerarNumOS() {
-    const ano = new Date().getFullYear();
-    const seq = String(Math.floor(Math.random() * 900) + 100);
-    return `${ano}-${seq}`;
+    return `${new Date().getFullYear()}-${String(Math.floor(Math.random()*900)+100)}`;
 }
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
+   TOGGLE BASE DA COMISSÃO (novo)
+═══════════════════════════════════════════ */
+function toggleComisBase(tipo) {
+    comisBase[tipo] = !comisBase[tipo];
+    document.getElementById(`tag_${tipo}`).classList.toggle('on', comisBase[tipo]);
+    updateComisBase();
+}
+
+function updateComisBase() {
+    const cmv  = parseMoney(document.getElementById('custo').value);
+    const serv = parseMoney(document.getElementById('servico').value);
+
+    let base = 0;
+    if (comisBase.cmv)  base += cmv;
+    if (comisBase.serv) base += serv;
+    // Se nenhum selecionado, base = custo total (fallback)
+    if (!comisBase.cmv && !comisBase.serv) base = cmv + serv;
+
+    const infoEl = document.getElementById('comis_base_info');
+    const valEl  = document.getElementById('comis_base_value');
+
+    valEl.innerText = formatBRL(base);
+
+    // Mostra painel só quando pelo menos um estiver ativo
+    if (comisBase.cmv || comisBase.serv) {
+        infoEl.classList.add('visible');
+    } else {
+        infoEl.classList.remove('visible');
+    }
+}
+
+/* ═══════════════════════════════════════════
    MÁSCARAS
-═══════════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function maskMoney(el) {
-    let v = el.value.replace(/\D/g, '');
-    if (!v) { el.value = ''; return; }
-    v = (parseInt(v, 10) / 100).toFixed(2);
-    el.value = 'R$ ' + v.replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    let v = el.value.replace(/\D/g,'');
+    if (!v) { el.value=''; return; }
+    v = (parseInt(v,10)/100).toFixed(2);
+    el.value = 'R$ ' + v.replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.');
 }
-
 function maskDecimal(el) {
-    let v = el.value.replace(/[^\d,]/g, '');
-    const parts = v.split(',');
-    if (parts.length > 2) v = parts[0] + ',' + parts.slice(1).join('');
-    if (parts[1] && parts[1].length > 2) v = parts[0] + ',' + parts[1].slice(0,2);
+    let v = el.value.replace(/[^\d,]/g,'');
+    const p = v.split(',');
+    if (p.length>2) v = p[0]+','+p.slice(1).join('');
+    if (p[1]&&p[1].length>2) v = p[0]+','+p[1].slice(0,2);
     el.value = v;
 }
-
 function maskTel(el) {
-    let v = el.value.replace(/\D/g, '').slice(0, 11);
-    if (v.length >= 7) v = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
-    else if (v.length >= 3) v = `(${v.slice(0,2)}) ${v.slice(2)}`;
-    else if (v.length > 0) v = `(${v}`;
-    el.value = v;
+    let v = el.value.replace(/\D/g,'').slice(0,11);
+    if (v.length>=7) v=`(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+    else if(v.length>=3) v=`(${v.slice(0,2)}) ${v.slice(2)}`;
+    else if(v.length>0) v=`(${v}`;
+    el.value=v;
 }
-
 function parseMoney(str) {
-    if (!str) return 0;
+    if(!str) return 0;
     return parseFloat(str.replace(/R\$\s?/g,'').replace(/\./g,'').replace(',','.')) || 0;
 }
-
 function parseDecimal(str) {
-    if (!str) return 0;
+    if(!str) return 0;
     return parseFloat(str.replace(',','.')) || 0;
 }
-
 function formatBRL(val) {
-    return val.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
+    return val.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 }
-
 function formatData(dateStr) {
-    if (!dateStr) return '—';
-    const [y,m,d] = dateStr.split('-');
+    if(!dateStr) return '—';
+    const [y,m,d]=dateStr.split('-');
     return `${d}/${m}/${y}`;
 }
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    CUSTO TOTAL LIVE
-═══════════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function updateCustoTotal() {
     const cmv  = parseMoney(document.getElementById('custo').value);
     const serv = parseMoney(document.getElementById('servico').value);
-    document.getElementById('custo_total_live').innerText = formatBRL(cmv + serv);
+    document.getElementById('custo_total_live').innerText = formatBRL(cmv+serv);
 }
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    TOGGLE %/$
-═══════════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function toggle(campo) {
     const btn = document.getElementById(`btn_${campo}`);
-    tipos[campo] = tipos[campo] === 'perc' ? 'moeda' : 'perc';
-    const isPerc = tipos[campo] === 'perc';
+    tipos[campo] = tipos[campo]==='perc' ? 'moeda' : 'perc';
+    const isPerc = tipos[campo]==='perc';
     btn.innerHTML = isPerc ? '%' : '<i class="fa-solid fa-dollar-sign"></i>';
     btn.classList.toggle('active', isPerc);
     const input = document.getElementById(`${campo}_val`);
     input.value = '';
     input.placeholder = isPerc ? '0,00' : 'R$ 0,00';
-    input.oninput = isPerc
-        ? function(){ maskDecimal(this); }
-        : function(){ maskMoney(this); };
+    input.oninput = isPerc ? function(){maskDecimal(this);} : function(){maskMoney(this);};
 }
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    VALIDAÇÃO
-═══════════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function validar() {
     let ok = true;
-    const campos = [
-        { id:'cliente',  err:'err_cliente', check: v => v.trim().length > 0 },
-        { id:'os_num',   err:'err_os',      check: v => v.trim().length > 0 },
-        { id:'os_data',  err:'err_data',    check: v => v.trim().length > 0 },
-        { id:'custo',    err:'err_custo',   check: v => parseMoney(v) > 0 },
-    ];
-    campos.forEach(c => {
-        const el  = document.getElementById(c.id);
-        const err = document.getElementById(c.err);
-        if (!c.check(el.value)) {
-            el.classList.add('error'); err.classList.add('show'); ok = false;
-        } else {
-            el.classList.remove('error'); err.classList.remove('show');
-        }
+    [
+        {id:'cliente', err:'err_cliente', check:v=>v.trim().length>0},
+        {id:'os_num',  err:'err_os',      check:v=>v.trim().length>0},
+        {id:'os_data', err:'err_data',    check:v=>v.trim().length>0},
+        {id:'custo',   err:'err_custo',   check:v=>parseMoney(v)>0},
+    ].forEach(c=>{
+        const el=document.getElementById(c.id), err=document.getElementById(c.err);
+        if(!c.check(el.value)){el.classList.add('error');err.classList.add('show');ok=false;}
+        else{el.classList.remove('error');err.classList.remove('show');}
     });
     return ok;
 }
 
-/* ═══════════════════════════════════════════════════
-   CALCULAR
-═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   CALCULAR — LÓGICA FINANCEIRA v2.2
+═══════════════════════════════════════════ */
 function calcular() {
-    if (!validar()) { showToast('Preencha os campos obrigatórios', 'error'); return; }
+    if(!validar()){showToast('Preencha os campos obrigatórios','error');return;}
 
-    const custo       = parseMoney(document.getElementById('custo').value);
+    const cmv         = parseMoney(document.getElementById('custo').value);
     const servico     = parseMoney(document.getElementById('servico').value);
-    const custoTotal  = custo + servico;
+    const custoTotal  = cmv + servico;
     const impostoPerc = parseDecimal(document.getElementById('imposto').value);
-    const lucroInput  = tipos.lucro === 'perc'
+    const lucroInput  = tipos.lucro==='perc'
         ? parseDecimal(document.getElementById('lucro_val').value)
         : parseMoney(document.getElementById('lucro_val').value);
-    const comisInput  = tipos.comis === 'perc'
+    const comisInput  = tipos.comis==='perc'
         ? parseDecimal(document.getElementById('comis_val').value)
         : parseMoney(document.getElementById('comis_val').value);
 
-    let fixosAdd   = 0;
-    let percVar    = impostoPerc;
+    /* ── Base da comissão ──────────────────────────
+       Determinada pelos toggles "Comissão" nos campos.
+       Se nenhum ativo → incide sobre o custo total.
+    ────────────────────────────────────────────── */
+    let baseComissao = 0;
+    if (comisBase.cmv)  baseComissao += cmv;
+    if (comisBase.serv) baseComissao += servico;
+    if (!comisBase.cmv && !comisBase.serv) baseComissao = custoTotal;
 
-    if (tipos.lucro === 'moeda') fixosAdd += lucroInput; else percVar += lucroInput;
-    if (tipos.comis === 'moeda') fixosAdd += comisInput; else percVar += comisInput;
+    /* ── Valor da comissão (custo fixo, já conhecido) ── */
+    const vComissao = tipos.comis==='perc'
+        ? baseComissao * (comisInput / 100)
+        : comisInput;
+
+    /* ── Custos fixos totais (custos que já sabemos o valor) ── */
+    const fixosTotal = custoTotal + vComissao;
+
+    /* ── Percentuais variáveis (incidem sobre o preço final) ── */
+    let percVar = impostoPerc;
+    if (tipos.lucro==='perc') percVar += lucroInput;
 
     const divisor = (100 - percVar) / 100;
-    if (divisor <= 0) { showToast('A soma das porcentagens não pode atingir 100%!', 'error'); return; }
+    if (divisor<=0){showToast('A soma das porcentagens não pode atingir 100%!','error');return;}
 
-    const precoFinal = (custoTotal + fixosAdd) / divisor;
-    const vImposto   = precoFinal * (impostoPerc / 100);
-    const vComissao  = tipos.comis === 'perc' ? precoFinal * (comisInput / 100) : comisInput;
-    const vLucro     = precoFinal - custoTotal - vImposto - vComissao;
-    const lucroPerc  = (vLucro / precoFinal) * 100;
+    /* ── Preço final ── */
+    const lucroFixo  = tipos.lucro==='moeda' ? lucroInput : 0;
+    const precoFinal = (fixosTotal + lucroFixo) / divisor;
+
+    /* ── Decomposição ── */
+    const vImposto = precoFinal * (impostoPerc / 100);
+    const vLucro   = precoFinal - custoTotal - vComissao - vImposto;
+    const lucroPerc= (vLucro / precoFinal) * 100;
+
+    /* ── Label descritivo da base ── */
+    let baseLabel = '';
+    if (comisBase.cmv && comisBase.serv) baseLabel = 'sobre Produto + Serviço';
+    else if (comisBase.cmv)              baseLabel = 'sobre Produto (CMV)';
+    else if (comisBase.serv)             baseLabel = 'sobre Serviço';
+    else                                 baseLabel = 'sobre Custo Total';
 
     ultimoResultado = {
-        precoFinal, custo, servico, custoTotal,
-        vImposto, vComissao, vLucro, lucroPerc,
-        cliente: document.getElementById('cliente').value.trim(),
+        precoFinal, cmv, servico, custoTotal,
+        vComissao, vImposto, vLucro, lucroPerc,
+        baseComissao, baseLabel,
+        cliente:    document.getElementById('cliente').value.trim(),
         clienteTel: document.getElementById('cliente_tel').value.trim(),
-        osNum:   document.getElementById('os_num').value.trim(),
-        osData:  document.getElementById('os_data').value,
-        impostoPerc, lucroInput, comisInput
+        osNum:      document.getElementById('os_num').value.trim(),
+        osData:     document.getElementById('os_data').value,
+        impostoPerc, comisInput, lucroInput,
+        comisBaseState: {...comisBase}
     };
 
     salvarStorage();
     mostrarResultados();
-    showToast('Precificação calculada com sucesso!', 'success');
+    showToast('Precificação calculada com sucesso!','success');
 }
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    SAÚDE DA MARGEM
-═══════════════════════════════════════════════════ */
-function healthBadge(lucroPerc) {
-    if (lucroPerc >= 20) return `<span class="health-badge health-green"><i class="fa-solid fa-circle-check"></i> Saudável</span>`;
-    if (lucroPerc >= 10) return `<span class="health-badge health-yellow"><i class="fa-solid fa-triangle-exclamation"></i> Apertado</span>`;
+═══════════════════════════════════════════ */
+function healthBadge(lp) {
+    if (lp>=20) return `<span class="health-badge health-green"><i class="fa-solid fa-circle-check"></i> Saudável</span>`;
+    if (lp>=10) return `<span class="health-badge health-yellow"><i class="fa-solid fa-triangle-exclamation"></i> Apertado</span>`;
     return `<span class="health-badge health-red"><i class="fa-solid fa-circle-xmark"></i> Perigoso</span>`;
 }
 
-/* ═══════════════════════════════════════════════════
-   ODÔMETRO (animação de contador)
-═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   ANIMAÇÃO ODÔMETRO
+═══════════════════════════════════════════ */
 function animateValue(el, start, end, duration) {
-    const startTime = performance.now();
-    function step(now) {
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        // ease out expo
-        const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-        const current = start + (end - start) * eased;
-        el.innerText = formatBRL(current);
-        if (progress < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
+    const t0 = performance.now();
+    (function step(now){
+        const p = Math.min((now-t0)/duration,1);
+        const e = p===1 ? 1 : 1-Math.pow(2,-10*p);
+        el.innerText = formatBRL(start+(end-start)*e);
+        if(p<1) requestAnimationFrame(step);
+    })(performance.now());
 }
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    MOSTRAR RESULTADOS
-═══════════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function mostrarResultados() {
     const r = ultimoResultado;
+    document.getElementById('resultado_skeleton').style.display='none';
+    document.getElementById('resultado_content').style.display='block';
 
-    document.getElementById('resultado_skeleton').style.display = 'none';
-    document.getElementById('resultado_content').style.display  = 'block';
-
-    // Odômetro no preço
     const totalEl = document.getElementById('res_total');
-    totalEl.innerText = 'R$ 0,00';
+    totalEl.innerText='R$ 0,00';
     animateValue(totalEl, 0, r.precoFinal, 900);
 
     document.getElementById('res_os_info').innerHTML =
         `<i class="fa-solid fa-user"></i> ${r.cliente} &nbsp;·&nbsp; OS ${r.osNum} &nbsp;·&nbsp; ${formatData(r.osData)}`;
 
     const dados = [
-        { label:'Custo do Produto (CMV)',        valor:r.custo,     cor:'#555555', icon:'fa-box' },
-        { label:'Custo de Serviços',              valor:r.servico,   cor:'#3498db', icon:'fa-screwdriver-wrench' },
-        { label:'Impostos | Fatia "Governo"',     valor:r.vImposto,  cor:'#e74c3c', icon:'fa-landmark' },
-        { label:'Comissão / Terceiros',           valor:r.vComissao, cor:'#f39c12', icon:'fa-handshake' },
-        { label:'Seu Lucro Real',                 valor:r.vLucro,    cor:'#27ae60', icon:'fa-chart-line' },
+        {label:'Custo do Produto (CMV)',      valor:r.cmv,       cor:'#555555', icon:'fa-box'},
+        {label:'Custo de Serviços',            valor:r.servico,   cor:'#3498db', icon:'fa-screwdriver-wrench'},
+        {label:'Comissão de Indicação',        valor:r.vComissao, cor:'#8e44ad', icon:'fa-handshake', note: r.baseLabel},
+        {label:'Impostos | Fatia "Governo"',   valor:r.vImposto,  cor:'#e74c3c', icon:'fa-landmark'},
+        {label:'Lucro Real',                   valor:r.vLucro,    cor:'#27ae60', icon:'fa-chart-line', isLucro:true},
     ];
 
     let html = '';
-    dados.forEach((item, i) => {
-        const p = (item.valor / r.precoFinal * 100).toFixed(1);
-        const extra = item.icon === 'fa-chart-line' ? healthBadge(r.lucroPerc) : '';
+    dados.forEach((item,i)=>{
+        const p = (item.valor/r.precoFinal*100).toFixed(1);
+        const health = item.isLucro ? healthBadge(r.lucroPerc) : '';
+        const note   = item.note
+            ? `<div class="comis-base-note"><i class="fa-solid fa-arrow-turn-up fa-rotate-90"></i> Calculada ${item.note} (${formatBRL(r.baseComissao)})</div>`
+            : '';
         html += `
             <div class="breakdown-item" style="animation-delay:${i*.08}s">
                 <div class="breakdown-row">
@@ -832,170 +727,117 @@ function mostrarResultados() {
                         <i class="fa-solid ${item.icon}" style="color:${item.cor};font-size:.7rem"></i>
                         ${item.label}
                         <span class="pct-chip" style="background:${item.cor}">${p}%</span>
-                        ${extra}
+                        ${health}
                     </span>
                     <span class="amount" style="color:${item.cor}">${formatBRL(item.valor)}</span>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="background:${item.cor}" data-width="${p}"></div>
-                </div>
+                <div class="progress-bar"><div class="progress-fill" style="background:${item.cor}" data-width="${p}"></div></div>
+                ${note}
             </div>`;
     });
 
     document.getElementById('breakdown_list').innerHTML = html;
-
-    requestAnimationFrame(() => {
-        document.querySelectorAll('.progress-fill').forEach(el => {
-            el.style.width = el.dataset.width + '%';
-        });
+    requestAnimationFrame(()=>{
+        document.querySelectorAll('.progress-fill').forEach(el=>{el.style.width=el.dataset.width+'%';});
     });
 }
 
-/* ═══════════════════════════════════════════════════
-   GERAR PDF
-═══════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   PDF
+═══════════════════════════════════════════ */
 function gerarPDF() {
-    if (!ultimoResultado) return;
+    if(!ultimoResultado) return;
     const r = ultimoResultado;
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ unit:'mm', format:'a4' });
+    const {jsPDF} = window.jspdf;
+    const doc = new jsPDF({unit:'mm',format:'a4'});
     const W = doc.internal.pageSize.getWidth();
     let y = 0;
 
     // Header
-    doc.setFillColor(4, 18, 115);
-    doc.rect(0, 0, W, 44, 'F');
-    doc.setTextColor(255, 255, 255);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(22);
-    doc.text('FÊNIX', 15, 18);
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(170, 185, 255);
-    doc.text('Precificação Inteligente v2.1', 15, 26);
+    doc.setFillColor(4,18,115); doc.rect(0,0,W,44,'F');
+    doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(22); doc.text('FÊNIX',15,18);
+    doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(170,185,255); doc.text('Precificação Inteligente v2.2',15,26);
+    doc.setTextColor(255,255,255); doc.setFontSize(8.5);
+    doc.text(`OS: ${r.osNum}`,W-15,13,{align:'right'});
+    doc.text(`Data: ${formatData(r.osData)}`,W-15,20,{align:'right'});
+    doc.text(`Cliente: ${r.cliente}`,W-15,27,{align:'right'});
+    if(r.clienteTel) doc.text(`WhatsApp: ${r.clienteTel}`,W-15,34,{align:'right'});
+    y=54;
 
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(8.5);
-    doc.text(`OS: ${r.osNum}`, W - 15, 13, { align:'right' });
-    doc.text(`Data: ${formatData(r.osData)}`, W - 15, 20, { align:'right' });
-    doc.text(`Cliente: ${r.cliente}`, W - 15, 27, { align:'right' });
-    if (r.clienteTel) doc.text(`WhatsApp: ${r.clienteTel}`, W - 15, 34, { align:'right' });
+    // Preço
+    doc.setFillColor(240,243,255); doc.roundedRect(15,y,W-30,24,4,4,'F');
+    doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor(4,18,115);
+    doc.text('PREÇO SUGERIDO AO CLIENTE',W/2,y+8,{align:'center'});
+    doc.setFontSize(20); doc.text(formatBRL(r.precoFinal),W/2,y+19,{align:'center'});
+    y+=32;
 
-    y = 54;
-
-    // Preço destaque
-    doc.setFillColor(240, 243, 255);
-    doc.roundedRect(15, y, W - 30, 24, 4, 4, 'F');
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(10);
-    doc.setTextColor(4, 18, 115);
-    doc.text('PREÇO SUGERIDO AO CLIENTE', W / 2, y + 8, { align:'center' });
-    doc.setFontSize(20);
-    doc.text(formatBRL(r.precoFinal), W / 2, y + 19, { align:'center' });
-    y += 32;
-
-    // Título composição
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(120, 125, 150);
-    doc.text('COMPOSIÇÃO DO PREÇO', 15, y);
-    y += 2;
-    doc.setDrawColor(210, 215, 230);
-    doc.setLineWidth(0.4);
-    doc.line(15, y, W - 15, y);
-    y += 6;
+    // Composição
+    doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.setTextColor(120,125,150);
+    doc.text('COMPOSIÇÃO DO PREÇO',15,y); y+=2;
+    doc.setDrawColor(210,215,230); doc.setLineWidth(0.4); doc.line(15,y,W-15,y); y+=6;
 
     const dados = [
-        { label:'Custo do Produto (CMV)',    valor:r.custo,     cor:[80,80,80] },
-        { label:'Custo de Serviços',          valor:r.servico,   cor:[52,152,219] },
-        { label:'Impostos | Fatia "Governo"', valor:r.vImposto,  cor:[231,76,60] },
-        { label:'Comissão / Terceiros',       valor:r.vComissao, cor:[243,156,18] },
-        { label:'Seu Lucro Real',             valor:r.vLucro,    cor:[39,174,96] },
+        {label:'Custo do Produto (CMV)',    valor:r.cmv,       cor:[80,80,80],    note:''},
+        {label:'Custo de Serviços',          valor:r.servico,   cor:[52,152,219],  note:''},
+        {label:'Comissão de Indicação',      valor:r.vComissao, cor:[142,68,173],  note:`(${r.baseLabel})`},
+        {label:'Impostos | Fatia "Governo"', valor:r.vImposto,  cor:[231,76,60],   note:''},
+        {label:'Lucro Real',                 valor:r.vLucro,    cor:[39,174,96],   note:''},
     ];
 
-    dados.forEach((item, i) => {
-        const p = (item.valor / r.precoFinal * 100).toFixed(1);
-        if (i % 2 === 0) {
-            doc.setFillColor(248, 249, 254);
-            doc.rect(15, y - 4, W - 30, 10, 'F');
-        }
-        doc.setFillColor(...item.cor);
-        doc.circle(20, y + 1, 2, 'F');
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(9.5);
-        doc.setTextColor(50, 50, 60);
-        doc.text(item.label, 26, y + 2);
-        doc.setTextColor(150, 155, 165);
-        doc.setFontSize(8.5);
-        doc.text(`${p}%`, W / 2, y + 2, { align:'center' });
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(9.5);
-        doc.setTextColor(...item.cor);
-        doc.text(formatBRL(item.valor), W - 15, y + 2, { align:'right' });
-        // barra
-        const bx = 15, by = y + 4.2, bw = W - 30, bh = 2;
-        doc.setFillColor(215, 220, 230);
-        doc.roundedRect(bx, by, bw, bh, 1, 1, 'F');
-        doc.setFillColor(...item.cor);
-        doc.roundedRect(bx, by, bw * (parseFloat(p) / 100), bh, 1, 1, 'F');
-        y += 14;
+    dados.forEach((item,i)=>{
+        const p=(item.valor/r.precoFinal*100).toFixed(1);
+        if(i%2===0){doc.setFillColor(248,249,254);doc.rect(15,y-4,W-30,10+(item.note?4:0),'F');}
+        doc.setFillColor(...item.cor); doc.circle(20,y+1,2,'F');
+        doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(50,50,60);
+        doc.text(item.label+(item.note?` ${item.note}`:''),26,y+2);
+        doc.setTextColor(150,155,165); doc.setFontSize(8.5); doc.text(`${p}%`,W/2,y+2,{align:'center'});
+        doc.setFont('helvetica','bold'); doc.setFontSize(9.5); doc.setTextColor(...item.cor);
+        doc.text(formatBRL(item.valor),W-15,y+2,{align:'right'});
+        const bx=15,by=y+4.2,bw=W-30,bh=2;
+        doc.setFillColor(215,220,230); doc.roundedRect(bx,by,bw,bh,1,1,'F');
+        doc.setFillColor(...item.cor); doc.roundedRect(bx,by,bw*(parseFloat(p)/100),bh,1,1,'F');
+        y+=14;
     });
 
-    y += 2;
-    doc.setDrawColor(210, 215, 230);
-    doc.line(15, y, W - 15, y);
-    y += 7;
+    y+=2; doc.setDrawColor(210,215,230); doc.line(15,y,W-15,y); y+=7;
 
-    // Indicador de saúde
-    const lp = r.lucroPerc;
-    let healthLabel, healthRGB;
-    if (lp >= 20)      { healthLabel = 'Margem Saudável ✓'; healthRGB = [39,174,96]; }
-    else if (lp >= 10) { healthLabel = 'Margem Apertada ⚠';  healthRGB = [243,156,18]; }
-    else               { healthLabel = 'Margem Perigosa ✗';  healthRGB = [231,76,60]; }
-
-    doc.setFillColor(...healthRGB.map(c => Math.round(c * 0.15 + 240)));
-    doc.roundedRect(15, y, 80, 10, 2, 2, 'F');
-    doc.setTextColor(...healthRGB);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(8.5);
-    doc.text(healthLabel, 55, y + 6.5, { align:'center' });
-    doc.setTextColor(80, 80, 100);
-    doc.setFont('helvetica', 'normal');
-    doc.text(`Lucro Real: ${lp.toFixed(1)}% sobre o preço final`, W - 15, y + 6.5, { align:'right' });
-
-    y += 16;
+    // Saúde
+    const lp=r.lucroPerc;
+    let hLabel,hRGB;
+    if(lp>=20){hLabel='Margem Saudável ✓';hRGB=[39,174,96];}
+    else if(lp>=10){hLabel='Margem Apertada ⚠';hRGB=[243,156,18];}
+    else{hLabel='Margem Perigosa ✗';hRGB=[231,76,60];}
+    doc.setFillColor(...hRGB.map(c=>Math.round(c*.15+240))); doc.roundedRect(15,y,80,10,2,2,'F');
+    doc.setTextColor(...hRGB); doc.setFont('helvetica','bold'); doc.setFontSize(8.5);
+    doc.text(hLabel,55,y+6.5,{align:'center'});
+    doc.setTextColor(80,80,100); doc.setFont('helvetica','normal');
+    doc.text(`Lucro Real: ${lp.toFixed(1)}% sobre o preço final`,W-15,y+6.5,{align:'right'});
+    y+=16;
 
     // Totalizador
-    doc.setFillColor(4, 18, 115);
-    doc.roundedRect(15, y, W - 30, 12, 3, 3, 'F');
-    doc.setTextColor(255, 255, 255);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(10);
-    doc.text('PREÇO FINAL DE VENDA', 22, y + 7.5);
-    doc.text(formatBRL(r.precoFinal), W - 15, y + 7.5, { align:'right' });
+    doc.setFillColor(4,18,115); doc.roundedRect(15,y,W-30,12,3,3,'F');
+    doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(10);
+    doc.text('PREÇO FINAL DE VENDA',22,y+7.5);
+    doc.text(formatBRL(r.precoFinal),W-15,y+7.5,{align:'right'});
 
     // Rodapé
-    doc.setDrawColor(200, 205, 220);
-    doc.setLineWidth(0.3);
-    doc.line(15, 270, W - 15, 270);
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(7.5);
-    doc.setTextColor(170, 175, 185);
-    doc.text('© Cristiano Fênix — 2026 | Fênix Soluções Tecnológicas', W / 2, 276, { align:'center' });
-    doc.text(`Documento gerado em ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')}`, W / 2, 281, { align:'center' });
+    doc.setDrawColor(200,205,220); doc.setLineWidth(0.3); doc.line(15,270,W-15,270);
+    doc.setFont('helvetica','normal'); doc.setFontSize(7.5); doc.setTextColor(170,175,185);
+    doc.text('© Cristiano Fênix — 2026 | Fênix Soluções Tecnológicas',W/2,276,{align:'center'});
+    doc.text(`Documento gerado em ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')}`,W/2,281,{align:'center'});
 
     doc.save(`OS_${r.osNum}_${r.cliente.replace(/\s+/g,'_')}.pdf`);
-    showToast('PDF gerado e baixado!', 'success');
+    showToast('PDF gerado e baixado!','success');
 }
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    WHATSAPP
-═══════════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function enviarWhatsApp() {
-    if (!ultimoResultado) return;
+    if(!ultimoResultado) return;
     const r = ultimoResultado;
     const lp = r.lucroPerc;
-    const healthEmoji = lp >= 20 ? '🟢' : lp >= 10 ? '🟡' : '🔴';
+    const hEmoji = lp>=20?'🟢':lp>=10?'🟡':'🔴';
 
     const msg =
 `🔥 *FÊNIX — PRECIFICAÇÃO INTELIGENTE*
@@ -1008,53 +850,61 @@ function enviarWhatsApp() {
 *${formatBRL(r.precoFinal)}*
 ━━━━━━━━━━━━━━━━━━━━
 🗂️ *Composição:*
-📦 CMV (Produto):       ${formatBRL(r.custo)} (${(r.custo/r.precoFinal*100).toFixed(1)}%)
-🔧 Custo de Serviços:  ${formatBRL(r.servico)} (${(r.servico/r.precoFinal*100).toFixed(1)}%)
-🏛️ Impostos "Governo": ${formatBRL(r.vImposto)} (${(r.vImposto/r.precoFinal*100).toFixed(1)}%)
-🤝 Comissão:            ${formatBRL(r.vComissao)} (${(r.vComissao/r.precoFinal*100).toFixed(1)}%)
-📈 Lucro Real:          ${formatBRL(r.vLucro)} (${lp.toFixed(1)}%)
+📦 CMV (Produto):          ${formatBRL(r.cmv)} (${(r.cmv/r.precoFinal*100).toFixed(1)}%)
+🔧 Custo de Serviços:     ${formatBRL(r.servico)} (${(r.servico/r.precoFinal*100).toFixed(1)}%)
+🤝 Comissão de Indicação: ${formatBRL(r.vComissao)} (${(r.vComissao/r.precoFinal*100).toFixed(1)}%) ↳ _${r.baseLabel}_
+🏛️ Impostos "Governo":    ${formatBRL(r.vImposto)} (${(r.vImposto/r.precoFinal*100).toFixed(1)}%)
+📈 Lucro Real:             ${formatBRL(r.vLucro)} (${lp.toFixed(1)}%)
 ━━━━━━━━━━━━━━━━━━━━
-${healthEmoji} Margem: ${lp >= 20 ? 'Saudável ✓' : lp >= 10 ? 'Apertada ⚠' : 'Perigosa — revisar ✗'}
+${hEmoji} Margem: ${lp>=20?'Saudável ✓':lp>=10?'Apertada ⚠':'Perigosa — revisar ✗'}
 ━━━━━━━━━━━━━━━━━━━━
 _Gerado por Fênix Soluções Tecnológicas_`;
 
-    // Se tem telefone, abre direto no contato
-    const tel = r.clienteTel.replace(/\D/g,'');
-    const base = tel.length >= 10 ? `https://wa.me/55${tel}` : `https://wa.me/`;
-    window.open(`${base}?text=${encodeURIComponent(msg)}`, '_blank');
-    showToast('Abrindo WhatsApp...', 'success');
+    const tel  = r.clienteTel.replace(/\D/g,'');
+    const base = tel.length>=10 ? `https://wa.me/55${tel}` : `https://wa.me/`;
+    window.open(`${base}?text=${encodeURIComponent(msg)}`,'_blank');
+    showToast('Abrindo WhatsApp...','success');
 }
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    RESET
-═══════════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function resetForm() {
-    ['cliente','cliente_tel','custo','servico','lucro_val','comis_val','imposto'].forEach(id => {
-        document.getElementById(id).value = '';
+    ['cliente','cliente_tel','custo','servico','lucro_val','comis_val','imposto'].forEach(id=>{
+        document.getElementById(id).value='';
     });
     document.getElementById('os_num').value  = gerarNumOS();
     document.getElementById('os_data').value = new Date().toISOString().split('T')[0];
-    document.querySelectorAll('input').forEach(i => i.classList.remove('error'));
-    document.querySelectorAll('.field-error').forEach(e => e.classList.remove('show'));
-    ['lucro','comis'].forEach(campo => {
-        tipos[campo] = 'perc';
-        const btn = document.getElementById(`btn_${campo}`);
-        btn.innerHTML = '%'; btn.classList.add('active');
-        const input = document.getElementById(`${campo}_val`);
-        input.placeholder = '0,00';
-        input.oninput = function(){ maskDecimal(this); };
+    document.querySelectorAll('input').forEach(i=>i.classList.remove('error'));
+    document.querySelectorAll('.field-error').forEach(e=>e.classList.remove('show'));
+
+    // Reset toggles %/$
+    ['lucro','comis'].forEach(campo=>{
+        tipos[campo]='perc';
+        const btn=document.getElementById(`btn_${campo}`);
+        btn.innerHTML='%'; btn.classList.add('active');
+        const input=document.getElementById(`${campo}_val`);
+        input.placeholder='0,00';
+        input.oninput=function(){maskDecimal(this);};
     });
+
+    // Reset base comissão
+    comisBase={cmv:false,serv:false};
+    document.getElementById('tag_cmv').classList.remove('on');
+    document.getElementById('tag_serv').classList.remove('on');
+    document.getElementById('comis_base_info').classList.remove('visible');
+
     updateCustoTotal();
-    ultimoResultado = null;
-    document.getElementById('resultado_skeleton').style.display = 'block';
-    document.getElementById('resultado_content').style.display  = 'none';
+    ultimoResultado=null;
+    document.getElementById('resultado_skeleton').style.display='block';
+    document.getElementById('resultado_content').style.display='none';
     localStorage.removeItem('fenix_last');
-    showToast('Formulário limpo!', 'success');
+    showToast('Formulário limpo!','success');
 }
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    LOCALSTORAGE
-═══════════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 function salvarStorage() {
     try {
         localStorage.setItem('fenix_last', JSON.stringify({
@@ -1067,46 +917,45 @@ function salvarStorage() {
             lucro:   document.getElementById('lucro_val').value,
             comis:   document.getElementById('comis_val').value,
             imposto: document.getElementById('imposto').value,
-            tipos
+            tipos, comisBase
         }));
     } catch(e){}
 }
 
 function carregarStorage() {
     try {
-        const d = JSON.parse(localStorage.getItem('fenix_last') || 'null');
-        if (!d) return;
-        const map = {
-            cliente:'cliente', cliente_tel:'cliente_tel', os_num:'os_num',
-            os_data:'os_data', custo:'custo', servico:'servico',
-            lucro:'lucro_val', comis:'comis_val', imposto:'imposto'
-        };
-        Object.entries(map).forEach(([k,id]) => {
-            if (d[k]) document.getElementById(id).value = d[k];
-        });
-        if (d.tipos) tipos = d.tipos;
-        ['lucro','comis'].forEach(campo => {
-            const btn = document.getElementById(`btn_${campo}`);
-            const isPerc = tipos[campo] === 'perc';
-            btn.innerHTML = isPerc ? '%' : '<i class="fa-solid fa-dollar-sign"></i>';
-            btn.classList.toggle('active', isPerc);
+        const d = JSON.parse(localStorage.getItem('fenix_last')||'null');
+        if(!d) return;
+        const map={cliente:'cliente',cliente_tel:'cliente_tel',os_num:'os_num',os_data:'os_data',custo:'custo',servico:'servico',lucro:'lucro_val',comis:'comis_val',imposto:'imposto'};
+        Object.entries(map).forEach(([k,id])=>{ if(d[k]) document.getElementById(id).value=d[k]; });
+        if(d.tipos) tipos=d.tipos;
+        if(d.comisBase){
+            comisBase=d.comisBase;
+            document.getElementById('tag_cmv').classList.toggle('on',comisBase.cmv);
+            document.getElementById('tag_serv').classList.toggle('on',comisBase.serv);
+        }
+        ['lucro','comis'].forEach(campo=>{
+            const btn=document.getElementById(`btn_${campo}`);
+            const isPerc=tipos[campo]==='perc';
+            btn.innerHTML=isPerc?'%':'<i class="fa-solid fa-dollar-sign"></i>';
+            btn.classList.toggle('active',isPerc);
         });
         updateCustoTotal();
+        updateComisBase();
     } catch(e){}
 }
 
-/* ═══════════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    TOAST
-═══════════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 let toastTimer;
-function showToast(msg, tipo = 'success') {
-    const t = document.getElementById('toast');
-    const icon = t.querySelector('i');
-    document.getElementById('toast_msg').innerText = msg;
-    t.className = `toast ${tipo} show`;
-    icon.className = tipo === 'success' ? 'fa-solid fa-circle-check' : 'fa-solid fa-circle-exclamation';
+function showToast(msg, tipo='success') {
+    const t=document.getElementById('toast');
+    document.getElementById('toast_msg').innerText=msg;
+    t.className=`toast ${tipo} show`;
+    t.querySelector('i').className=tipo==='success'?'fa-solid fa-circle-check':'fa-solid fa-circle-exclamation';
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => t.classList.remove('show'), 3400);
+    toastTimer=setTimeout(()=>t.classList.remove('show'),3400);
 }
 </script>
 </body>
