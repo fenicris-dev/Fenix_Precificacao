@@ -3,280 +3,317 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fênix | Sistema de Cobrança Real v1.8</title>
+<title>Fênix | Sistema de Cobrança Real v1.9.2</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-:root {
-  --bg: #0a0d14;
-  --surface: #111827;
-  --surface2: #1a2235;
-  --border: rgba(255,255,255,0.07);
-  --border-bright: rgba(255,255,255,0.14);
-  --text: #e8edf5;
-  --muted: #6b7a99;
-  --accent: #f97316;
-  --accent2: #fb923c;
-  --mei: #38bdf8;
-  --simples: #4ade80;
-  --leao: #f87171;
-  --gold: #fbbf24;
-  --warn: #f59e0b;
+:root{
+  --bg:#0a0d14;--surface:#111827;--surface2:#1a2235;
+  --border:rgba(255,255,255,0.07);--border-bright:rgba(255,255,255,0.14);
+  --text:#e8edf5;--muted:#6b7a99;
+  --accent:#f97316;--accent2:#fb923c;
+  --mei:#38bdf8;--simples:#4ade80;--leao:#f87171;
+  --gold:#fbbf24;--warn:#f59e0b;--danger:#ef4444;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;}
 
 /* HEADER */
-header { padding: 16px 28px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); background: rgba(10,13,20,0.97); position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); gap: 16px; flex-wrap: wrap; }
-.logo { display: flex; align-items: center; gap: 11px; }
-.logo-icon { width: 34px; height: 34px; }
-.logo-text { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em; }
-.logo-text span { color: var(--accent); }
-.version-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; padding: 3px 10px; border-radius: 20px; background: rgba(249,115,22,0.12); border: 1px solid rgba(249,115,22,0.3); color: var(--accent2); }
-.header-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+header{padding:14px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:rgba(10,13,20,.97);position:sticky;top:0;z-index:60;backdrop-filter:blur(12px);gap:12px;flex-wrap:wrap;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-icon{width:32px;height:32px;}
+.logo-text{font-size:1rem;font-weight:700;letter-spacing:-.02em;}
+.logo-text span{color:var(--accent);}
+.version-badge{font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:3px 9px;border-radius:20px;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3);color:var(--accent2);}
+.header-actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
+.btn-action{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:8px;font-family:'Sora',sans-serif;font-size:.73rem;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid;white-space:nowrap;background:transparent;}
+.btn-fiscal{border-color:rgba(251,191,36,.35);color:var(--gold);}
+.btn-fiscal:hover{background:rgba(251,191,36,.12);}
+.btn-limpar{border-color:rgba(248,113,113,.35);color:var(--leao);}
+.btn-limpar:hover{background:rgba(248,113,113,.1);}
+.btn-save{border-color:rgba(74,222,128,.3);color:var(--simples);}
+.btn-save:hover{background:rgba(74,222,128,.12);}
+.btn-json{border-color:rgba(56,189,248,.3);color:var(--mei);}
+.btn-json:hover{background:rgba(56,189,248,.12);}
+.btn-pdf{border-color:rgba(249,115,22,.3);color:var(--accent2);}
+.btn-pdf:hover{background:rgba(249,115,22,.12);}
+.btn-import{border-color:var(--border-bright);color:var(--muted);}
+.btn-import:hover{border-color:var(--text);color:var(--text);}
 
 /* OS BAR */
-.os-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 28px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
-.os-field { display: flex; flex-direction: column; gap: 4px; min-width: 160px; }
-.os-field label { font-size: 0.62rem; color: var(--muted); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
-.os-field input { background: var(--surface2); border: 1px solid var(--border-bright); color: var(--text); font-family: 'Sora', sans-serif; font-size: 0.82rem; padding: 7px 10px; border-radius: 7px; outline: none; transition: border-color 0.2s; }
-.os-field input:focus { border-color: var(--accent); }
-.os-date { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); margin-left: auto; align-self: flex-end; padding-bottom: 6px; }
+.os-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+.os-field{display:flex;flex-direction:column;gap:3px;}
+.os-field label{font-size:.6rem;color:var(--muted);font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+.os-field input[type="text"]{background:var(--surface2);border:1px solid var(--border-bright);color:var(--text);font-family:'Sora',sans-serif;font-size:.8rem;padding:6px 9px;border-radius:7px;outline:none;transition:border-color .2s;width:200px;}
+.os-field input[type="text"]:focus{border-color:var(--accent);}
+.os-date{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);margin-left:auto;align-self:flex-end;padding-bottom:4px;}
 
 /* LAYOUT */
-.app-body { flex: 1; display: grid; grid-template-columns: 340px 1fr; }
+.app-body{flex:1;display:grid;grid-template-columns:330px 1fr;}
 
 /* SIDEBAR */
-.sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 22px 20px; overflow-y: auto; max-height: calc(100vh - 110px); position: sticky; top: 110px; }
-.section-label { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; margin: 20px 0 12px; padding-bottom: 7px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 7px; }
-.section-label:first-child { margin-top: 0; }
-.section-label::before { content: ''; display: inline-block; width: 3px; height: 10px; background: var(--accent); border-radius: 2px; }
-.field { margin-bottom: 12px; }
-.field-label { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
-.input-wrap { display: flex; gap: 6px; }
-input[type="number"] { flex: 1; background: var(--surface2); border: 1px solid var(--border-bright); color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; padding: 8px 11px; border-radius: 8px; outline: none; transition: border-color 0.2s; -moz-appearance: textfield; }
-input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
-input[type="number"]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(249,115,22,0.1); }
-.toggle-btn { background: var(--surface2); border: 1px solid var(--border-bright); color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600; padding: 8px 11px; border-radius: 8px; cursor: pointer; min-width: 42px; text-align: center; transition: all 0.2s; }
-.toggle-btn.on { background: rgba(249,115,22,0.15); border-color: var(--accent); color: var(--accent); }
+.sidebar{background:var(--surface);border-right:1px solid var(--border);padding:20px 18px;overflow-y:auto;max-height:calc(100vh - 106px);position:sticky;top:106px;}
+.section-label{font-size:.62rem;font-weight:700;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin:18px 0 11px;padding-bottom:6px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;}
+.section-label:first-child{margin-top:0;}
+.section-label::before{content:'';display:inline-block;width:3px;height:9px;background:var(--accent);border-radius:2px;}
+.field{margin-bottom:11px;}
+.field-label{display:flex;justify-content:space-between;align-items:center;font-size:.73rem;color:var(--muted);font-weight:600;margin-bottom:5px;}
+.input-wrap{display:flex;gap:5px;}
+input[type="number"]{flex:1;background:var(--surface2);border:1px solid var(--border-bright);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.83rem;padding:7px 10px;border-radius:8px;outline:none;transition:border-color .2s;-moz-appearance:textfield;width:100%;}
+input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;}
+input[type="number"]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(249,115,22,.1);}
+.toggle-btn{background:var(--surface2);border:1px solid var(--border-bright);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;padding:7px 10px;border-radius:8px;cursor:pointer;min-width:40px;text-align:center;transition:all .2s;}
+.toggle-btn.on{background:rgba(249,115,22,.15);border-color:var(--accent);color:var(--accent);}
 
-/* REGIME SELECTOR */
-.regime-selector { display: flex; flex-direction: column; gap: 8px; }
-.regime-option { display: flex; align-items: flex-start; gap: 10px; background: var(--surface2); border: 1px solid var(--border-bright); border-radius: 9px; padding: 10px 12px; cursor: pointer; transition: all 0.2s; }
-.regime-option:hover { border-color: rgba(249,115,22,0.3); }
-.regime-option.selected { border-color: var(--accent); background: rgba(249,115,22,0.08); }
-.regime-option input[type="radio"] { display: none; }
-.regime-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border-bright); margin-top: 1px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-.regime-option.selected .regime-dot { border-color: var(--accent); background: var(--accent); }
-.regime-dot::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: white; display: none; }
-.regime-option.selected .regime-dot::after { display: block; }
-.regime-info { flex: 1; }
-.regime-name { font-size: 0.8rem; font-weight: 700; color: var(--text); }
-.regime-desc { font-size: 0.68rem; color: var(--muted); margin-top: 2px; line-height: 1.4; }
-
-.mei-tipo { margin-top: 10px; display: none; }
-.mei-tipo.show { display: block; }
-.mei-tipo-label { font-size: 0.68rem; color: var(--muted); font-weight: 700; margin-bottom: 7px; letter-spacing: 0.05em; }
-.mei-tipo-opts { display: flex; gap: 6px; }
-.mei-tipo-btn { flex: 1; padding: 7px 6px; background: var(--surface2); border: 1px solid var(--border-bright); border-radius: 7px; color: var(--muted); font-family: 'Sora', sans-serif; font-size: 0.7rem; font-weight: 600; cursor: pointer; text-align: center; transition: all 0.2s; }
-.mei-tipo-btn.active { background: rgba(56,189,248,0.12); border-color: var(--mei); color: var(--mei); }
-
-.config-btn { width: 100%; padding: 10px; background: transparent; border: 1px solid rgba(249,115,22,0.35); color: var(--accent2); border-radius: 8px; cursor: pointer; font-family: 'Sora', sans-serif; font-size: 0.78rem; font-weight: 600; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 7px; margin-top: 6px; }
-.config-btn:hover { background: rgba(249,115,22,0.1); border-color: var(--accent); }
-
-/* ACTION BUTTONS (header) */
-.btn-action { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 8px; font-family: 'Sora', sans-serif; font-size: 0.76rem; font-weight: 600; cursor: pointer; transition: all 0.2s; border: 1px solid; white-space: nowrap; }
-.btn-save { background: rgba(74,222,128,0.1); border-color: rgba(74,222,128,0.3); color: var(--simples); }
-.btn-save:hover { background: rgba(74,222,128,0.18); }
-.btn-export-json { background: rgba(56,189,248,0.1); border-color: rgba(56,189,248,0.3); color: var(--mei); }
-.btn-export-json:hover { background: rgba(56,189,248,0.18); }
-.btn-export-pdf { background: rgba(249,115,22,0.1); border-color: rgba(249,115,22,0.3); color: var(--accent2); }
-.btn-export-pdf:hover { background: rgba(249,115,22,0.18); }
-.btn-import { background: rgba(255,255,255,0.04); border-color: var(--border-bright); color: var(--muted); }
-.btn-import:hover { border-color: var(--text); color: var(--text); }
+/* REGIME */
+.regime-selector{display:flex;flex-direction:column;gap:7px;}
+.regime-option{display:flex;align-items:flex-start;gap:9px;background:var(--surface2);border:1px solid var(--border-bright);border-radius:9px;padding:9px 11px;cursor:pointer;transition:all .2s;user-select:none;}
+.regime-option:hover{border-color:rgba(249,115,22,.3);}
+.regime-option.selected{border-color:var(--accent);background:rgba(249,115,22,.08);}
+.regime-dot{width:15px;height:15px;border-radius:50%;border:2px solid var(--border-bright);margin-top:2px;flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+.regime-option.selected .regime-dot{border-color:var(--accent);background:var(--accent);}
+.regime-dot::after{content:'';width:5px;height:5px;border-radius:50%;background:white;display:none;}
+.regime-option.selected .regime-dot::after{display:block;}
+.regime-name{font-size:.78rem;font-weight:700;}
+.regime-desc{font-size:.65rem;color:var(--muted);margin-top:2px;line-height:1.4;}
+.mei-tipo{margin-top:9px;display:none;}
+.mei-tipo.show{display:block;}
+.mei-tipo-label{font-size:.65rem;color:var(--muted);font-weight:700;margin-bottom:6px;}
+.mei-tipo-opts{display:flex;gap:5px;}
+.mei-tipo-btn{flex:1;padding:6px 5px;background:var(--surface2);border:1px solid var(--border-bright);border-radius:7px;color:var(--muted);font-family:'Sora',sans-serif;font-size:.67rem;font-weight:600;cursor:pointer;text-align:center;transition:all .2s;}
+.mei-tipo-btn.active{background:rgba(56,189,248,.12);border-color:var(--mei);color:var(--mei);}
+.config-btn{width:100%;padding:9px;background:transparent;border:1px solid rgba(249,115,22,.35);color:var(--accent2);border-radius:8px;cursor:pointer;font-family:'Sora',sans-serif;font-size:.75rem;font-weight:600;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:5px;}
+.config-btn:hover{background:rgba(249,115,22,.1);border-color:var(--accent);}
 
 /* RESULTS */
-.results { padding: 22px 24px; display: flex; flex-direction: column; gap: 16px; }
-.winner-banner { background: linear-gradient(135deg, rgba(251,191,36,0.07), rgba(249,115,22,0.07)); border: 1px solid rgba(251,191,36,0.2); border-radius: 11px; padding: 13px 18px; display: flex; align-items: center; gap: 12px; font-size: 0.82rem; flex-wrap: wrap; }
-.winner-text strong { color: var(--gold); font-weight: 700; }
-.winner-text span { color: var(--muted); font-size: 0.76rem; }
-
-/* ALERT LEAO */
-.alert-leao { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.3); border-radius: 11px; padding: 12px 18px; display: none; gap: 10px; align-items: flex-start; font-size: 0.8rem; color: var(--warn); }
-.alert-leao.show { display: flex; }
-.alert-leao strong { display: block; font-weight: 700; margin-bottom: 2px; }
-.alert-leao span { color: var(--muted); font-size: 0.75rem; }
-
-.cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.results{padding:20px 22px;display:flex;flex-direction:column;gap:14px;}
+.empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:60px 20px;text-align:center;}
+.empty-icon{font-size:2.5rem;opacity:.4;}
+.empty-title{font-size:1rem;font-weight:700;color:var(--muted);}
+.empty-sub{font-size:.78rem;color:var(--muted);opacity:.7;max-width:300px;line-height:1.6;}
+.winner-banner{background:linear-gradient(135deg,rgba(251,191,36,.07),rgba(249,115,22,.07));border:1px solid rgba(251,191,36,.2);border-radius:11px;padding:12px 16px;display:flex;align-items:center;gap:11px;font-size:.8rem;flex-wrap:wrap;}
+.winner-text strong{color:var(--gold);font-weight:700;}
+.winner-text span{color:var(--muted);font-size:.74rem;}
+.alert-leao{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:11px;padding:11px 16px;display:none;gap:9px;align-items:flex-start;font-size:.78rem;color:var(--warn);}
+.alert-leao.show{display:flex;}
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
 
 /* CARDS */
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden; transition: border-color 0.3s; }
-.card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-.card.mei::before { background: var(--mei); }
-.card.simples::before { background: var(--simples); }
-.card.leao::before { background: var(--leao); }
-.card.meu-regime { border-color: rgba(249,115,22,0.5); box-shadow: 0 0 30px rgba(249,115,22,0.07); }
-.card.meu-regime::before { background: var(--accent); height: 4px; }
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;transition:border-color .3s;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.card.mei::before{background:var(--mei);}
+.card.simples::before{background:var(--simples);}
+.card.leao::before{background:var(--leao);}
+.card.meu-regime{border-color:rgba(249,115,22,.5);box-shadow:0 0 28px rgba(249,115,22,.06);}
+.card.meu-regime::before{background:var(--accent);height:4px;}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:7px;}
+.card-title{font-size:.83rem;font-weight:700;}
+.card-subtitle{font-size:.65rem;color:var(--muted);margin-top:2px;}
+.badges{display:flex;flex-direction:column;gap:4px;align-items:flex-end;}
+.badge-pill{font-size:.58rem;font-weight:700;letter-spacing:.07em;padding:2px 8px;border-radius:20px;text-transform:uppercase;white-space:nowrap;}
+.pill-meu{background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.35);color:var(--accent);}
+.pill-best{background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);color:var(--gold);}
+.pill-warn{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);color:var(--warn);}
+.nf-box{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:13px;text-align:center;}
+.nf-label{font-size:.6rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:3px;}
+.nf-value{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:600;letter-spacing:-.02em;}
+.nf-split{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;}
+.nf-sub{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:7px;padding:6px 8px;}
+.nf-sub-label{font-size:.58rem;color:var(--muted);font-weight:700;letter-spacing:.07em;text-transform:uppercase;}
+.nf-sub-val{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;margin-top:2px;}
+.delta-box{border-radius:8px;padding:8px 11px;font-size:.73rem;display:flex;justify-content:space-between;align-items:center;gap:7px;}
+.delta-box.economia{background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.18);}
+.delta-box.custo{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.18);}
+.delta-box.neutro{background:rgba(255,255,255,.04);border:1px solid var(--border);}
+.delta-label{color:var(--muted);}
+.delta-val{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.8rem;}
+.delta-val.pos{color:var(--simples);}
+.delta-val.neg{color:var(--leao);}
+.delta-val.zero{color:var(--muted);}
+.details{display:flex;flex-direction:column;gap:5px;}
+.detail-row{display:flex;justify-content:space-between;align-items:center;font-size:.73rem;}
+.detail-row .lbl{color:var(--muted);}
+.detail-row .val{font-family:'JetBrains Mono',monospace;font-size:.71rem;font-weight:600;display:flex;align-items:center;gap:4px;}
+.itag{font-size:.56rem;font-weight:700;padding:2px 5px;border-radius:4px;}
+.itag.tax{background:rgba(248,113,113,.15);color:var(--leao);}
+.itag.ok{background:rgba(74,222,128,.1);color:var(--simples);}
+.itag.neutral{background:rgba(255,255,255,.06);color:var(--muted);}
+.divider{height:1px;background:var(--border);}
+.preco-cliente{border-radius:8px;padding:8px 11px;background:rgba(255,255,255,.03);border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.preco-cliente-lbl{font-size:.65rem;color:var(--muted);font-weight:600;}
+.preco-cliente-val{font-family:'JetBrains Mono',monospace;font-size:.92rem;font-weight:700;}
+.preco-diff{font-size:.63rem;margin-top:2px;text-align:right;}
+.profit-box{margin-top:auto;border-radius:10px;padding:12px 14px;text-align:center;}
+.profit-box.mei-bg{background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.2);}
+.profit-box.simples-bg{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);}
+.profit-box.leao-bg{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);}
+.profit-box.meu-bg{background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.25);}
+.profit-label{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+.profit-val{font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:700;display:block;}
+.profit-val.mei-c{color:var(--mei);}
+.profit-val.simples-c{color:var(--simples);}
+.profit-val.leao-c{color:var(--leao);}
+.profit-val.accent-c{color:var(--accent);}
+.profit-perc{font-size:.7rem;color:var(--muted);margin-top:2px;}
+/* leao detail IR */
+.ir-detail{font-size:.67rem;color:var(--muted);margin-top:4px;line-height:1.5;}
+.ir-detail strong{color:var(--leao);}
 
-.card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-.card-title { font-size: 0.85rem; font-weight: 700; color: var(--text); }
-.card-subtitle { font-size: 0.67rem; color: var(--muted); margin-top: 2px; }
-.badges { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; }
-.badge-pill { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.07em; padding: 3px 9px; border-radius: 20px; text-transform: uppercase; white-space: nowrap; }
-.pill-meu { background: rgba(249,115,22,0.15); border: 1px solid rgba(249,115,22,0.35); color: var(--accent); }
-.pill-best { background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.3); color: var(--gold); }
-.pill-warn { background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.3); color: var(--warn); }
+/* FISCAL DRAWER */
+.fiscal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:300;opacity:0;pointer-events:none;transition:opacity .3s;}
+.fiscal-overlay.open{opacity:1;pointer-events:all;}
+.fiscal-drawer{position:fixed;top:0;right:0;bottom:0;width:520px;max-width:96vw;background:var(--surface);border-left:1px solid var(--border-bright);z-index:301;transform:translateX(110%);transition:transform .35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;}
+.fiscal-drawer.open{transform:translateX(0);}
+.fiscal-header{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.fiscal-header h2{font-size:.92rem;font-weight:700;display:flex;align-items:center;gap:8px;}
+.fiscal-close{background:transparent;border:1px solid var(--border-bright);color:var(--muted);width:30px;height:30px;border-radius:7px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:sans-serif;}
+.fiscal-close:hover{border-color:var(--text);color:var(--text);}
+.fiscal-body{flex:1;overflow-y:auto;padding:18px 22px;display:flex;flex-direction:column;gap:16px;}
 
-/* NF BOX */
-.nf-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; }
-.nf-label { font-size: 0.62rem; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; margin-bottom: 3px; }
-.nf-value { font-family: 'JetBrains Mono', monospace; font-size: 1.55rem; font-weight: 600; letter-spacing: -0.02em; }
-.nf-split { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 9px; }
-.nf-sub { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 7px; padding: 7px 9px; }
-.nf-sub-label { font-size: 0.6rem; color: var(--muted); font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
-.nf-sub-val { font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; font-weight: 600; color: var(--text); margin-top: 2px; }
-
-/* DELTA vs meu regime */
-.delta-box { border-radius: 8px; padding: 9px 12px; font-size: 0.75rem; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-.delta-box.economia { background: rgba(74,222,128,0.07); border: 1px solid rgba(74,222,128,0.18); }
-.delta-box.custo { background: rgba(248,113,113,0.07); border: 1px solid rgba(248,113,113,0.18); }
-.delta-box.neutro { background: rgba(255,255,255,0.04); border: 1px solid var(--border); }
-.delta-label { color: var(--muted); }
-.delta-val { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.82rem; }
-.delta-val.pos { color: var(--simples); }
-.delta-val.neg { color: var(--leao); }
-.delta-val.zero { color: var(--muted); }
-
-/* DETAILS */
-.details { display: flex; flex-direction: column; gap: 6px; }
-.detail-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; }
-.detail-row .lbl { color: var(--muted); }
-.detail-row .val { font-family: 'JetBrains Mono', monospace; font-size: 0.73rem; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 5px; }
-.tag { font-size: 0.58rem; font-weight: 700; padding: 2px 5px; border-radius: 4px; }
-.tag.tax { background: rgba(248,113,113,0.15); color: var(--leao); }
-.tag.ok { background: rgba(74,222,128,0.1); color: var(--simples); }
-.tag.neutral { background: rgba(255,255,255,0.06); color: var(--muted); }
-.divider { height: 1px; background: var(--border); }
-
-/* PRECO CLIENTE */
-.preco-cliente { border-radius: 8px; padding: 9px 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-.preco-cliente-lbl { font-size: 0.68rem; color: var(--muted); font-weight: 600; }
-.preco-cliente-val { font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; font-weight: 700; color: var(--text); }
-.preco-cliente-diff { font-size: 0.65rem; margin-top: 2px; text-align: right; }
-
-/* PROFIT */
-.profit-box { margin-top: auto; border-radius: 10px; padding: 13px 15px; text-align: center; }
-.profit-box.mei-bg { background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.2); }
-.profit-box.simples-bg { background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.2); }
-.profit-box.leao-bg { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.2); }
-.profit-box.meu-bg { background: rgba(249,115,22,0.08); border: 1px solid rgba(249,115,22,0.25); }
-.profit-label { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
-.profit-val { font-family: 'JetBrains Mono', monospace; font-size: 1.35rem; font-weight: 700; display: block; }
-.profit-val.mei-c { color: var(--mei); }
-.profit-val.simples-c { color: var(--simples); }
-.profit-val.leao-c { color: var(--leao); }
-.profit-val.accent-c { color: var(--accent); }
-.profit-perc { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+/* PAINEL FISCAL elementos */
+.period-bar{display:flex;gap:6px;flex-wrap:wrap;}
+.period-btn{padding:5px 11px;border-radius:6px;font-size:.7rem;font-weight:600;border:1px solid var(--border-bright);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;font-family:'Sora',sans-serif;}
+.period-btn.active{background:rgba(249,115,22,.15);border-color:var(--accent);color:var(--accent);}
+.period-custom{display:none;gap:6px;align-items:center;margin-top:8px;flex-wrap:wrap;}
+.period-custom.show{display:flex;}
+.period-custom input[type="date"]{background:var(--surface2);border:1px solid var(--border-bright);color:var(--text);font-family:'Sora',sans-serif;font-size:.72rem;padding:5px 8px;border-radius:7px;outline:none;}
+.period-custom input[type="date"]:focus{border-color:var(--accent);}
+.fp-section{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;}
+.fp-title{font-size:.63rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:13px;display:flex;align-items:center;gap:7px;}
+.fp-title::before{content:'';width:3px;height:9px;background:var(--accent);border-radius:2px;display:inline-block;flex-shrink:0;}
+.termo-labels{display:flex;justify-content:space-between;font-size:.68rem;color:var(--muted);margin-bottom:6px;}
+.termo-labels strong{color:var(--text);}
+.termo-bar{height:14px;background:rgba(255,255,255,.06);border-radius:7px;overflow:hidden;}
+.termo-fill{height:100%;border-radius:7px;transition:width .6s cubic-bezier(.4,0,.2,1);}
+.termo-pct{text-align:center;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;margin-top:6px;}
+.termo-zonas{display:flex;gap:8px;margin-top:8px;font-size:.62rem;color:var(--muted);flex-wrap:wrap;}
+.zona{display:flex;align-items:center;gap:3px;}
+.zona-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.stat-box{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:9px;padding:11px 13px;}
+.stat-label{font-size:.6rem;color:var(--muted);font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:5px;}
+.stat-val{font-family:'JetBrains Mono',monospace;font-size:1.05rem;font-weight:700;}
+.stat-val.green{color:var(--simples);}
+.stat-val.blue{color:var(--mei);}
+.stat-val.orange{color:var(--accent);}
+.stat-val.red{color:var(--leao);}
+.stat-sub{font-size:.62rem;color:var(--muted);margin-top:3px;}
+.proj-box{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);border-radius:9px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start;}
+.proj-text strong{display:block;font-size:.78rem;color:var(--gold);font-weight:700;margin-bottom:3px;}
+.proj-text span{font-size:.71rem;color:var(--muted);line-height:1.5;}
+.ir-table{width:100%;border-collapse:collapse;font-size:.72rem;}
+.ir-table th{text-align:left;color:var(--muted);font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 8px;border-bottom:1px solid var(--border);}
+.ir-table td{padding:7px 8px;border-bottom:1px solid rgba(255,255,255,.04);font-family:'JetBrains Mono',monospace;font-size:.7rem;}
+.ir-table td:first-child{font-family:'Sora',sans-serif;font-size:.72rem;}
+.ir-table tr.ativa td{background:rgba(249,115,22,.08);color:var(--accent2);}
+.ir-table tr.ativa td:first-child{border-left:2px solid var(--accent);padding-left:6px;}
+.minichart{display:flex;align-items:flex-end;gap:5px;height:80px;padding-top:8px;}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.bar{width:100%;border-radius:3px 3px 0 0;min-height:3px;transition:height .4s;}
+.bar-label{font-size:.58rem;color:var(--muted);}
+.os-list{display:flex;flex-direction:column;gap:7px;max-height:220px;overflow-y:auto;}
+.os-item{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:9px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.os-num{font-size:.72rem;font-weight:700;}
+.os-cli{font-size:.65rem;color:var(--muted);}
+.os-date-lbl{font-size:.6rem;color:var(--muted);margin-top:1px;}
+.os-nf{font-family:'JetBrains Mono',monospace;font-size:.83rem;font-weight:700;color:var(--simples);}
+.os-lucro{font-size:.62rem;color:var(--muted);margin-top:2px;text-align:right;}
+.os-empty{font-size:.75rem;color:var(--muted);text-align:center;padding:20px 0;}
+.limite-item{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:9px;padding:10px 12px;margin-bottom:8px;}
+.limite-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.limite-name{font-size:.73rem;font-weight:700;}
+.limite-mono{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--muted);}
+.limite-bar{height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;}
+.limite-fill{height:100%;border-radius:3px;transition:width .5s;}
+.limite-sub{font-size:.62rem;color:var(--muted);margin-top:4px;}
+.ir-alert{border-radius:9px;padding:11px 13px;display:flex;gap:9px;align-items:flex-start;margin-bottom:10px;}
+.ir-alert.ok{background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.2);}
+.ir-alert.warn{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.25);}
+.ir-alert.danger{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);}
+.ir-alert strong{display:block;font-size:.78rem;font-weight:700;margin-bottom:2px;}
+.ir-alert span{font-size:.7rem;color:var(--muted);line-height:1.5;}
 
 /* MODAL */
-.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.72); z-index: 200; align-items: center; justify-content: center; }
-.overlay.open { display: flex; }
-.modal { background: var(--surface); border: 1px solid var(--border-bright); border-radius: 16px; padding: 28px; width: 370px; max-width: 92vw; }
-.modal h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 18px; display: flex; align-items: center; gap: 9px; }
-.modal-field { margin-bottom: 12px; }
-.modal-field label { display: block; font-size: 0.72rem; color: var(--muted); font-weight: 600; margin-bottom: 5px; }
-.modal-field input { width: 100%; }
-.modal-actions { display: flex; gap: 9px; margin-top: 18px; }
-.btn-primary { flex: 1; padding: 10px; background: var(--accent); border: none; color: #fff; font-family: 'Sora', sans-serif; font-size: 0.82rem; font-weight: 700; border-radius: 8px; cursor: pointer; transition: opacity 0.2s; }
-.btn-primary:hover { opacity: 0.87; }
-.btn-ghost { padding: 10px 16px; background: transparent; border: 1px solid var(--border-bright); color: var(--muted); font-family: 'Sora', sans-serif; font-size: 0.82rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
-.btn-ghost:hover { border-color: var(--text); color: var(--text); }
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:400;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:var(--surface);border:1px solid var(--border-bright);border-radius:16px;padding:26px;width:360px;max-width:92vw;}
+.modal-box h3{font-size:.92rem;font-weight:700;margin-bottom:16px;}
+.mfield{margin-bottom:11px;}
+.mfield label{display:block;font-size:.7rem;color:var(--muted);font-weight:600;margin-bottom:5px;}
+.mfield input{width:100%;}
+.modal-actions{display:flex;gap:8px;margin-top:16px;}
+.btn-primary{flex:1;padding:9px;background:var(--accent);border:none;color:#fff;font-family:'Sora',sans-serif;font-size:.8rem;font-weight:700;border-radius:8px;cursor:pointer;}
+.btn-primary:hover{opacity:.88;}
+.btn-ghost{padding:9px 14px;background:transparent;border:1px solid var(--border-bright);color:var(--muted);font-family:'Sora',sans-serif;font-size:.8rem;font-weight:600;border-radius:8px;cursor:pointer;}
+.btn-ghost:hover{border-color:var(--text);color:var(--text);}
 
 /* TOAST */
-.toast { position: fixed; bottom: 28px; right: 28px; background: var(--surface); border: 1px solid var(--border-bright); border-radius: 10px; padding: 12px 18px; font-size: 0.8rem; font-weight: 600; color: var(--text); z-index: 500; transform: translateY(80px); opacity: 0; transition: all 0.35s; pointer-events: none; display: flex; align-items: center; gap: 8px; }
-.toast.show { transform: translateY(0); opacity: 1; }
-.toast .ti { font-size: 1rem; }
+.toast{position:fixed;bottom:24px;right:24px;background:var(--surface);border:1px solid var(--border-bright);border-radius:10px;padding:11px 16px;font-size:.78rem;font-weight:600;z-index:600;transform:translateY(70px);opacity:0;transition:all .3s;pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1;}
 
 /* FOOTER */
-footer { border-top: 1px solid var(--border); padding: 14px 28px; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.73rem; color: var(--muted); background: var(--surface); flex-wrap: wrap; }
-footer a { color: var(--accent2); text-decoration: none; font-weight: 600; transition: color 0.2s; }
-footer a:hover { color: var(--accent); }
-footer .sep { opacity: 0.3; margin: 0 4px; }
+footer{border-top:1px solid var(--border);padding:13px 24px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:.71rem;color:var(--muted);background:var(--surface);flex-wrap:wrap;}
+footer a{color:var(--accent2);text-decoration:none;font-weight:600;}
+footer a:hover{color:var(--accent);}
+footer .sep{opacity:.3;margin:0 4px;}
+#file-input{display:none;}
 
-/* HIDDEN FILE INPUT */
-#file-input { display: none; }
-
-/* RESPONSIVE */
-@media (max-width: 920px) {
-  .app-body { grid-template-columns: 1fr; }
-  .sidebar { max-height: none; position: static; }
-  .cards-grid { grid-template-columns: 1fr; }
-  header { padding: 12px 16px; }
-  .results { padding: 16px; }
-  .os-bar { padding: 10px 16px; }
+@media(max-width:900px){
+  .app-body{grid-template-columns:1fr;}
+  .sidebar{max-height:none;position:static;}
+  .cards-grid{grid-template-columns:1fr;}
+  .fiscal-drawer{width:100vw;}
 }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <div class="logo">
     <svg class="logo-icon" viewBox="0 0 36 36" fill="none">
-      <path d="M18 3 C10 10 6 16 10 21 C13 25 15 23 18 28 C21 23 23 25 26 21 C30 16 26 10 18 3Z" fill="#f97316" opacity="0.9"/>
+      <path d="M18 3 C10 10 6 16 10 21 C13 25 15 23 18 28 C21 23 23 25 26 21 C30 16 26 10 18 3Z" fill="#f97316" opacity=".9"/>
       <path d="M18 10 C14 15 13 18 15 21 C16.5 23 17 22 18 24 C19 22 19.5 23 21 21 C23 18 22 15 18 10Z" fill="#fbbf24"/>
-      <path d="M18 26 L16 33 L18 31 L20 33 Z" fill="#f97316" opacity="0.7"/>
+      <path d="M18 26 L16 33 L18 31 L20 33 Z" fill="#f97316" opacity=".7"/>
     </svg>
-    <div>
-      <div class="logo-text">Fênix <span>|</span> Sistema de Cobrança Real</div>
-    </div>
+    <div class="logo-text">Fênix <span>|</span> Sistema de Cobrança Real</div>
   </div>
   <div class="header-actions">
-    <button class="btn-action btn-import" onclick="document.getElementById('file-input').click()">
-      ↑ Importar JSON
-    </button>
-    <button class="btn-action btn-save" onclick="salvarLocal()">
-      ✦ Salvar
-    </button>
-    <button class="btn-action btn-export-json" onclick="exportarJSON()">
-      ↓ Exportar JSON
-    </button>
-    <button class="btn-action btn-export-pdf" onclick="exportarPDF()">
-      ↓ Exportar PDF
-    </button>
+    <button class="btn-action btn-fiscal" onclick="abrirFiscal()">📊 Painel Fiscal</button>
+    <button class="btn-action btn-limpar" onclick="limparFormulario()">✕ Limpar</button>
+    <button class="btn-action btn-import" onclick="document.getElementById('file-input').click()">↑ Importar</button>
+    <button class="btn-action btn-save" onclick="salvarLocal()">✦ Salvar</button>
+    <button class="btn-action btn-json" onclick="exportarJSON()">↓ JSON</button>
+    <button class="btn-action btn-pdf" onclick="exportarPDF()">↓ PDF</button>
   </div>
-  <div class="version-badge">v1.8</div>
+  <div class="version-badge">v1.9.2</div>
 </header>
 
-<!-- OS BAR -->
 <div class="os-bar">
-  <div class="os-field" style="min-width:220px">
+  <div class="os-field">
     <label>Cliente</label>
-    <input type="text" id="os_cliente" placeholder="Nome do cliente" oninput="calc()">
+    <input type="text" id="os_cliente" placeholder="Nome do cliente">
   </div>
-  <div class="os-field" style="min-width:140px">
+  <div class="os-field">
     <label>Nº Ordem de Serviço</label>
-    <input type="text" id="os_numero" placeholder="OS-2026-001" oninput="calc()">
+    <input type="text" id="os_numero" placeholder="OS-2026-001">
   </div>
   <div class="os-date" id="os_date"></div>
 </div>
 
-<input type="file" id="file-input" accept=".json" onchange="importarJSON(event)">
+<input type="file" id="file-input" accept=".json">
 
 <div class="app-body">
-  <!-- SIDEBAR -->
   <aside class="sidebar">
 
     <div class="section-label">Meu Regime Tributário</div>
     <div class="regime-selector">
-      <label class="regime-option selected" id="opt-mei" onclick="setRegime('mei')">
-        <input type="radio" name="regime" value="mei" checked>
+      <div class="regime-option selected" id="opt-mei" onclick="setRegime('mei')">
         <div class="regime-dot"></div>
-        <div class="regime-info">
+        <div>
           <div class="regime-name">MEI</div>
-          <div class="regime-desc">Microempreendedor Individual — DAS fixo mensal</div>
+          <div class="regime-desc">DAS fixo mensal · Até R$ 81.000/ano</div>
         </div>
-      </label>
+      </div>
       <div class="mei-tipo show" id="mei-tipo-box">
         <div class="mei-tipo-label">Tipo de operação MEI</div>
         <div class="mei-tipo-opts">
@@ -285,99 +322,104 @@ footer .sep { opacity: 0.3; margin: 0 4px; }
           <button class="mei-tipo-btn active" id="mt-amb" onclick="setMeiTipo('ambos')">Ambos</button>
         </div>
       </div>
-      <label class="regime-option" id="opt-simples" onclick="setRegime('simples')">
-        <input type="radio" name="regime" value="simples">
+      <div class="regime-option" id="opt-simples" onclick="setRegime('simples')">
         <div class="regime-dot"></div>
-        <div class="regime-info">
+        <div>
           <div class="regime-name">Simples Nacional</div>
-          <div class="regime-desc">Anexo I (comércio) + Anexo III (serviço)</div>
+          <div class="regime-desc">Anexo I + III · Até R$ 4.800.000/ano</div>
         </div>
-      </label>
-      <label class="regime-option" id="opt-leao" onclick="setRegime('leao')">
-        <input type="radio" name="regime" value="leao">
+      </div>
+      <div class="regime-option" id="opt-leao" onclick="setRegime('leao')">
         <div class="regime-dot"></div>
-        <div class="regime-info">
+        <div>
           <div class="regime-name">Carnê Leão / Informal</div>
-          <div class="regime-desc">CPF — tabela progressiva IRPF</div>
+          <div class="regime-desc">CPF · Tabela progressiva IRPF 2026</div>
         </div>
-      </label>
+      </div>
     </div>
 
     <div class="section-label">Base de Investimento</div>
     <div class="field">
       <div class="field-label">Produto (Nota de Compra)</div>
-      <div class="input-wrap"><input type="number" id="cost_prod" value="1950.78" oninput="calc()"></div>
+      <div class="input-wrap"><input type="number" id="cost_prod" placeholder="0,00" oninput="calc()"></div>
     </div>
     <div class="field">
       <div class="field-label">Custo Colaborador <button class="toggle-btn" id="mode_colab" onclick="toggleMode('colab')">R$</button></div>
-      <div class="input-wrap"><input type="number" id="val_colab" value="573" oninput="calc()"></div>
+      <div class="input-wrap"><input type="number" id="val_colab" placeholder="0,00" oninput="calc()"></div>
     </div>
     <div class="field">
       <div class="field-label">Sua Mão de Obra</div>
-      <div class="input-wrap"><input type="number" id="val_minha_mo" value="850" oninput="calc()"></div>
+      <div class="input-wrap"><input type="number" id="val_minha_mo" placeholder="0,00" oninput="calc()"></div>
     </div>
 
     <div class="section-label">Margens Desejadas (protegidas)</div>
     <div class="field">
       <div class="field-label">Lucro s/ Produto <button class="toggle-btn" id="mode_l_prod" onclick="toggleMode('l_prod')">%</button></div>
-      <div class="input-wrap"><input type="number" id="val_l_prod" value="20" oninput="calc()"></div>
+      <div class="input-wrap"><input type="number" id="val_l_prod" placeholder="0" oninput="calc()"></div>
     </div>
     <div class="field">
       <div class="field-label">Lucro s/ Colaborador <button class="toggle-btn" id="mode_l_colab" onclick="toggleMode('l_colab')">%</button></div>
-      <div class="input-wrap"><input type="number" id="val_l_colab" value="15" oninput="calc()"></div>
+      <div class="input-wrap"><input type="number" id="val_l_colab" placeholder="0" oninput="calc()"></div>
     </div>
     <div class="field">
       <div class="field-label">Sua Margem <button class="toggle-btn" id="mode_l_minha" onclick="toggleMode('l_minha')">%</button></div>
-      <div class="input-wrap"><input type="number" id="val_l_minha" value="10" oninput="calc()"></div>
+      <div class="input-wrap"><input type="number" id="val_l_minha" placeholder="0" oninput="calc()"></div>
     </div>
 
     <div class="section-label">Extras e Cartão</div>
     <div class="field">
       <div class="field-label">Comissão Indicação <button class="toggle-btn" id="mode_comis" onclick="toggleMode('comis')">%</button></div>
-      <div class="input-wrap"><input type="number" id="val_comis" value="5" oninput="calc()"></div>
+      <div class="input-wrap"><input type="number" id="val_comis" placeholder="0" oninput="calc()"></div>
     </div>
     <div class="field">
       <div class="field-label">Taxa Cartão (%)</div>
-      <div class="input-wrap"><input type="number" id="tax_cartao" value="3.5" oninput="calc()"></div>
+      <div class="input-wrap"><input type="number" id="tax_cartao" placeholder="0,00" oninput="calc()"></div>
     </div>
-
-    <button class="config-btn" onclick="openModal()">
-      ⚙ Alíquotas Federais 2026
-    </button>
-
+    <button class="config-btn" onclick="openModal()">⚙ Alíquotas Federais 2026</button>
   </aside>
 
-  <!-- RESULTS -->
-  <main class="results">
-    <div id="winner-area"></div>
-    <div id="alert-leao" class="alert-leao">
-      <span style="font-size:1.2rem">⚠</span>
-      <div>
-        <strong>Atenção: Carnê Leão inviável comercialmente</strong>
-        <span id="alert-leao-text"></span>
-      </div>
+  <main class="results" id="results-area">
+    <div class="empty-state" id="empty-state">
+      <div class="empty-icon">🔥</div>
+      <div class="empty-title">Pronto para calcular</div>
+      <div class="empty-sub">Preencha os valores no painel lateral para gerar a comparação entre os regimes tributários.</div>
     </div>
-    <div class="cards-grid" id="cards"></div>
   </main>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <span>© <a href="https://wa.me/5579999680880" target="_blank" rel="noopener">Cristiano Fênix</a></span>
-  <span class="sep">|</span>
-  <span>2026</span>
-  <span class="sep">|</span>
+  <span class="sep">|</span><span>2026</span><span class="sep">|</span>
   <a href="https://instagram.com/fenixsolucoestecnologicas" target="_blank" rel="noopener">Fênix Soluções Tecnológicas</a>
 </footer>
 
+<!-- FISCAL DRAWER -->
+<div class="fiscal-overlay" id="fiscal-overlay"></div>
+<div class="fiscal-drawer" id="fiscal-drawer">
+  <div class="fiscal-header">
+    <h2>📊 Painel Fiscal &amp; Contabilidade</h2>
+    <button class="fiscal-close" onclick="fecharFiscal()">✕</button>
+  </div>
+  <div class="fiscal-body" id="fiscal-body"></div>
+</div>
+
 <!-- MODAL ALÍQUOTAS -->
-<div class="overlay" id="overlay" onclick="handleOverlay(event)">
-  <div class="modal" onclick="event.stopPropagation()">
-    <h3>⚙ Configurações Tributárias</h3>
-    <div class="modal-field"><label>DAS MEI Mensal (R$)</label><input type="number" id="aliq_mei" value="76.60"></div>
-    <div class="modal-field"><label>Simples Nacional — Comércio (%)</label><input type="number" id="aliq_simples_com" value="4.0"></div>
-    <div class="modal-field"><label>Simples Nacional — Serviço (%)</label><input type="number" id="aliq_simples_ser" value="6.0"></div>
-    <div class="modal-field"><label>Carnê Leão — Alíquota efetiva (%)</label><input type="number" id="aliq_leao" value="27.5"></div>
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <h3>⚙ Alíquotas Federais 2026</h3>
+    <!-- DAS MEI removido do cálculo por OS -->
+    <div class="mfield"><label>Simples Nacional — Comércio (%)</label><input type="number" id="aliq_simples_com" value="4.0"></div>
+    <div class="mfield"><label>Simples Nacional — Serviço (%)</label><input type="number" id="aliq_simples_ser" value="6.0"></div>
+    <div class="mfield" style="background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.2);border-radius:8px;padding:10px;">
+      <div style="font-size:.68rem;color:var(--leao);font-weight:700;margin-bottom:8px;">⚠ Carnê Leão — calculado pela tabela progressiva real (não editável)</div>
+      <div style="font-size:.65rem;color:var(--muted);line-height:1.6;">
+        Até R$ 2.259,20 → isento<br>
+        R$ 2.259,21–2.826,65 → 7,5% (ded. R$ 169,44)<br>
+        R$ 2.826,66–3.751,05 → 15% (ded. R$ 381,44)<br>
+        R$ 3.751,06–4.664,68 → 22,5% (ded. R$ 662,77)<br>
+        Acima de R$ 4.664,68 → 27,5% (ded. R$ 896,00)
+      </div>
+    </div>
     <div class="modal-actions">
       <button class="btn-ghost" onclick="closeModal()">Cancelar</button>
       <button class="btn-primary" onclick="closeModal()">Aplicar</button>
@@ -385,479 +427,756 @@ footer .sep { opacity: 0.3; margin: 0 4px; }
   </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-/* ===== ESTADO ===== */
-const modes = { colab: 'R$', l_prod: '%', l_colab: '%', l_minha: '%', comis: '%' };
-let meuRegime = 'mei';
-let meiTipo = 'ambos';
+'use strict';
 
-/* ===== DATA ===== */
-(function() {
+/* ══════════════════════════════════════
+   TABELA PROGRESSIVA IRPF 2026
+══════════════════════════════════════ */
+const TABELA_IR = [
+  { ate: 2259.20,  aliq: 0,    ded: 0       },
+  { ate: 2826.65,  aliq: 7.5,  ded: 169.44  },
+  { ate: 3751.05,  aliq: 15,   ded: 381.44  },
+  { ate: 4664.68,  aliq: 22.5, ded: 662.77  },
+  { ate: Infinity, aliq: 27.5, ded: 896.00  },
+];
+
+/*
+  GROSS-UP com tabela progressiva:
+  Para achar o bruto tal que (bruto * aliq - ded) = imposto_desejado
+  e (bruto - imposto) = liquido_alvo, resolvemos iterativamente.
+
+  Formula direta por faixa:
+    liquido = bruto - (bruto * aliq/100 - ded) - outras_deducoes
+    liquido = bruto*(1 - aliq/100) + ded - outras_deducoes
+    bruto = (liquido_alvo - ded + outras_deducoes_fixas) / (1 - aliq/100 - tax_c - comis_pct)
+
+  Mas como não sabemos a faixa de antemão, resolvemos tentando cada faixa
+  e verificando se o bruto resultante cai dentro dela.
+*/
+function calcIR(rendimento) {
+  if (rendimento <= 0) return { imposto: 0, aliqEfetiva: 0, faixaIdx: 0 };
+  let faixaIdx = TABELA_IR.findIndex(f => rendimento <= f.ate);
+  if (faixaIdx < 0) faixaIdx = TABELA_IR.length - 1;
+  const f = TABELA_IR[faixaIdx];
+  const imposto = Math.max(0, rendimento * (f.aliq / 100) - f.ded);
+  return { imposto, aliqEfetiva: rendimento > 0 ? (imposto / rendimento * 100) : 0, faixaIdx };
+}
+
+/*
+  Gross-up Carnê Leão: dado alvo_liquido, encontra bruto tal que
+  bruto - IR(bruto) - tax_c*bruto - comis_pct*bruto - comis_fixo = alvo_liquido
+
+  Resolve por tentativa de faixa (a mais comum vai funcionar na primeira):
+*/
+function grossUpLeao(alvo_liquido, tax_c, comis_pct, comis_fixo_parcial) {
+  // Sem alvo não há nota — evita negativos e divisões problemáticas
+  if (alvo_liquido <= 0) return 0;
+
+  for (let fi = 0; fi < TABELA_IR.length; fi++) {
+    const f = TABELA_IR[fi];
+    const aliq = f.aliq / 100;
+    // bruto*(1 - aliq - tax_c - comis_pct) + ded = alvo_liquido + comis_fixo_parcial
+    // => bruto = (alvo + comis_fixo - ded) / (1 - aliq - taxas)
+    const denom = 1 - aliq - tax_c - comis_pct;
+    if (denom <= 0.001) continue;
+    const bruto = (alvo_liquido + comis_fixo_parcial - f.ded) / denom;
+    if (bruto <= 0) continue;
+    // Verificar se bruto cai na faixa correta (consistência)
+    const fi_check = TABELA_IR.findIndex(fx => bruto <= fx.ate);
+    const faixaReal = fi_check < 0 ? TABELA_IR.length - 1 : fi_check;
+    if (faixaReal === fi) return bruto;
+  }
+  // Fallback seguro: faixa máxima sem subtrair dedução (conservador)
+  const fMax = TABELA_IR[TABELA_IR.length - 1];
+  const denom = 1 - fMax.aliq/100 - tax_c - comis_pct;
+  return denom > 0 ? (alvo_liquido + comis_fixo_parcial) / denom : alvo_liquido;
+}
+
+/* ══════════════════════════════════════
+   ESTADO
+══════════════════════════════════════ */
+const modes = { colab:'R$', l_prod:'%', l_colab:'%', l_minha:'%', comis:'%' };
+let meuRegime  = 'mei';
+let meiTipo    = 'ambos';
+let periodoFiltro = 'ano';
+let periodoInicio = '', periodoFim = '';
+
+const LIMITES = { mei:81000, simples:4800000, leao:Infinity };
+
+/* Data */
+(function(){
   const d = new Date();
   document.getElementById('os_date').textContent =
-    d.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'long', year: 'numeric' });
+    d.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'long',year:'numeric'});
+  periodoInicio = d.getFullYear()+'-01-01';
+  periodoFim    = d.toISOString().slice(0,10);
 })();
 
-/* ===== UI HELPERS ===== */
-function toggleMode(key) {
-  modes[key] = modes[key] === '%' ? 'R$' : '%';
-  const btn = document.getElementById('mode_' + key);
-  btn.textContent = modes[key];
-  btn.classList.toggle('on', modes[key] === 'R$');
-  calc();
-}
-
-function setRegime(r) {
-  meuRegime = r;
-  ['mei','simples','leao'].forEach(x => document.getElementById('opt-' + x).classList.toggle('selected', x === r));
-  document.getElementById('mei-tipo-box').classList.toggle('show', r === 'mei');
-  calc();
-}
-
-function setMeiTipo(t) {
-  meiTipo = t;
-  ['comercio','servico','ambos'].forEach(x => {
-    document.getElementById('mt-' + x.slice(0,3)).classList.toggle('active', x === t);
-  });
-  calc();
-}
-
-function openModal() { document.getElementById('overlay').classList.add('open'); }
-function closeModal() { document.getElementById('overlay').classList.remove('open'); calc(); }
-function handleOverlay(e) { if (e.target === document.getElementById('overlay')) closeModal(); }
-
-function toast(msg, icon) {
+/* ══════════════════════════════════════
+   HELPERS
+══════════════════════════════════════ */
+function brl(v){ return (isNaN(v)||!isFinite(v)?0:v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
+function pct(v){ return (+v).toFixed(2)+'%'; }
+function nv(id){ return parseFloat(document.getElementById(id).value)||0; }
+function showToast(msg){
   const el = document.getElementById('toast');
-  el.innerHTML = (icon || '✦') + ' ' + msg;
+  el.textContent = msg;
   el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 2800);
+  setTimeout(()=>el.classList.remove('show'), 2800);
 }
 
-function n(id) { return parseFloat(document.getElementById(id).value) || 0; }
-function brl(v) { return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
-function pct(v) { return v.toFixed(2) + '%'; }
+/* ══════════════════════════════════════
+   UI
+══════════════════════════════════════ */
+function toggleMode(key){
+  modes[key] = modes[key]==='%' ? 'R$' : '%';
+  const btn = document.getElementById('mode_'+key);
+  btn.textContent = modes[key];
+  btn.classList.toggle('on', modes[key]==='R$');
+  calc();
+}
 
-/* ===== CÁLCULO ===== */
-function calc() {
-  const c_prod    = n('cost_prod');
-  const c_minha   = n('val_minha_mo');
-  const tax_c_pct = n('tax_cartao') / 100;
-  const a_mei     = n('aliq_mei');
-  const a_sc_com  = n('aliq_simples_com') / 100;
-  const a_sc_ser  = n('aliq_simples_ser') / 100;
-  const a_leao    = n('aliq_leao') / 100;
+function setRegime(r){
+  meuRegime = r;
+  ['mei','simples','leao'].forEach(x=>{
+    document.getElementById('opt-'+x).classList.toggle('selected', x===r);
+  });
+  document.getElementById('mei-tipo-box').classList.toggle('show', r==='mei');
+  calc();
+}
 
-  const c_colab = modes.colab === 'R$' ? n('val_colab') : c_prod * (n('val_colab') / 100);
-  const l_prod  = modes.l_prod  === '%' ? c_prod  * (n('val_l_prod')  / 100) : n('val_l_prod');
-  const l_colab = modes.l_colab === '%' ? c_colab * (n('val_l_colab') / 100) : n('val_l_colab');
-  const l_minha = modes.l_minha === '%' ? c_minha * (n('val_l_minha') / 100) : n('val_l_minha');
-  const comis_pct  = modes.comis === '%'  ? n('val_comis') / 100 : 0;
-  const comis_fixo = modes.comis === 'R$' ? n('val_comis') : 0;
+function setMeiTipo(t){
+  meiTipo = t;
+  const map = {comercio:'com', servico:'ser', ambos:'amb'};
+  Object.values(map).forEach(id=>document.getElementById('mt-'+id).classList.remove('active'));
+  document.getElementById('mt-'+map[t]).classList.add('active');
+  calc();
+}
 
-  /* Alvos líquidos por segmento */
+function openModal(){
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal(){
+  document.getElementById('modal-overlay').classList.remove('open');
+  calc();
+}
+document.getElementById('modal-overlay').addEventListener('click', function(e){
+  if(e.target===this) closeModal();
+});
+
+function abrirFiscal(){
+  document.getElementById('fiscal-overlay').classList.add('open');
+  document.getElementById('fiscal-drawer').classList.add('open');
+  renderFiscal();
+}
+function fecharFiscal(){
+  document.getElementById('fiscal-overlay').classList.remove('open');
+  document.getElementById('fiscal-drawer').classList.remove('open');
+}
+document.getElementById('fiscal-overlay').addEventListener('click', fecharFiscal);
+document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ fecharFiscal(); closeModal(); } });
+
+function limparFormulario(){
+  ['cost_prod','val_colab','val_minha_mo','val_l_prod','val_l_colab','val_l_minha','val_comis','tax_cartao'].forEach(id=>{
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('os_cliente').value = '';
+  document.getElementById('os_numero').value  = '';
+  // reset modos
+  ['colab','l_prod','l_colab','l_minha','comis'].forEach(k=>{
+    modes[k] = k==='colab' ? 'R$' : '%';
+    const btn = document.getElementById('mode_'+k);
+    btn.textContent = modes[k];
+    btn.classList.remove('on');
+  });
+  setRegime('mei');
+  setMeiTipo('ambos');
+  document.getElementById('results-area').innerHTML = `
+    <div class="empty-state" id="empty-state">
+      <div class="empty-icon">🔥</div>
+      <div class="empty-title">Pronto para calcular</div>
+      <div class="empty-sub">Preencha os valores no painel lateral para gerar a comparação entre os regimes tributários.</div>
+    </div>`;
+  showToast('✕ Formulário limpo');
+}
+
+/* ══════════════════════════════════════
+   CÁLCULO PRINCIPAL
+══════════════════════════════════════ */
+function calcRegimeNormal(imp_com, imp_ser, das, c_prod, c_colab, c_minha, l_prod, l_colab, l_minha, tax_c, comis_pct, comis_fixo){
   const alvo_com = c_prod + l_prod;
   const alvo_ser = c_colab + l_colab + c_minha + l_minha;
+  const div_com  = 1 - imp_com - tax_c - comis_pct;
+  const div_ser  = 1 - imp_ser - tax_c - comis_pct;
+  const bruto_com = div_com > 0.005 ? (alvo_com + comis_fixo*0.5) / div_com : alvo_com;
+  const bruto_ser = div_ser > 0.005 ? (alvo_ser + comis_fixo*0.5) / div_ser : alvo_ser;
+  const total_nf  = bruto_com + bruto_ser;
+  const v_imp_com = bruto_com * imp_com;
+  const v_imp_ser = bruto_ser * imp_ser;
+  const v_tax_c   = total_nf  * tax_c;
+  const v_comis   = total_nf  * comis_pct + comis_fixo;
+  const liquido   = total_nf - v_imp_com - v_imp_ser - v_tax_c - v_comis - das;
+  const lucro     = liquido - c_prod - c_colab;
+  const margem    = total_nf > 0 ? (lucro/total_nf*100) : 0;
+  return { bruto_com, bruto_ser, total_nf, v_imp_com, v_imp_ser, v_tax_c, v_comis, v_das:das, lucro, margem,
+           imp_com_pct: imp_com, imp_ser_pct: imp_ser, ir_detail: null };
+}
 
-  /* MEI: imposto varia conforme tipo */
-  const mei_imp_com = (meiTipo === 'servico') ? 0 : 0;
-  const mei_imp_ser = (meiTipo === 'comercio') ? 0 : 0;
+function calcRegimeLeao(c_prod, c_colab, c_minha, l_prod, l_colab, l_minha, tax_c, comis_pct, comis_fixo){
+  // Alvo líquido de cada segmento
+  const alvo_com = c_prod  + l_prod;
+  const alvo_ser = c_colab + l_colab + c_minha + l_minha;
 
-  const regimes = [
-    { id: 'mei',     label: 'MEI',             sub: 'Comércio + Serviço', cls: 'mei',
-      imp_com: mei_imp_com, imp_ser: mei_imp_ser, das: a_mei },
-    { id: 'simples', label: 'Simples Nacional', sub: 'Anexo I + III',      cls: 'simples',
-      imp_com: a_sc_com, imp_ser: a_sc_ser, das: 0 },
-    { id: 'leao',    label: 'Carnê Leão (CPF)', sub: 'Tabela progressiva', cls: 'leao',
-      imp_com: a_leao, imp_ser: a_leao, das: 0 },
-  ];
+  // Gross-up com tabela progressiva
+  const bruto_com = grossUpLeao(alvo_com, tax_c, comis_pct, comis_fixo * 0.5);
+  const bruto_ser = grossUpLeao(alvo_ser, tax_c, comis_pct, comis_fixo * 0.5);
+  const total_nf  = bruto_com + bruto_ser;
 
-  const results = regimes.map(r => {
-    const div_com = 1 - r.imp_com - tax_c_pct - comis_pct;
-    const div_ser = 1 - r.imp_ser - tax_c_pct - comis_pct;
-    const bruto_com = div_com > 0.01 ? (alvo_com + comis_fixo * 0.5) / div_com : alvo_com;
-    const bruto_ser = div_ser > 0.01 ? (alvo_ser + comis_fixo * 0.5) / div_ser : alvo_ser;
-    const total_nf  = bruto_com + bruto_ser;
-    const v_imp_com = bruto_com * r.imp_com;
-    const v_imp_ser = bruto_ser * r.imp_ser;
-    const v_tax_c   = total_nf * tax_c_pct;
-    const v_comis   = total_nf * comis_pct + comis_fixo;
-    const v_das     = r.das;
-    const liquido   = total_nf - v_imp_com - v_imp_ser - v_tax_c - v_comis - v_das;
-    const lucro_real = liquido - c_prod - c_colab;
-    const margem    = total_nf > 0 ? (lucro_real / total_nf) * 100 : 0;
-    return { ...r, bruto_com, bruto_ser, total_nf, v_imp_com, v_imp_ser, v_tax_c, v_comis, v_das, lucro_real, margem };
-  });
+  // IR real pelo total da receita mensal estimada
+  const ir_com = calcIR(bruto_com);
+  const ir_ser = calcIR(bruto_ser);
+  const v_imp_com = ir_com.imposto;
+  const v_imp_ser = ir_ser.imposto;
+  const v_tax_c   = total_nf * tax_c;
+  const v_comis   = total_nf * comis_pct + comis_fixo;
+  const liquido   = total_nf - v_imp_com - v_imp_ser - v_tax_c - v_comis;
+  const lucro     = liquido - c_prod - c_colab;
+  const margem    = total_nf > 0 ? (lucro/total_nf*100) : 0;
 
-  /* Regime do usuário */
-  const meuR = results.find(r => r.id === meuRegime);
+  // Alíquotas efetivas para exibição
+  const aliq_com_ef = bruto_com > 0 ? (v_imp_com/bruto_com*100) : 0;
+  const aliq_ser_ef = bruto_ser > 0 ? (v_imp_ser/bruto_ser*100) : 0;
 
-  /* Melhor lucro real */
-  const bestIdx = results.reduce((bi, r, i) => r.lucro_real > results[bi].lucro_real ? i : bi, 0);
+  const ir_detail = `Faixa comércio: ${TABELA_IR[ir_com.faixaIdx].aliq}% · Faixa serviço: ${TABELA_IR[ir_ser.faixaIdx].aliq}% · Alíq. efetiva: ${aliq_com_ef.toFixed(1)}% / ${aliq_ser_ef.toFixed(1)}%`;
 
-  /* Alerta Carnê Leão */
-  const leaoR = results.find(r => r.id === 'leao');
-  const diffLeao = meuR ? ((leaoR.total_nf - meuR.total_nf) / meuR.total_nf) * 100 : 0;
-  const alertEl = document.getElementById('alert-leao');
-  if (diffLeao > 15) {
-    alertEl.classList.add('show');
-    document.getElementById('alert-leao-text').textContent =
-      `O preço da nota no Carnê Leão (${brl(leaoR.total_nf)}) é ${diffLeao.toFixed(1)}% mais caro que no seu regime atual (${brl(meuR.total_nf)}). Comercialmente, isso pode afastar clientes.`;
-  } else {
-    alertEl.classList.remove('show');
+  return { bruto_com, bruto_ser, total_nf, v_imp_com, v_imp_ser, v_tax_c, v_comis, v_das:0,
+           lucro, margem, imp_com_pct: aliq_com_ef/100, imp_ser_pct: aliq_ser_ef/100, ir_detail };
+}
+
+function calc(){
+  const c_prod  = nv('cost_prod');
+  const c_minha = nv('val_minha_mo');
+  const tax_c   = nv('tax_cartao') / 100;
+  const a_sc_com = nv('aliq_simples_com') / 100;
+  const a_sc_ser = nv('aliq_simples_ser') / 100;
+
+  const c_colab = modes.colab==='R$' ? nv('val_colab') : c_prod*(nv('val_colab')/100);
+  const l_prod  = modes.l_prod==='%'  ? c_prod *(nv('val_l_prod') /100) : nv('val_l_prod');
+  const l_colab = modes.l_colab==='%' ? c_colab*(nv('val_l_colab')/100) : nv('val_l_colab');
+  const l_minha = modes.l_minha==='%' ? c_minha*(nv('val_l_minha')/100) : nv('val_l_minha');
+  const comis_pct  = modes.comis==='%'  ? nv('val_comis')/100 : 0;
+  const comis_fixo = modes.comis==='R$' ? nv('val_comis') : 0;
+
+  // Só renderiza se houver pelo menos custo de produto preenchido
+  if(c_prod <= 0 && c_colab <= 0 && c_minha <= 0){
+    document.getElementById('results-area').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🔥</div>
+        <div class="empty-title">Pronto para calcular</div>
+        <div class="empty-sub">Preencha os valores no painel lateral para gerar a comparação entre os regimes tributários.</div>
+      </div>`;
+    return;
   }
 
-  /* Winner banner */
-  const winner = results[bestIdx];
-  document.getElementById('winner-area').innerHTML = `
+  const rMEI     = { id:'mei',     label:'MEI',             sub:'Comércio + Serviço — Isento de impostos por OS', cls:'mei',
+    ...calcRegimeNormal(0, 0, 0, c_prod, c_colab, c_minha, l_prod, l_colab, l_minha, tax_c, comis_pct, comis_fixo) };
+  const rSimples = { id:'simples', label:'Simples Nacional', sub:'Anexo I + III',      cls:'simples',
+    ...calcRegimeNormal(a_sc_com, a_sc_ser, 0, c_prod, c_colab, c_minha, l_prod, l_colab, l_minha, tax_c, comis_pct, comis_fixo) };
+  const rLeao    = { id:'leao',    label:'Carnê Leão (CPF)', sub:'Tabela progressiva IRPF', cls:'leao',
+    ...calcRegimeLeao(c_prod, c_colab, c_minha, l_prod, l_colab, l_minha, tax_c, comis_pct, comis_fixo) };
+
+  const regimes  = [rMEI, rSimples, rLeao];
+  const meuR     = regimes.find(r=>r.id===meuRegime);
+
+  // Menor nota ao cliente = melhor para o cliente
+  const bestIdx  = regimes.reduce((bi,r,i)=> r.total_nf < regimes[bi].total_nf ? i : bi, 0);
+  regimes[bestIdx].best = true;
+
+  // Alerta Carnê Leão
+  const diffLeao = meuR && meuR.total_nf > 0 ? ((rLeao.total_nf - meuR.total_nf)/meuR.total_nf*100) : 0;
+
+  // Monta HTML
+  const winnerR = regimes[bestIdx];
+  let html = `
     <div class="winner-banner">
-      <span style="font-size:1.3rem">🏆</span>
+      <span style="font-size:1.2rem">🏆</span>
       <div class="winner-text">
-        Menor carga tributária: <strong>${winner.label}</strong> —
-        <span>nota de <strong style="color:var(--gold)">${brl(winner.total_nf)}</strong> com lucro de <strong style="color:var(--gold)">${brl(winner.lucro_real)}</strong></span>
+        Menor preço ao cliente: <strong>${winnerR.label}</strong> —
+        <span>nota de <strong style="color:var(--gold)">${brl(winnerR.total_nf)}</strong> · lucro de <strong style="color:var(--gold)">${brl(winnerR.lucro)}</strong></span>
       </div>
-    </div>
-  `;
+    </div>`;
 
-  /* Cards */
-  document.getElementById('cards').innerHTML = results.map((r, i) => {
+  if(diffLeao > 15){
+    html += `<div class="alert-leao show">
+      <span style="font-size:1.1rem">⚠</span>
+      <div><strong>Carnê Leão inviável comercialmente</strong>
+      O preço no Carnê Leão (${brl(rLeao.total_nf)}) é <strong>${diffLeao.toFixed(1)}%</strong> mais caro que no seu regime atual (${brl(meuR.total_nf)}). Isso afasta clientes.
+      </div></div>`;
+  }
+
+  html += '<div class="cards-grid">';
+  regimes.forEach((r, i)=>{
     const isMeu = r.id === meuRegime;
-    const isBest = i === bestIdx;
-    const isLeao = r.id === 'leao';
+    const isBest= i === bestIdx;
+    const isLeao= r.id === 'leao';
 
-    /* Delta vs meu regime */
+    // Delta vs meu regime
     let deltaHTML = '';
-    if (meuR) {
-      const diffImp = (r.v_imp_com + r.v_imp_ser + r.v_das) - (meuR.v_imp_com + meuR.v_imp_ser + meuR.v_das);
-      const diffPreco = r.total_nf - meuR.total_nf;
-      if (isMeu) {
-        deltaHTML = `<div class="delta-box neutro"><span class="delta-label">Este é o seu regime atual</span><span class="delta-val zero">referência</span></div>`;
+    if(meuR){
+      if(isMeu){
+        deltaHTML = `<div class="delta-box neutro"><span class="delta-label">Regime atual — referência</span><span class="delta-val zero">—</span></div>`;
       } else {
-        const sinalImp = diffImp > 0 ? '+' : '';
-        const sinalPrc = diffPreco > 0 ? '+' : '';
-        const clsImp = diffImp > 0 ? 'neg' : 'pos';
-        const clsPrc = diffPreco > 0 ? 'neg' : 'pos';
-        const boxCls = diffImp > 0 ? 'custo' : 'economia';
-        deltaHTML = `
-          <div class="delta-box ${boxCls}">
-            <div>
-              <div class="delta-label">Imposto vs seu regime</div>
-              <div style="font-size:0.65rem;color:var(--muted);margin-top:2px">Preço ao cliente</div>
-            </div>
-            <div style="text-align:right">
-              <div class="delta-val ${clsImp}">${sinalImp}${brl(diffImp)}</div>
-              <div class="delta-val ${clsPrc}" style="font-size:0.72rem">${sinalPrc}${brl(diffPreco)}</div>
-            </div>
-          </div>`;
+        const diffImp  = (r.v_imp_com+r.v_imp_ser+r.v_das) - (meuR.v_imp_com+meuR.v_imp_ser+meuR.v_das);
+        const diffPreco= r.total_nf - meuR.total_nf;
+        const boxCls   = diffImp > 0 ? 'custo' : 'economia';
+        deltaHTML = `<div class="delta-box ${boxCls}">
+          <div>
+            <div class="delta-label">Imposto vs seu regime</div>
+            <div style="font-size:.62rem;color:var(--muted);margin-top:1px">Preço ao cliente</div>
+          </div>
+          <div style="text-align:right">
+            <div class="delta-val ${diffImp>0?'neg':'pos'}">${diffImp>0?'+':''}${brl(diffImp)}</div>
+            <div class="delta-val ${diffPreco>0?'neg':'pos'}" style="font-size:.7rem">${diffPreco>0?'+':''}${brl(diffPreco)}</div>
+          </div></div>`;
       }
     }
 
-    /* Preço que cliente vê */
+    // Preço cliente diff
     let precoClienteDiff = '';
-    if (meuR && !isMeu) {
+    if(meuR && !isMeu){
       const d = r.total_nf - meuR.total_nf;
-      const p = (d / meuR.total_nf * 100).toFixed(1);
-      const cor = d > 0 ? 'var(--leao)' : 'var(--simples)';
-      precoClienteDiff = `<div class="preco-cliente-diff" style="color:${cor}">${d > 0 ? '+' : ''}${p}% vs seu regime</div>`;
+      const p = (d/meuR.total_nf*100).toFixed(1);
+      const cor = d>0 ? 'var(--leao)' : 'var(--simples)';
+      precoClienteDiff = `<div class="preco-diff" style="color:${cor}">${d>0?'+':''}${p}% vs seu regime</div>`;
     }
 
     const badges = [];
-    if (isMeu) badges.push('<span class="badge-pill pill-meu">✦ Meu regime</span>');
-    if (isBest && !isMeu) badges.push('<span class="badge-pill pill-best">↓ Menor imposto</span>');
-    if (isLeao && diffLeao > 15) badges.push('<span class="badge-pill pill-warn">⚠ Comercialmente caro</span>');
+    if(isMeu)  badges.push('<span class="badge-pill pill-meu">✦ Meu regime</span>');
+    if(isBest && !isMeu) badges.push('<span class="badge-pill pill-best">↓ Menor preço</span>');
+    if(isLeao && diffLeao>15) badges.push('<span class="badge-pill pill-warn">⚠ Caro ao cliente</span>');
 
-    const profitCls = isMeu ? 'accent-c' : r.cls + '-c';
-    const profitBg  = isMeu ? 'meu-bg'   : r.cls + '-bg';
+    const profitCls = isMeu ? 'accent-c' : r.cls+'-c';
+    const profitBg  = isMeu ? 'meu-bg'   : r.cls+'-bg';
 
-    return `
-      <div class="card ${r.cls}${isMeu ? ' meu-regime' : ''}">
-        <div class="card-header">
-          <div>
-            <div class="card-title">${r.label}</div>
-            <div class="card-subtitle">${r.sub}</div>
-          </div>
-          <div class="badges">${badges.join('')}</div>
-        </div>
+    // Exibição de imposto no detalhe
+    const impComLabel = isLeao
+      ? brl(r.v_imp_com)+` <span class="itag tax">IR ${(r.imp_com_pct*100).toFixed(1)}%ef</span>`
+      : (r.v_imp_com>0 ? brl(r.v_imp_com)+` <span class="itag tax">${pct(r.imp_com_pct*100)}</span>` : `— <span class="itag ok">isento</span>`);
+    const impSerLabel = isLeao
+      ? brl(r.v_imp_ser)+` <span class="itag tax">IR ${(r.imp_ser_pct*100).toFixed(1)}%ef</span>`
+      : (r.v_imp_ser>0 ? brl(r.v_imp_ser)+` <span class="itag tax">${pct(r.imp_ser_pct*100)}</span>` : `— <span class="itag ok">isento</span>`);
 
-        <div class="nf-box">
-          <div class="nf-label">Valor Total da Nota Fiscal</div>
-          <div class="nf-value">${brl(r.total_nf)}</div>
-          <div class="nf-split">
-            <div class="nf-sub"><div class="nf-sub-label">Comércio</div><div class="nf-sub-val">${brl(r.bruto_com)}</div></div>
-            <div class="nf-sub"><div class="nf-sub-label">Serviço</div><div class="nf-sub-val">${brl(r.bruto_ser)}</div></div>
-          </div>
-        </div>
+    html += `<div class="card ${r.cls}${isMeu?' meu-regime':''}">
+      <div class="card-header">
+        <div><div class="card-title">${r.label}</div><div class="card-subtitle">${r.sub}</div></div>
+        <div class="badges">${badges.join('')}</div>
+      </div>
 
-        <div class="preco-cliente">
-          <div>
-            <div class="preco-cliente-lbl">Preço que o cliente vê</div>
-            ${precoClienteDiff}
-          </div>
-          <div class="preco-cliente-val">${brl(r.total_nf)}</div>
-        </div>
-
-        ${deltaHTML}
-
-        <div class="details">
-          <div class="detail-row">
-            <span class="lbl">Imposto Comércio</span>
-            <span class="val">${r.v_imp_com > 0 ? brl(r.v_imp_com) : '—'} <span class="tag ${r.v_imp_com > 0 ? 'tax' : 'ok'}">${r.imp_com > 0 ? pct(r.imp_com * 100) : 'isento'}</span></span>
-          </div>
-          <div class="detail-row">
-            <span class="lbl">Imposto Serviço</span>
-            <span class="val">${r.v_imp_ser > 0 ? brl(r.v_imp_ser) : '—'} <span class="tag ${r.v_imp_ser > 0 ? 'tax' : 'ok'}">${r.imp_ser > 0 ? pct(r.imp_ser * 100) : 'isento'}</span></span>
-          </div>
-          <div class="detail-row">
-            <span class="lbl">Taxa Cartão</span>
-            <span class="val">${brl(r.v_tax_c)} <span class="tag neutral">${pct(tax_c_pct * 100)}</span></span>
-          </div>
-          <div class="detail-row">
-            <span class="lbl">Comissão</span>
-            <span class="val">${brl(r.v_comis)}</span>
-          </div>
-          ${r.v_das > 0 ? `<div class="detail-row"><span class="lbl">DAS MEI</span><span class="val">${brl(r.v_das)} <span class="tag neutral">fixo</span></span></div>` : ''}
-          <div class="divider"></div>
-          <div class="detail-row"><span class="lbl">Custo Produto</span><span class="val">${brl(c_prod)}</span></div>
-          <div class="detail-row"><span class="lbl">Custo Colaborador</span><span class="val">${brl(c_colab)}</span></div>
-          <div class="detail-row"><span class="lbl">Sua Mão de Obra</span><span class="val">${brl(c_minha)}</span></div>
-        </div>
-
-        <div class="profit-box ${profitBg}">
-          <div class="profit-label">Lucro Líquido Real</div>
-          <span class="profit-val ${profitCls}">${brl(r.lucro_real)}</span>
-          <div class="profit-perc">${pct(r.margem)} sobre o total da nota</div>
+      <div class="nf-box">
+        <div class="nf-label">Valor Total da Nota Fiscal</div>
+        <div class="nf-value">${brl(r.total_nf)}</div>
+        <div class="nf-split">
+          <div class="nf-sub"><div class="nf-sub-label">Comércio</div><div class="nf-sub-val">${brl(r.bruto_com)}</div></div>
+          <div class="nf-sub"><div class="nf-sub-label">Serviço</div><div class="nf-sub-val">${brl(r.bruto_ser)}</div></div>
         </div>
       </div>
-    `;
-  }).join('');
+
+      <div class="preco-cliente">
+        <div><div class="preco-cliente-lbl">Preço que o cliente vê</div>${precoClienteDiff}</div>
+        <div class="preco-cliente-val">${brl(r.total_nf)}</div>
+      </div>
+
+      ${deltaHTML}
+
+      <div class="details">
+        <div class="detail-row"><span class="lbl">IR / Imposto Comércio</span><span class="val">${impComLabel}</span></div>
+        <div class="detail-row"><span class="lbl">IR / Imposto Serviço</span><span class="val">${impSerLabel}</span></div>
+        ${isLeao && r.ir_detail ? `<div class="ir-detail"><strong>Carnê Leão 2026:</strong> ${r.ir_detail}</div>` : ''}
+        <div class="detail-row"><span class="lbl">Taxa Cartão</span><span class="val">${brl(r.v_tax_c)} <span class="itag neutral">${pct(nv('tax_cartao'))}</span></span></div>
+        <div class="detail-row"><span class="lbl">Comissão</span><span class="val">${brl(r.v_comis)}</span></div>
+        <!-- DAS MEI removido: custo fixo mensal, não por OS -->
+        <div class="divider"></div>
+        <div class="detail-row"><span class="lbl">Custo Produto</span><span class="val">${brl(c_prod)}</span></div>
+        <div class="detail-row"><span class="lbl">Custo Colaborador</span><span class="val">${brl(c_colab)}</span></div>
+        <div class="detail-row"><span class="lbl">Sua Mão de Obra</span><span class="val">${brl(c_minha)}</span></div>
+      </div>
+
+      <div class="profit-box ${profitBg}">
+        <div class="profit-label">Lucro Líquido Real</div>
+        <span class="profit-val ${profitCls}">${brl(r.lucro)}</span>
+        <div class="profit-perc">${pct(r.margem)} sobre o total da nota</div>
+      </div>
+    </div>`;
+  });
+
+  html += '</div>';
+  document.getElementById('results-area').innerHTML = html;
 }
 
-/* ===== ESTADO SNAPSHOT ===== */
-function getSnapshot() {
-  const d = new Date();
-  return {
-    versao: '1.8',
-    gerado_em: d.toISOString(),
-    gerado_em_br: d.toLocaleString('pt-BR'),
-    os: {
-      cliente: document.getElementById('os_cliente').value,
-      numero: document.getElementById('os_numero').value,
-    },
-    regime: meuRegime,
-    mei_tipo: meiTipo,
-    modes: { ...modes },
-    inputs: {
-      cost_prod: n('cost_prod'), val_colab: n('val_colab'), val_minha_mo: n('val_minha_mo'),
-      val_l_prod: n('val_l_prod'), val_l_colab: n('val_l_colab'), val_l_minha: n('val_l_minha'),
-      val_comis: n('val_comis'), tax_cartao: n('tax_cartao'),
-    },
-    aliquotas: {
-      aliq_mei: n('aliq_mei'), aliq_simples_com: n('aliq_simples_com'),
-      aliq_simples_ser: n('aliq_simples_ser'), aliq_leao: n('aliq_leao'),
+/* ══════════════════════════════════════
+   PAINEL FISCAL
+══════════════════════════════════════ */
+function getAllOS(){
+  const res = [];
+  try{
+    for(let i=0;i<localStorage.length;i++){
+      const k = localStorage.key(i);
+      if(!k || !k.startsWith('fenix_os_')) continue;
+      try{ const s = JSON.parse(localStorage.getItem(k)); if(s) res.push(s); }catch(e){}
     }
+  }catch(e){}
+  return res.sort((a,b)=>new Date(b.gerado_em||0)-new Date(a.gerado_em||0));
+}
+
+function getOSsPeriodo(){
+  const todas = getAllOS();
+  const ini = periodoInicio ? new Date(periodoInicio+'T00:00:00') : null;
+  const fim = periodoFim    ? new Date(periodoFim+'T23:59:59')   : null;
+  return todas.filter(os=>{
+    if(!os.gerado_em) return true;
+    const d = new Date(os.gerado_em);
+    if(ini && d<ini) return false;
+    if(fim && d>fim) return false;
+    return true;
+  });
+}
+
+function snapTotais(snap){
+  if(!snap||!snap.inputs) return {nf:0,compra:0,lucro:0};
+  try{
+    const {cost_prod:cp,val_colab:cc,val_minha_mo:cm,val_l_prod:vlp,val_l_colab:vlc,val_l_minha:vlm,val_comis:vco,tax_cartao:txc} = snap.inputs;
+    const m = snap.modes||{};
+    const lp = m.l_prod==='R$'  ? vlp : cp*(vlp/100);
+    const lc = m.l_colab==='R$' ? vlc : cc*(vlc/100);
+    const lm = m.l_minha==='R$' ? vlm : cm*(vlm/100);
+    const cpc  = m.comis==='%'  ? vco/100 : 0;
+    const cfix = m.comis==='R$' ? vco : 0;
+    const tx = txc/100;
+    const alvo_com = cp+lp, alvo_ser=cc+lc+cm+lm;
+    const dc=1-tx-cpc, ds=1-tx-cpc;
+    const bc=dc>0.01?(alvo_com+cfix*.5)/dc:alvo_com;
+    const bs=ds>0.01?(alvo_ser+cfix*.5)/ds:alvo_ser;
+    const tot=bc+bs, vtx=tot*tx, vco2=tot*cpc+cfix;
+    const liq=tot-vtx-vco2, lucro=liq-cp-cc;
+    return {nf:tot,compra:cp+cc,lucro};
+  }catch(e){ return {nf:0,compra:0,lucro:0}; }
+}
+
+function setPeriodo(p){
+  periodoFiltro=p;
+  const d=new Date(),ano=d.getFullYear();
+  if(p==='mes'){ periodoInicio=`${ano}-${String(d.getMonth()+1).padStart(2,'0')}-01`; periodoFim=d.toISOString().slice(0,10); }
+  else if(p==='trim'){ const q=Math.floor(d.getMonth()/3); periodoInicio=`${ano}-${String(q*3+1).padStart(2,'0')}-01`; periodoFim=d.toISOString().slice(0,10); }
+  else if(p==='ano'){ periodoInicio=`${ano}-01-01`; periodoFim=d.toISOString().slice(0,10); }
+  renderFiscal();
+}
+function setCustomPeriod(){
+  const a=document.getElementById('dt-ini'), b=document.getElementById('dt-fim');
+  if(a) periodoInicio=a.value;
+  if(b) periodoFim=b.value;
+  renderFiscal();
+}
+
+function renderFiscal(){
+  const oss    = getOSsPeriodo();
+  const totNF  = oss.reduce((s,o)=>s+snapTotais(o).nf,0);
+  const totCom = oss.reduce((s,o)=>s+snapTotais(o).compra,0);
+  const totLuc = oss.reduce((s,o)=>s+snapTotais(o).lucro,0);
+  const limite = LIMITES[meuRegime]||81000;
+  const perc   = limite===Infinity ? 0 : Math.min((totNF/limite)*100,100);
+  const termCor= perc<60?'#4ade80':perc<80?'#f59e0b':perc<95?'#f97316':'#ef4444';
+
+  const d=new Date(), diaAtual=Math.floor((d-new Date(d.getFullYear()+'-01-01'))/864e5)+1;
+  const ritmoMensal = totNF/(diaAtual/30)||0;
+  const projAnual   = ritmoMensal*12;
+  const mesesRest   = ritmoMensal>0 ? Math.max(0,(limite-totNF)/ritmoMensal) : 999;
+  const projeAtinge = mesesRest<12 && limite!==Infinity;
+
+  const lucroMensalEst = ritmoMensal*0.3;
+  const irInfo = calcIR(lucroMensalEst);
+
+  // Gráfico por mês
+  const porMes={};
+  oss.forEach(os=>{
+    const mes = os.gerado_em ? new Date(os.gerado_em).toLocaleString('pt-BR',{month:'short'}) : '?';
+    if(!porMes[mes]) porMes[mes]=0;
+    porMes[mes]+=snapTotais(os).nf;
+  });
+  const meses=Object.keys(porMes).slice(-6);
+  const maxMes=Math.max(...meses.map(m=>porMes[m]),1);
+  const barras = meses.length>0
+    ? meses.map(m=>`<div class="bar-wrap">
+        <div class="bar" style="height:${Math.round(porMes[m]/maxMes*62)}px;background:var(--accent);opacity:.8"></div>
+        <div class="bar-label">${m}</div>
+      </div>`).join('')
+    : '<div style="color:var(--muted);font-size:.72rem;padding:20px 0;text-align:center">Nenhuma OS no período</div>';
+
+  // Histórico
+  const histHTML = oss.length>0
+    ? oss.slice(0,10).map(os=>{
+        const t=snapTotais(os),dt=os.gerado_em?new Date(os.gerado_em).toLocaleDateString('pt-BR'):'—';
+        const rl={mei:'MEI',simples:'Simples',leao:'Carnê Leão'};
+        return `<div class="os-item">
+          <div><div class="os-num">${os.os?.numero||'Sem nº'}</div><div class="os-cli">${os.os?.cliente||'—'}</div><div class="os-date-lbl">${dt} · ${rl[os.regime]||'—'}</div></div>
+          <div><div class="os-nf">${brl(t.nf)}</div><div class="os-lucro">Lucro: ${brl(t.lucro)}</div></div>
+        </div>`;
+      }).join('')
+    : '<div class="os-empty">Nenhuma OS salva no período.<br>Salve orçamentos para ver o histórico aqui.</div>';
+
+  // Alerta IR
+  let irAlertHTML='';
+  if(irInfo.faixaIdx===0){
+    irAlertHTML=`<div class="ir-alert ok"><span>✅</span><div><strong>Abaixo da faixa tributável</strong><span>Renda mensal estimada de ${brl(lucroMensalEst)} — sem IR.</span></div></div>`;
+  } else if(TABELA_IR[irInfo.faixaIdx].aliq<=15){
+    irAlertHTML=`<div class="ir-alert warn"><span>⚠️</span><div><strong>Faixa ${TABELA_IR[irInfo.faixaIdx].aliq}% de IR</strong><span>IR estimado: ${brl(irInfo.imposto)}/mês · Alíq. efetiva: ${irInfo.aliqEfetiva.toFixed(2)}%</span></div></div>`;
+  } else {
+    irAlertHTML=`<div class="ir-alert danger"><span>🔴</span><div><strong>Faixa ${TABELA_IR[irInfo.faixaIdx].aliq}% — atenção!</strong><span>IR estimado: ${brl(irInfo.imposto)}/mês · Alíq. efetiva: ${irInfo.aliqEfetiva.toFixed(2)}% · Considere estrutura jurídica.</span></div></div>`;
+  }
+
+  // Tabela IR
+  const tabelaHTML = TABELA_IR.map((f,fi)=>{
+    const ativa = irInfo.faixaIdx===fi;
+    const fxLabel = f.ate===Infinity ? `Acima de ${brl(TABELA_IR[fi-1]?.ate||4664.68)}` : fi===0 ? `Até ${brl(f.ate)}` : `${brl(TABELA_IR[fi-1].ate+0.01)} — ${brl(f.ate)}`;
+    return `<tr class="${ativa?'ativa':''}">
+      <td>${fxLabel}</td>
+      <td>${f.aliq}%</td>
+      <td>${brl(f.ded)}</td>
+      <td>${ativa?'← você':'—'}</td>
+    </tr>`;
+  }).join('');
+
+  // Limites
+  const limitesHTML=[{id:'mei',label:'MEI',limite:81000,cor:'var(--mei)'},{id:'simples',label:'Simples Nacional',limite:4800000,cor:'var(--simples)'}]
+    .map(r=>{
+      const p=Math.min((totNF/r.limite)*100,100);
+      const cor=p<70?r.cor:p<90?'var(--warn)':'var(--danger)';
+      return `<div class="limite-item">
+        <div class="limite-header">
+          <span class="limite-name">${r.label}${r.id===meuRegime?' <span style="color:var(--accent);font-size:.6rem">← seu regime</span>':''}</span>
+          <span class="limite-mono">${brl(totNF)} / ${brl(r.limite)}</span>
+        </div>
+        <div class="limite-bar"><div class="limite-fill" style="width:${p}%;background:${cor}"></div></div>
+        <div class="limite-sub">${p.toFixed(1)}% utilizado · Restam ${brl(Math.max(0,r.limite-totNF))}</div>
+      </div>`;
+    }).join('');
+
+  document.getElementById('fiscal-body').innerHTML = `
+    <div class="fp-section">
+      <div class="fp-title">Período de análise</div>
+      <div class="period-bar">
+        <button class="period-btn ${periodoFiltro==='mes'?'active':''}" onclick="setPeriodo('mes')">Este mês</button>
+        <button class="period-btn ${periodoFiltro==='trim'?'active':''}" onclick="setPeriodo('trim')">Trimestre</button>
+        <button class="period-btn ${periodoFiltro==='ano'?'active':''}" onclick="setPeriodo('ano')">Este ano</button>
+        <button class="period-btn ${periodoFiltro==='custom'?'active':''}" onclick="setPeriodo('custom')">Personalizado</button>
+      </div>
+      <div class="period-custom ${periodoFiltro==='custom'?'show':''}" id="period-custom-row">
+        <input type="date" id="dt-ini" value="${periodoInicio}" onchange="setCustomPeriod()">
+        <span style="color:var(--muted);font-size:.8rem">até</span>
+        <input type="date" id="dt-fim" value="${periodoFim}" onchange="setCustomPeriod()">
+      </div>
+    </div>
+
+    <div class="fp-section">
+      <div class="fp-title">Termômetro — ${{mei:'MEI',simples:'Simples Nacional',leao:'Carnê Leão'}[meuRegime]}</div>
+      <div class="termo-labels"><span>R$ 0</span><strong>${brl(totNF)} faturado</strong><span>${limite===Infinity?'Sem limite':brl(limite)}</span></div>
+      <div class="termo-bar"><div class="termo-fill" style="width:${perc}%;background:${termCor}"></div></div>
+      <div class="termo-pct" style="color:${termCor}">${limite===Infinity?'Sem limite formal':perc.toFixed(1)+'% do limite anual'}</div>
+      <div class="termo-zonas">
+        <div class="zona"><div class="zona-dot" style="background:#4ade80"></div>0–60% seguro</div>
+        <div class="zona"><div class="zona-dot" style="background:#f59e0b"></div>60–80% atenção</div>
+        <div class="zona"><div class="zona-dot" style="background:#f97316"></div>80–95% alerta</div>
+        <div class="zona"><div class="zona-dot" style="background:#ef4444"></div>+95% crítico</div>
+      </div>
+    </div>
+
+    <div class="fp-section">
+      <div class="fp-title">Resumo do período (${oss.length} OS)</div>
+      <div class="stats-grid">
+        <div class="stat-box"><div class="stat-label">Total NF emitida</div><div class="stat-val blue">${brl(totNF)}</div><div class="stat-sub">${oss.length} ordens</div></div>
+        <div class="stat-box"><div class="stat-label">Total em compras</div><div class="stat-val orange">${brl(totCom)}</div><div class="stat-sub">Produto + colaborador</div></div>
+        <div class="stat-box"><div class="stat-label">Lucro acumulado</div><div class="stat-val green">${brl(totLuc)}</div><div class="stat-sub">${totNF>0?((totLuc/totNF)*100).toFixed(1):0}% de margem</div></div>
+        <div class="stat-box"><div class="stat-label">Projeção anual</div><div class="stat-val ${projAnual>limite&&limite!==Infinity?'red':'orange'}">${brl(projAnual)}</div><div class="stat-sub">No ritmo atual</div></div>
+      </div>
+      ${projeAtinge?`<div class="proj-box" style="margin-top:10px"><span style="font-size:1.1rem">📅</span><div class="proj-text"><strong>Limite atingido em ~${mesesRest.toFixed(1)} meses</strong><span>Ritmo: ${brl(ritmoMensal)}/mês. Considere antecipar a mudança de regime.</span></div></div>`:''}
+    </div>
+
+    <div class="fp-section">
+      <div class="fp-title">Limites por regime</div>
+      ${limitesHTML}
+    </div>
+
+    <div class="fp-section">
+      <div class="fp-title">Imposto de Renda — Tabela Progressiva 2026</div>
+      ${irAlertHTML}
+      <table class="ir-table">
+        <thead><tr><th>Faixa mensal</th><th>Alíquota</th><th>Parcela a deduzir</th><th>Status</th></tr></thead>
+        <tbody>${tabelaHTML}</tbody>
+      </table>
+      <div style="font-size:.63rem;color:var(--muted);margin-top:8px">* Estimativa baseada em 30% da média de faturamento no período (${brl(lucroMensalEst)}/mês).</div>
+    </div>
+
+    <div class="fp-section">
+      <div class="fp-title">Faturamento por mês</div>
+      <div class="minichart">${barras}</div>
+    </div>
+
+    <div class="fp-section">
+      <div class="fp-title">Histórico de Ordens de Serviço</div>
+      <div class="os-list">${histHTML}</div>
+    </div>`;
+}
+
+/* ══════════════════════════════════════
+   SNAPSHOT / PERSISTÊNCIA
+══════════════════════════════════════ */
+function getSnapshot(){
+  const d=new Date();
+  return {
+    versao:'1.9.1', gerado_em:d.toISOString(), gerado_em_br:d.toLocaleString('pt-BR'),
+    os:{ cliente:document.getElementById('os_cliente').value, numero:document.getElementById('os_numero').value },
+    regime:meuRegime, mei_tipo:meiTipo, modes:{...modes},
+    inputs:{
+      cost_prod:nv('cost_prod'), val_colab:nv('val_colab'), val_minha_mo:nv('val_minha_mo'),
+      val_l_prod:nv('val_l_prod'), val_l_colab:nv('val_l_colab'), val_l_minha:nv('val_l_minha'),
+      val_comis:nv('val_comis'), tax_cartao:nv('tax_cartao')
+    },
+    aliquotas:{ aliq_simples_com:nv('aliq_simples_com'), aliq_simples_ser:nv('aliq_simples_ser') }
   };
 }
 
-function applySnapshot(s) {
-  if (!s.inputs) return;
-  Object.entries(s.inputs).forEach(([k, v]) => { const el = document.getElementById(k); if (el) el.value = v; });
-  Object.entries(s.aliquotas).forEach(([k, v]) => { const el = document.getElementById(k); if (el) el.value = v; });
-  if (s.os) {
-    document.getElementById('os_cliente').value = s.os.cliente || '';
-    document.getElementById('os_numero').value  = s.os.numero  || '';
-  }
-  if (s.modes) Object.assign(modes, s.modes);
-  ['colab','l_prod','l_colab','l_minha','comis'].forEach(k => {
-    const btn = document.getElementById('mode_' + k);
-    if (btn) { btn.textContent = modes[k]; btn.classList.toggle('on', modes[k] === 'R$'); }
-  });
-  if (s.regime) setRegime(s.regime);
-  if (s.mei_tipo) setMeiTipo(s.mei_tipo);
+function applySnapshot(s){
+  if(!s||!s.inputs) return;
+  const ids=['cost_prod','val_colab','val_minha_mo','val_l_prod','val_l_colab','val_l_minha','val_comis','tax_cartao'];
+  ids.forEach(k=>{ const el=document.getElementById(k); if(el&&s.inputs[k]!==undefined) el.value=s.inputs[k]||''; });
+  if(s.aliquotas){ Object.entries(s.aliquotas).forEach(([k,v])=>{ const el=document.getElementById(k); if(el) el.value=v; }); }
+  // compatibilidade retroativa: ignora aliq_mei de snapshots antigos
+  if(s.os){ document.getElementById('os_cliente').value=s.os.cliente||''; document.getElementById('os_numero').value=s.os.numero||''; }
+  if(s.modes){ Object.assign(modes,s.modes); ['colab','l_prod','l_colab','l_minha','comis'].forEach(k=>{ const btn=document.getElementById('mode_'+k); if(btn){ btn.textContent=modes[k]; btn.classList.toggle('on',modes[k]==='R$'); } }); }
+  if(s.regime) setRegime(s.regime);
+  if(s.mei_tipo) setMeiTipo(s.mei_tipo);
   calc();
 }
 
-/* ===== SALVAR LOCAL ===== */
-function salvarLocal() {
-  try {
-    const snap = getSnapshot();
-    const key = 'fenix_os_' + (snap.os.numero || Date.now());
-    localStorage.setItem(key, JSON.stringify(snap));
-    localStorage.setItem('fenix_last', key);
-    toast('Salvo localmente — ' + (snap.os.numero || 'sem nº OS'), '✦');
-  } catch(e) { toast('Erro ao salvar: ' + e.message, '⚠'); }
+function salvarLocal(){
+  try{
+    const s=getSnapshot();
+    const key='fenix_os_'+(s.os.numero||Date.now());
+    localStorage.setItem(key,JSON.stringify(s));
+    localStorage.setItem('fenix_last',key);
+    showToast('✦ Salvo — '+(s.os.numero||'sem nº OS'));
+  }catch(e){ showToast('⚠ Erro ao salvar: '+e.message); }
 }
 
-/* ===== EXPORTAR JSON ===== */
-function exportarJSON() {
-  const snap = getSnapshot();
-  const cli = (snap.os.cliente || 'fenix').replace(/\s+/g, '_');
-  const os  = (snap.os.numero  || 'OS').replace(/\s+/g, '_');
-  const d   = new Date().toISOString().slice(0,10);
-  const filename = `Fenix_${cli}_${os}_${d}.json`;
-  const blob = new Blob([JSON.stringify(snap, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = filename; a.click();
-  URL.revokeObjectURL(url);
-  toast('JSON exportado: ' + filename, '↓');
+function exportarJSON(){
+  try{
+    const s=getSnapshot();
+    const cli=(s.os.cliente||'fenix').replace(/\s+/g,'_');
+    const os=(s.os.numero||'OS').replace(/\s+/g,'_');
+    const d=new Date().toISOString().slice(0,10);
+    const fn=`Fenix_${cli}_${os}_${d}.json`;
+    const blob=new Blob([JSON.stringify(s,null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a'); a.href=url; a.download=fn; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+    showToast('↓ JSON exportado: '+fn);
+  }catch(e){ showToast('⚠ Erro: '+e.message); }
 }
 
-/* ===== IMPORTAR JSON ===== */
-function importarJSON(evt) {
-  const file = evt.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    try {
-      const snap = JSON.parse(e.target.result);
-      applySnapshot(snap);
-      toast('Orçamento carregado: ' + (snap.os?.numero || file.name), '✦');
-    } catch(err) { toast('Arquivo inválido', '⚠'); }
+function importarJSON(evt){
+  const file=evt.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{ applySnapshot(JSON.parse(e.target.result)); showToast('✦ Orçamento carregado'); }
+    catch(err){ showToast('⚠ Arquivo inválido'); }
   };
   reader.readAsText(file);
-  evt.target.value = '';
+  evt.target.value='';
+}
+document.getElementById('file-input').addEventListener('change', importarJSON);
+
+function exportarPDF(){
+  try{
+    const snap=getSnapshot();
+    if(!window.jspdf){ showToast('⚠ jsPDF não carregado'); return; }
+    const {jsPDF}=window.jspdf;
+    const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+    const W=210,M=16; let y=0;
+    const ln=h=>{y+=h;};
+    const tx=(text,x,sz,st,col)=>{ doc.setFontSize(sz||10); doc.setFont('helvetica',st||'normal'); doc.setTextColor(...(col||[30,30,40])); doc.text(String(text),x,y); };
+
+    doc.setFillColor(249,115,22); doc.rect(0,0,W,22,'F'); y=14;
+    tx('Fênix | Sistema de Cobrança Real — v1.9.2',M,13,'bold',[255,255,255]);
+    doc.setFontSize(8); doc.setTextColor(255,220,180);
+    doc.text('© Cristiano Fênix | Fênix Soluções Tecnológicas',W-M,y,{align:'right'}); ln(12);
+
+    doc.setFillColor(245,246,250); doc.rect(M,y,W-M*2,18,'F'); ln(6);
+    tx('Cliente: '+(snap.os.cliente||'—'),M+4,10,'bold'); tx('OS: '+(snap.os.numero||'—'),M+90,10,'normal');
+    tx('Gerado: '+snap.gerado_em_br,M+140,8,'normal',[100,100,120]); ln(7);
+    tx('Regime: '+({mei:'MEI',simples:'Simples Nacional',leao:'Carnê Leão/CPF'})[snap.regime]||snap.regime,M+4,9,'normal',[100,100,120]); ln(4); ln(8);
+
+    // Parâmetros
+    doc.setFillColor(230,230,240); doc.rect(M,y,W-M*2,6,'F'); ln(4.5); tx('PARÂMETROS',M+2,8,'bold',[60,60,80]); ln(7);
+    const params=[['Produto',brl(snap.inputs.cost_prod)],['Colaborador',brl(snap.inputs.val_colab)],['Mão de obra',brl(snap.inputs.val_minha_mo)],['Cartão',pct(snap.inputs.tax_cartao)],['Comissão',snap.modes.comis==='%'?pct(snap.inputs.val_comis):brl(snap.inputs.val_comis)]];
+    params.forEach((p,i)=>{ const col=M+(i%3)*60; if(i%3===0&&i>0) ln(7); tx(p[0]+': ',col,8,'normal',[80,80,100]); doc.setFont('helvetica','bold'); doc.setTextColor(30,30,40); doc.text(p[1],col+24,y); }); ln(12);
+
+    const cores={mei:[56,189,248],simples:[74,222,128],leao:[248,113,113]};
+    const tx_c=snap.inputs.tax_cartao/100,cp=snap.inputs.cost_prod,cc=snap.inputs.val_colab,cm=snap.inputs.val_minha_mo;
+    const lp=cp*(snap.inputs.val_l_prod/100),lc=cc*(snap.inputs.val_l_colab/100),lm=cm*(snap.inputs.val_l_minha/100);
+    const cpc=snap.modes.comis==='%'?snap.inputs.val_comis/100:0,cfix=snap.modes.comis==='R$'?snap.inputs.val_comis:0;
+
+    const regsPDF=[
+      {id:'mei',label:'MEI — Isento por OS',ic:0,is:0,das:0,leao:false},
+      {id:'simples',label:'Simples Nacional',ic:snap.aliquotas.aliq_simples_com/100,is:snap.aliquotas.aliq_simples_ser/100,das:0,leao:false},
+      {id:'leao',label:'Carnê Leão (CPF — tabela progressiva)',ic:0,is:0,das:0,leao:true},
+    ];
+
+    regsPDF.forEach(r=>{
+      if(y>240){doc.addPage();y=16;}
+      let bc,bs,tot,vic,vis,vtx,vco,lucro,mgm;
+      if(r.leao){
+        bc=grossUpLeao(cp+lp,tx_c,cpc,cfix*.5);
+        bs=grossUpLeao(cc+lc+cm+lm,tx_c,cpc,cfix*.5);
+        tot=bc+bs; vic=calcIR(bc).imposto; vis=calcIR(bs).imposto;
+        vtx=tot*tx_c; vco=tot*cpc+cfix;
+        const liq=tot-vic-vis-vtx-vco; lucro=liq-cp-cc; mgm=tot>0?lucro/tot*100:0;
+      } else {
+        const dc=1-r.ic-tx_c-cpc,ds=1-r.is-tx_c-cpc;
+        bc=dc>0.01?(cp+lp+cfix*.5)/dc:cp+lp; bs=ds>0.01?(cc+lc+cm+lm+cfix*.5)/ds:cc+lc+cm+lm;
+        tot=bc+bs; vic=bc*r.ic; vis=bs*r.is; vtx=tot*tx_c; vco=tot*cpc+cfix;
+        const liq=tot-vic-vis-vtx-vco-r.das; lucro=liq-cp-cc; mgm=tot>0?lucro/tot*100:0;
+      }
+      const isMeu=r.id===snap.regime;
+      doc.setFillColor(...cores[r.id]); doc.rect(M,y,4,34,'F');
+      doc.setFillColor(isMeu?255:248,248,isMeu?230:250); doc.rect(M+4,y,W-M*2-4,34,'F');
+      if(isMeu){doc.setFillColor(249,115,22);doc.rect(M+4,y,W-M*2-4,1.5,'F');}
+      ln(7); tx(r.label+(isMeu?'  ← SEU REGIME':''),M+8,10,'bold'); ln(7);
+      tx('Nota Fiscal: ',M+8,9,'normal',[80,80,100]); doc.setFont('helvetica','bold'); doc.setTextColor(30,30,40); doc.text(brl(tot),M+38,y);
+      tx('  Imposto: '+brl(vic+vis),M+90,8,'normal',[180,60,60]);
+      tx('  Lucro: '+brl(lucro)+' ('+pct(mgm)+')',M+135,9,'bold',[30,120,60]); ln(8);
+      tx('Comércio: '+brl(bc)+'  Serviço: '+brl(bs)+'  Cartão: '+brl(vtx)+'  Comissão: '+brl(vco),M+8,7.5,'normal',[100,100,120]); ln(4);
+      if(r.leao){ tx('IR calculado pela tabela progressiva IRPF 2026',M+8,7,'italic',[150,100,100]); ln(4); }
+      ln(6);
+    });
+
+    if(y>262){doc.addPage();y=16;} ln(6);
+    doc.setFillColor(249,115,22); doc.rect(0,y,W,.5,'F'); ln(5);
+    doc.setFontSize(7); doc.setTextColor(120,120,140);
+    doc.text('Fênix | Sistema de Cobrança Real v1.9.2  •  @fenixsolucoestecnologicas  •  wa.me/5579999680880',W/2,y,{align:'center'});
+
+    const cli=(snap.os.cliente||'fenix').replace(/\s+/g,'_'),os2=(snap.os.numero||'OS').replace(/\s+/g,'_'),dstr=new Date().toISOString().slice(0,10);
+    doc.save(`Fenix_${cli}_${os2}_${dstr}.pdf`);
+    showToast('↓ PDF exportado com sucesso');
+  }catch(e){ showToast('⚠ Erro PDF: '+e.message); console.error(e); }
 }
 
-/* ===== EXPORTAR PDF ===== */
-function exportarPDF() {
-  const snap = getSnapshot();
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-  const W = 210, M = 16;
-  let y = 0;
-
-  const line = (h) => { y += h; };
-  const txt = (text, x, size, style, color) => {
-    doc.setFontSize(size || 10);
-    doc.setFont('helvetica', style || 'normal');
-    doc.setTextColor(...(color || [30, 30, 40]));
-    doc.text(String(text), x, y);
-  };
-
-  /* Header */
-  doc.setFillColor(249, 115, 22);
-  doc.rect(0, 0, W, 22, 'F');
-  y = 14;
-  txt('Fênix | Sistema de Cobrança Real  —  v1.8', M, 13, 'bold', [255,255,255]);
-  txt('© Cristiano Fênix | Fênix Soluções Tecnológicas', W - M - 2, 8, 'normal', [255,220,180]);
-  doc.setFontSize(8); doc.setTextColor(255,220,180);
-  doc.text('© Cristiano Fênix | Fênix Soluções Tecnológicas', W - M, y, { align: 'right' });
-
-  line(12);
-
-  /* OS Info */
-  doc.setFillColor(245,246,250); doc.rect(M, y, W - M*2, 16, 'F');
-  line(6);
-  txt('Cliente: ' + (snap.os.cliente || '—'), M + 4, 10, 'bold');
-  txt('OS: ' + (snap.os.numero || '—'), M + 90, 10, 'normal');
-  txt('Gerado em: ' + snap.gerado_em_br, M + 140, 8, 'normal', [100,100,120]);
-  line(10);
-  txt('Regime: ' + { mei:'MEI', simples:'Simples Nacional', leao:'Carnê Leão / CPF' }[snap.regime], M + 4, 9, 'normal', [100,100,120]);
-
-  line(10);
-
-  /* Inputs resumo */
-  doc.setFillColor(230,230,240); doc.rect(M, y, W - M*2, 6, 'F');
-  line(4.5);
-  txt('PARÂMETROS', M + 2, 8, 'bold', [60,60,80]);
-  line(7);
-  const params = [
-    ['Produto', brl(snap.inputs.cost_prod)],
-    ['Colaborador', brl(snap.inputs.val_colab)],
-    ['Mão de obra', brl(snap.inputs.val_minha_mo)],
-    ['Taxa cartão', pct(snap.inputs.tax_cartao)],
-    ['Comissão', snap.modes.comis === '%' ? pct(snap.inputs.val_comis) : brl(snap.inputs.val_comis)],
-  ];
-  params.forEach((p, i) => {
-    const col = M + (i % 3) * 58;
-    if (i % 3 === 0 && i > 0) line(7);
-    txt(p[0] + ': ', col, 8, 'normal', [80,80,100]);
-    doc.setFont('helvetica', 'bold'); doc.setTextColor(30,30,40);
-    doc.text(p[1], col + 22, y);
-  });
-
-  line(12);
-
-  /* Cards por regime */
-  const regimeData = { mei: 'MEI', simples: 'Simples Nacional', leao: 'Carnê Leão (CPF)' };
-  const cores = { mei: [56,189,248], simples: [74,222,128], leao: [248,113,113] };
-
-  /* Cálculo rápido para PDF */
-  const tax_c = snap.inputs.tax_cartao / 100;
-  const cp = snap.inputs.cost_prod, cc = snap.inputs.val_colab, cm = snap.inputs.val_minha_mo;
-  const lp = cp * (snap.inputs.val_l_prod / 100);
-  const lc = cc * (snap.inputs.val_l_colab / 100);
-  const lm = cm * (snap.inputs.val_l_minha / 100);
-  const cpc = snap.modes.comis === '%' ? snap.inputs.val_comis / 100 : 0;
-  const cfix = snap.modes.comis === 'R$' ? snap.inputs.val_comis : 0;
-  const alvo_com = cp + lp, alvo_ser = cc + lc + cm + lm;
-
-  const regList = [
-    { id: 'mei', label: 'MEI', ic: 0, is: 0, das: snap.aliquotas.aliq_mei },
-    { id: 'simples', label: 'Simples Nacional', ic: snap.aliquotas.aliq_simples_com/100, is: snap.aliquotas.aliq_simples_ser/100, das: 0 },
-    { id: 'leao', label: 'Carnê Leão (CPF)', ic: snap.aliquotas.aliq_leao/100, is: snap.aliquotas.aliq_leao/100, das: 0 },
-  ];
-
-  regList.forEach(r => {
-    const dc = 1 - r.ic - tax_c - cpc, ds = 1 - r.is - tax_c - cpc;
-    const bc = dc > 0.01 ? (alvo_com + cfix*0.5)/dc : alvo_com;
-    const bs = ds > 0.01 ? (alvo_ser + cfix*0.5)/ds : alvo_ser;
-    const tot = bc + bs;
-    const vic = bc * r.ic, vis = bs * r.is;
-    const vtx = tot * tax_c, vco = tot * cpc + cfix;
-    const liq = tot - vic - vis - vtx - vco - r.das;
-    const lucro = liq - cp - cc;
-    const mgm = tot > 0 ? (lucro / tot * 100) : 0;
-    const isMeu = r.id === snap.regime;
-
-    if (y > 240) { doc.addPage(); y = 16; }
-
-    const cor = cores[r.id];
-    doc.setFillColor(...cor); doc.rect(M, y, 4, 32, 'F');
-    doc.setFillColor(isMeu ? 255 : 248, isMeu ? 248 : 248, isMeu ? 230 : 250);
-    doc.rect(M + 4, y, W - M*2 - 4, 32, 'F');
-    if (isMeu) { doc.setFillColor(249,115,22); doc.rect(M + 4, y, W - M*2 - 4, 1.5, 'F'); }
-
-    const ry = y;
-    line(7);
-    txt(r.label + (isMeu ? '  ← SEU REGIME' : ''), M + 8, 10, 'bold');
-    line(7);
-    txt('Nota Fiscal Total: ', M + 8, 9, 'normal', [80,80,100]);
-    txt(brl(tot), M + 45, 10, 'bold');
-    txt('Imposto: ' + brl(vic + vis), M + 90, 8, 'normal', [180,60,60]);
-    txt('Lucro: ' + brl(lucro) + '  (' + pct(mgm) + ')', M + 140, 9, 'bold', [30,120,60]);
-    line(8);
-    txt('Comércio: ' + brl(bc) + '   Serviço: ' + brl(bs) + '   Cartão: ' + brl(vtx) + '   Comissão: ' + brl(vco), M + 8, 7.5, 'normal', [100,100,120]);
-    line(12);
-  });
-
-  /* Rodapé PDF */
-  if (y > 260) doc.addPage();
-  line(8);
-  doc.setFillColor(249,115,22); doc.rect(0, y, W, 0.5, 'F');
-  line(5);
-  doc.setFontSize(7.5); doc.setTextColor(120,120,140);
-  doc.text('Documento gerado pelo Fênix | Sistema de Cobrança Real v1.8  •  fenixsolucoestecnologicas  •  wa.me/5579999680880', W/2, y, { align: 'center' });
-
-  const cli = (snap.os.cliente || 'fenix').replace(/\s+/g,'_');
-  const os  = (snap.os.numero  || 'OS').replace(/\s+/g,'_');
-  const d   = new Date().toISOString().slice(0,10);
-  doc.save(`Fenix_${cli}_${os}_${d}.pdf`);
-  toast('PDF exportado com sucesso', '↓');
-}
-
-/* ===== CARREGAR ÚLTIMO SALVO ===== */
-(function() {
-  try {
-    const lastKey = localStorage.getItem('fenix_last');
-    if (lastKey) {
-      const snap = JSON.parse(localStorage.getItem(lastKey));
-      if (snap) { applySnapshot(snap); return; }
-    }
-  } catch(e) {}
-  calc();
-})();
+/* ══════════════════════════════════════
+   BOOT — inicia limpo
+══════════════════════════════════════ */
+// Não carrega nada do localStorage automaticamente.
+// Formulário começa limpo para novo orçamento.
+calc();
 </script>
 </body>
 </html>
