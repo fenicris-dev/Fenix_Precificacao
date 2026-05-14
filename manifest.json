@@ -1,7 +1,7 @@
 {
-  "name": "Fênix | Precificação Inteligente",
-  "short_name": "Fênix",
-  "description": "Calculadora de precificação inteligente com análise de margens",
+  "name": "Fênix Precificador",
+  "short_name": "Precificador",
+  "description": "Calculadora de precificação inteligente com análise de margens e regimes tributários",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#020d52",
@@ -23,7 +23,6 @@
       "purpose": "any maskable"
     }
   ],
-  "screenshots": [],
   "shortcuts": [
     {
       "name": "Nova OS",
